@@ -28,5 +28,11 @@
     "description": "Manage the Avada theme: options, custom CSS, page options, builder content, library and layouts.",
     "icon": "dashicons-admin-customizer",
     "requires": "Avada theme"
+  },
+  "vgc-ai-nexus-elementor": {
+    "name": "Elementor",
+    "description": "Manage Elementor: global Kit settings, page content, widgets and templates.",
+    "icon": "dashicons-admin-customizer",
+    "requires": "Elementor"
   }
 }
