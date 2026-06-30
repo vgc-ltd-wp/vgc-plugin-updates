@@ -11,7 +11,157 @@
     "author": "VGC",
     "sections": {
       "description": "The AI management layer for WordPress (MCP tools for AI agents).",
-      "changelog": "<h4>2.11.3</h4><ul><li>Updater detection hardening: inject on the transient read filter; 1h manifest cache.</li></ul><h4>2.11.2</h4><ul><li>Update View details shows a live abilities summary (count + per-group breakdown).</li></ul><h4>2.11.1</h4><ul><li>Self-hosted updater: native WordPress Update button, no wp-config token.</li></ul>"
+      "changelog": "<h4>2.11.3</h4><ul><li>Updater detection hardening: read-filter injection; 1h cache.</li></ul><h4>2.11.2</h4><ul><li>View details shows a live abilities summary.</li></ul><h4>2.11.1</h4><ul><li>Self-hosted updater added.</li></ul>"
+    }
+  },
+  "vgc-ai-nexus-analytics": {
+    "name": "VGC AI Nexus for Analytics",
+    "version": "1.6.2",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-analytics-1.6.2/vgc-ai-nexus-analytics-1.6.2.zip",
+    "requires": "6.0",
+    "requires_php": "8.0",
+    "tested": "6.8",
+    "last_updated": "2026-06-30",
+    "homepage": "https://tools.vgc-ltd.com",
+    "author": "VGC",
+    "sections": {
+      "description": "GA4, Search Console and PageSpeed reporting via Site Kit.",
+      "changelog": "<h4>1.6.2</h4><ul><li>Self-hosted updater: native WordPress \"Update now\" button via the public manifest (no wp-config token).</li></ul>"
+    }
+  },
+  "vgc-ai-nexus-wpml": {
+    "name": "VGC AI Nexus for WPML",
+    "version": "1.4.1",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-wpml-1.4.1/vgc-ai-nexus-wpml-1.4.1.zip",
+    "requires": "6.0",
+    "requires_php": "8.0",
+    "tested": "6.8",
+    "last_updated": "2026-06-30",
+    "homepage": "https://tools.vgc-ltd.com",
+    "author": "VGC",
+    "sections": {
+      "description": "WPML translation management abilities.",
+      "changelog": "<h4>1.4.1</h4><ul><li>Self-hosted updater: native WordPress \"Update now\" button via the public manifest (no wp-config token).</li></ul>"
+    }
+  },
+  "vgc-ai-nexus-cpt": {
+    "name": "VGC AI Nexus for Custom Post Types",
+    "version": "1.3.1",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-cpt-1.3.1/vgc-ai-nexus-cpt-1.3.1.zip",
+    "requires": "6.0",
+    "requires_php": "8.0",
+    "tested": "6.8",
+    "last_updated": "2026-06-30",
+    "homepage": "https://tools.vgc-ltd.com",
+    "author": "VGC",
+    "sections": {
+      "description": "Create custom post types, taxonomies and assign terms.",
+      "changelog": "<h4>1.3.1</h4><ul><li>Self-hosted updater: native WordPress \"Update now\" button via the public manifest (no wp-config token).</li></ul>"
+    }
+  },
+  "vgc-ai-nexus-woocommerce": {
+    "name": "VGC AI Nexus for WooCommerce",
+    "version": "1.7.1",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-woocommerce-1.7.1/vgc-ai-nexus-woocommerce-1.7.1.zip",
+    "requires": "6.0",
+    "requires_php": "8.0",
+    "tested": "6.8",
+    "last_updated": "2026-06-30",
+    "homepage": "https://tools.vgc-ltd.com",
+    "author": "VGC",
+    "sections": {
+      "description": "WooCommerce orders, products, customers, coupons abilities.",
+      "changelog": "<h4>1.7.1</h4><ul><li>Self-hosted updater: native WordPress \"Update now\" button via the public manifest (no wp-config token).</li></ul>"
+    }
+  },
+  "vgc-mcp-claude-connector-oauth": {
+    "name": "VGC MCP Claude Connector (OAuth)",
+    "version": "1.2.4",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-mcp-claude-connector-oauth-1.2.4/vgc-mcp-claude-connector-oauth-1.2.4.zip",
+    "requires": "6.0",
+    "requires_php": "8.0",
+    "tested": "6.8",
+    "last_updated": "2026-06-30",
+    "homepage": "https://tools.vgc-ltd.com",
+    "author": "VGC",
+    "sections": {
+      "description": "OAuth MCP connector exposing site abilities to Claude.",
+      "changelog": "<h4>1.2.4</h4><ul><li>Self-hosted updater: native WordPress \"Update now\" button via the public manifest (no wp-config token).</li></ul>"
+    }
+  },
+  "vgc-mcp-claude-desktop": {
+    "name": "VGC MCP Claude Desktop Connector (Lite)",
+    "version": "1.2.4",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-mcp-claude-desktop-1.2.4/vgc-mcp-claude-desktop-1.2.4.zip",
+    "requires": "6.0",
+    "requires_php": "8.0",
+    "tested": "6.8",
+    "last_updated": "2026-06-30",
+    "homepage": "https://tools.vgc-ltd.com",
+    "author": "VGC",
+    "sections": {
+      "description": "Application-password MCP connector for Claude Desktop.",
+      "changelog": "<h4>1.2.4</h4><ul><li>Self-hosted updater: native WordPress \"Update now\" button via the public manifest (no wp-config token).</li></ul>"
+    }
+  },
+  "vgc-price-by-quantity": {
+    "name": "VGC Price By Quantity",
+    "version": "1.4.6",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-price-by-quantity-1.4.6/vgc-price-by-quantity-1.4.6.zip",
+    "requires": "6.0",
+    "requires_php": "7.4",
+    "tested": "6.8",
+    "last_updated": "2026-06-30",
+    "homepage": "https://tools.vgc-ltd.com",
+    "author": "VGC",
+    "sections": {
+      "description": "Quantity-based pricing for WooCommerce.",
+      "changelog": "<h4>1.4.6</h4><ul><li>Self-hosted updater: native WordPress \"Update now\" button via the public manifest (no wp-config token).</li></ul>"
+    }
+  },
+  "vgc-order-withdrawal": {
+    "name": "VGC Order Withdrawal",
+    "version": "1.6.1",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-order-withdrawal-1.6.1/vgc-order-withdrawal-1.6.1.zip",
+    "requires": "6.0",
+    "requires_php": "7.4",
+    "tested": "6.8",
+    "last_updated": "2026-06-30",
+    "homepage": "https://tools.vgc-ltd.com",
+    "author": "VGC",
+    "sections": {
+      "description": "EU 14-day right-of-withdrawal returns for WooCommerce.",
+      "changelog": "<h4>1.6.1</h4><ul><li>Self-hosted updater: native WordPress \"Update now\" button via the public manifest (no wp-config token).</li></ul>"
+    }
+  },
+  "vgc-email-templates": {
+    "name": "VGC Email Templates",
+    "version": "1.3.1",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-email-templates-1.3.1/vgc-email-templates-1.3.1.zip",
+    "requires": "6.0",
+    "requires_php": "7.4",
+    "tested": "6.8",
+    "last_updated": "2026-06-30",
+    "homepage": "https://tools.vgc-ltd.com",
+    "author": "VGC",
+    "sections": {
+      "description": "Branded WooCommerce + WordPress email templates.",
+      "changelog": "<h4>1.3.1</h4><ul><li>Self-hosted updater: native WordPress \"Update now\" button via the public manifest (no wp-config token).</li></ul>"
+    }
+  },
+  "vgc-events-for-woocommerce": {
+    "name": "VGC Events for WooCommerce",
+    "version": "1.1.1",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-events-for-woocommerce-1.1.1/vgc-events-for-woocommerce-1.1.1.zip",
+    "requires": "6.0",
+    "requires_php": "7.4",
+    "tested": "6.8",
+    "last_updated": "2026-06-30",
+    "homepage": "https://tools.vgc-ltd.com",
+    "author": "VGC",
+    "sections": {
+      "description": "Course/event ticketing for WooCommerce.",
+      "changelog": "<h4>1.1.1</h4><ul><li>Self-hosted updater: native WordPress \"Update now\" button via the public manifest (no wp-config token).</li></ul>"
     }
   }
 }
