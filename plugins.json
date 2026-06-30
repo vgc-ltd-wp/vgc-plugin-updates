@@ -166,8 +166,8 @@
   },
   "vgc-ai-nexus-avada": {
     "name": "VGC AI Nexus for Avada",
-    "version": "1.5.0",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-avada-1.5.0/vgc-ai-nexus-avada-1.5.0.zip",
+    "version": "1.5.1",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-avada-1.5.1/vgc-ai-nexus-avada-1.5.1.zip",
     "requires": "6.0",
     "requires_php": "8.0",
     "tested": "6.8",
@@ -176,7 +176,7 @@
     "author": "VGC",
     "sections": {
       "description": "Manage the Avada theme from AI Nexus (read-only Global Options to start).",
-      "changelog": "<h4>1.5.0</h4><ul><li>Avada Builder (read): get_builder_status, get_builder_content, list_elements.</li></ul><h4>1.4.1</h4><ul><li>Paginate export.</li></ul><h4>1.4.0</h4><ul><li>Backup &amp; Diff.</li></ul><h4>1.3.0</h4><ul><li>Page Options.</li></ul>"
+      "changelog": "<h4>1.5.1</h4><ul><li>Builder read hardening: force element registration; chunk get_builder_content.</li></ul><h4>1.5.0</h4><ul><li>Avada Builder (read).</li></ul><h4>1.4.1</h4><ul><li>Paginate export.</li></ul>"
     }
   }
 }
