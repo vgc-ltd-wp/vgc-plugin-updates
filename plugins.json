@@ -163,5 +163,20 @@
       "description": "Course/event ticketing for WooCommerce.",
       "changelog": "<h4>1.1.1</h4><ul><li>Self-hosted updater: native WordPress \"Update now\" button via the public manifest (no wp-config token).</li></ul>"
     }
+  },
+  "vgc-ai-nexus-avada": {
+    "name": "VGC AI Nexus for Avada",
+    "version": "1.0.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-avada-1.0.0/vgc-ai-nexus-avada-1.0.0.zip",
+    "requires": "6.0",
+    "requires_php": "8.0",
+    "tested": "6.8",
+    "last_updated": "2026-06-30",
+    "homepage": "https://tools.vgc-ltd.com",
+    "author": "VGC",
+    "sections": {
+      "description": "Manage the Avada theme from AI Nexus (read-only Global Options to start).",
+      "changelog": "<h4>1.0.0</h4><ul><li>Read-only Avada Global Options: status, list_options, get_option.</li></ul>"
+    }
   }
 }
