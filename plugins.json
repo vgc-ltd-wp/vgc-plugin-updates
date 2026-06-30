@@ -1,8 +1,8 @@
 {
   "vgc-ai-nexus": {
     "name": "VGC AI Nexus",
-    "version": "2.13.2",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-2.13.2/vgc-ai-nexus-2.13.2.zip",
+    "version": "2.13.3",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-2.13.3/vgc-ai-nexus-2.13.3.zip",
     "requires": "6.0",
     "requires_php": "8.0",
     "tested": "6.8",
@@ -11,13 +11,13 @@
     "author": "VGC",
     "sections": {
       "description": "The AI management layer for WordPress (MCP tools for AI agents).",
-      "changelog": "<h4>2.13.2</h4><ul><li>Extension settings render on the AI Nexus subpage.</li></ul><h4>2.13.1</h4><ul><li>Connect: choose user.</li></ul><h4>2.13.0</h4><ul><li>Single plugin: bundled MCP server + Connect.</li></ul>"
+      "changelog": "<h4>2.13.3</h4><ul><li>Fix Extensions overview card layout (installed cards).</li></ul><h4>2.13.2</h4><ul><li>Extension settings on the AI Nexus subpage.</li></ul>"
     }
   },
   "vgc-ai-nexus-analytics": {
     "name": "VGC AI Nexus for Analytics",
-    "version": "1.6.3",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-analytics-1.6.3/vgc-ai-nexus-analytics-1.6.3.zip",
+    "version": "1.6.4",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-analytics-1.6.4/vgc-ai-nexus-analytics-1.6.4.zip",
     "requires": "6.0",
     "requires_php": "8.0",
     "tested": "6.8",
@@ -26,7 +26,7 @@
     "author": "VGC",
     "sections": {
       "description": "GA4, Search Console and PageSpeed reporting via Site Kit.",
-      "changelog": "<h4>1.6.3</h4><ul><li>Connection settings moved to AI Nexus -> Extensions -> Analytics.</li></ul>"
+      "changelog": "<h4>1.6.4</h4><ul><li>Description update; updater version fix.</li></ul><h4>1.6.3</h4><ul><li>Settings moved to AI Nexus subpage.</li></ul>"
     }
   },
   "vgc-ai-nexus-wpml": {
