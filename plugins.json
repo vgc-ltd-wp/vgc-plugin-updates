@@ -166,8 +166,8 @@
   },
   "vgc-ai-nexus-avada": {
     "name": "VGC AI Nexus for Avada",
-    "version": "1.0.0",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-avada-1.0.0/vgc-ai-nexus-avada-1.0.0.zip",
+    "version": "1.1.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-avada-1.1.0/vgc-ai-nexus-avada-1.1.0.zip",
     "requires": "6.0",
     "requires_php": "8.0",
     "tested": "6.8",
@@ -176,7 +176,7 @@
     "author": "VGC",
     "sections": {
       "description": "Manage the Avada theme from AI Nexus (read-only Global Options to start).",
-      "changelog": "<h4>1.0.0</h4><ul><li>Read-only Avada Global Options: status, list_options, get_option.</li></ul>"
+      "changelog": "<h4>1.1.0</h4><ul><li>Write + reset Global Options (validated, cache-flushed, VGC_AVADA_READONLY lockdown).</li></ul><h4>1.0.0</h4><ul><li>Read-only Global Options.</li></ul>"
     }
   }
 }
