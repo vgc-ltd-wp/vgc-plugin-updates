@@ -166,8 +166,8 @@
   },
   "vgc-ai-nexus-avada": {
     "name": "VGC AI Nexus for Avada",
-    "version": "1.3.0",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-avada-1.3.0/vgc-ai-nexus-avada-1.3.0.zip",
+    "version": "1.4.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-avada-1.4.0/vgc-ai-nexus-avada-1.4.0.zip",
     "requires": "6.0",
     "requires_php": "8.0",
     "tested": "6.8",
@@ -176,7 +176,7 @@
     "author": "VGC",
     "sections": {
       "description": "Manage the Avada theme from AI Nexus (read-only Global Options to start).",
-      "changelog": "<h4>1.3.0</h4><ul><li>Page Options: list/get/set/reset per-post Avada overrides.</li></ul><h4>1.2.1</h4><ul><li>Fix Custom CSS find_replace delete.</li></ul><h4>1.2.0</h4><ul><li>Custom CSS + batch set_options.</li></ul><h4>1.1.0</h4><ul><li>Write + reset Global Options.</li></ul>"
+      "changelog": "<h4>1.4.0</h4><ul><li>Backup &amp; Diff: export_options, diff_from_defaults, import_options (dry_run).</li></ul><h4>1.3.0</h4><ul><li>Page Options (per-post).</li></ul><h4>1.2.1</h4><ul><li>Fix Custom CSS find_replace delete.</li></ul><h4>1.2.0</h4><ul><li>Custom CSS + batch set_options.</li></ul>"
     }
   }
 }
