@@ -166,8 +166,8 @@
   },
   "vgc-ai-nexus-avada": {
     "name": "VGC AI Nexus for Avada",
-    "version": "1.2.0",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-avada-1.2.0/vgc-ai-nexus-avada-1.2.0.zip",
+    "version": "1.2.1",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-avada-1.2.1/vgc-ai-nexus-avada-1.2.1.zip",
     "requires": "6.0",
     "requires_php": "8.0",
     "tested": "6.8",
@@ -176,7 +176,7 @@
     "author": "VGC",
     "sections": {
       "description": "Manage the Avada theme from AI Nexus (read-only Global Options to start).",
-      "changelog": "<h4>1.2.0</h4><ul><li>Custom CSS (get/set) + batch set_options.</li></ul><h4>1.1.0</h4><ul><li>Write + reset Global Options.</li></ul><h4>1.0.0</h4><ul><li>Read-only Global Options.</li></ul>"
+      "changelog": "<h4>1.2.1</h4><ul><li>Fix: Custom CSS find_replace can delete matched text (css optional).</li></ul><h4>1.2.0</h4><ul><li>Custom CSS (get/set) + batch set_options.</li></ul><h4>1.1.0</h4><ul><li>Write + reset Global Options.</li></ul>"
     }
   }
 }
