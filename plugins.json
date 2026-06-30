@@ -1,8 +1,8 @@
 {
   "vgc-ai-nexus": {
     "name": "VGC AI Nexus",
-    "version": "2.13.3",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-2.13.3/vgc-ai-nexus-2.13.3.zip",
+    "version": "2.13.4",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-2.13.4/vgc-ai-nexus-2.13.4.zip",
     "requires": "6.0",
     "requires_php": "8.0",
     "tested": "6.8",
@@ -11,7 +11,7 @@
     "author": "VGC",
     "sections": {
       "description": "The AI management layer for WordPress (MCP tools for AI agents).",
-      "changelog": "<h4>2.13.3</h4><ul><li>Fix Extensions overview card layout (installed cards).</li></ul><h4>2.13.2</h4><ul><li>Extension settings on the AI Nexus subpage.</li></ul>"
+      "changelog": "<h4>2.13.4</h4><ul><li>Fix extension subpage toolbar spacing (no longer flush to card edges).</li></ul><h4>2.13.3</h4><ul><li>Fix Extensions card layout.</li></ul>"
     }
   },
   "vgc-ai-nexus-analytics": {
