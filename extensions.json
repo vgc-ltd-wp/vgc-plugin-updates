@@ -1,0 +1,32 @@
+{
+  "vgc-ai-nexus-cpt": {
+    "name": "Custom Post Types",
+    "description": "Create custom post types and taxonomies, and assign terms to content.",
+    "icon": "dashicons-screenoptions",
+    "requires": ""
+  },
+  "vgc-ai-nexus-woocommerce": {
+    "name": "WooCommerce",
+    "description": "Manage WooCommerce orders, products, customers and coupons.",
+    "icon": "dashicons-cart",
+    "requires": "WooCommerce"
+  },
+  "vgc-ai-nexus-wpml": {
+    "name": "WPML Translations",
+    "description": "Manage WPML languages and translate posts, terms and interface strings.",
+    "icon": "dashicons-translation",
+    "requires": "WPML"
+  },
+  "vgc-ai-nexus-analytics": {
+    "name": "Analytics & Search Console",
+    "description": "Read GA4, Search Console and PageSpeed data via Google Site Kit.",
+    "icon": "dashicons-chart-bar",
+    "requires": "Google Site Kit"
+  },
+  "vgc-ai-nexus-avada": {
+    "name": "Avada Theme",
+    "description": "Manage the Avada theme: options, custom CSS, page options, builder content, library and layouts.",
+    "icon": "dashicons-admin-customizer",
+    "requires": "Avada theme"
+  }
+}
