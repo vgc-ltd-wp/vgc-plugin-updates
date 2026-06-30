@@ -1,0 +1,17 @@
+{
+  "vgc-ai-nexus": {
+    "name": "VGC AI Nexus",
+    "version": "2.11.1",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-2.11.1/vgc-ai-nexus-2.11.1.zip",
+    "requires": "6.0",
+    "requires_php": "8.0",
+    "tested": "6.8",
+    "last_updated": "2026-06-30",
+    "homepage": "https://tools.vgc-ltd.com",
+    "author": "VGC",
+    "sections": {
+      "description": "The AI management layer for WordPress (MCP tools for AI agents).",
+      "changelog": "<h4>2.11.1</h4><ul><li>Self-hosted updater: VGC plugins now show the normal WordPress Update button.</li></ul><h4>2.11.0</h4><ul><li>Per-extension admin subpages with usage guides and example prompts.</li></ul>"
+    }
+  }
+}
