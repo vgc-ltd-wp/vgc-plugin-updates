@@ -1,8 +1,8 @@
 {
   "vgc-ai-nexus": {
     "name": "VGC AI Nexus",
-    "version": "2.12.0",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-2.12.0/vgc-ai-nexus-2.12.0.zip",
+    "version": "2.13.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-2.13.0/vgc-ai-nexus-2.13.0.zip",
     "requires": "6.0",
     "requires_php": "8.0",
     "tested": "6.8",
@@ -11,7 +11,7 @@
     "author": "VGC",
     "sections": {
       "description": "The AI management layer for WordPress (MCP tools for AI agents).",
-      "changelog": "<h4>2.12.0</h4><ul><li>One-click install of curated extensions on the Extensions tab.</li></ul><h4>2.11.3</h4><ul><li>Updater detection hardening.</li></ul><h4>2.11.0</h4><ul><li>Per-extension subpages with usage guides.</li></ul>"
+      "changelog": "<h4>2.13.0</h4><ul><li>Single plugin: bundles the MCP server + adds a Connect page (no separate connector needed).</li></ul><h4>2.12.0</h4><ul><li>One-click extension installs.</li></ul>"
     }
   },
   "vgc-ai-nexus-analytics": {
