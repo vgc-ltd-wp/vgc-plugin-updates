@@ -166,8 +166,8 @@
   },
   "vgc-ai-nexus-avada": {
     "name": "VGC AI Nexus for Avada",
-    "version": "1.9.0",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-avada-1.9.0/vgc-ai-nexus-avada-1.9.0.zip",
+    "version": "1.9.1",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-avada-1.9.1/vgc-ai-nexus-avada-1.9.1.zip",
     "requires": "6.0",
     "requires_php": "8.0",
     "tested": "6.8",
@@ -176,7 +176,7 @@
     "author": "VGC",
     "sections": {
       "description": "Manage the Avada theme from AI Nexus (read-only Global Options to start).",
-      "changelog": "<h4>1.9.0</h4><ul><li>Avada Layouts: Layout Sections CRUD + Layouts read.</li></ul><h4>1.8.0</h4><ul><li>Avada Library CRUD.</li></ul><h4>1.7.0</h4><ul><li>set_builder_content.</li></ul>"
+      "changelog": "<h4>1.9.1</h4><ul><li>Fix layout conditions read (wp_unslash + template_terms).</li></ul><h4>1.9.0</h4><ul><li>Avada Layouts &amp; Sections.</li></ul>"
     }
   }
 }
