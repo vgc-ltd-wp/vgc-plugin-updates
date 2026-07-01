@@ -181,17 +181,17 @@
   },
   "vgc-ai-nexus-elementor": {
     "name": "VGC AI Nexus for Elementor",
-    "version": "1.0.0",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-elementor-1.0.0/vgc-ai-nexus-elementor-1.0.0.zip",
+    "version": "1.1.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-elementor-1.1.0/vgc-ai-nexus-elementor-1.1.0.zip",
     "requires": "6.0",
     "requires_php": "8.0",
     "tested": "6.8",
-    "last_updated": "2026-06-30",
+    "last_updated": "2026-07-01",
     "homepage": "https://tools.vgc-ltd.com",
     "author": "VGC",
     "sections": {
       "description": "Manage Elementor from AI Nexus (status to start).",
-      "changelog": "<h4>1.0.0</h4><ul><li>Scaffold + status.</li></ul>"
+      "changelog": "<h4>1.1.0</h4><ul><li>Step 1: read the active Kit — global colors, global fonts, and all Kit settings (list_kit_settings, get_kit_setting, list_global_colors, list_global_fonts).</li></ul><h4>1.0.0</h4><ul><li>Scaffold + status.</li></ul>"
     }
   }
 }
