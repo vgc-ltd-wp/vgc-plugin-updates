@@ -1,17 +1,17 @@
 {
   "vgc-ai-nexus": {
     "name": "VGC AI Nexus",
-    "version": "2.13.5",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-2.13.5/vgc-ai-nexus-2.13.5.zip",
+    "version": "2.13.6",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-2.13.6/vgc-ai-nexus-2.13.6.zip",
     "requires": "6.0",
     "requires_php": "8.0",
     "tested": "6.8",
-    "last_updated": "2026-06-30",
+    "last_updated": "2026-07-01",
     "homepage": "https://tools.vgc-ltd.com",
     "author": "VGC",
     "sections": {
       "description": "The AI management layer for WordPress (MCP tools for AI agents).",
-      "changelog": "<h4>2.13.5</h4><ul><li>Fix Claude Desktop 1.17377+ tools/list rejection (properties emitted as {} not []).</li></ul><h4>2.13.4</h4><ul><li>Fix extension subpage toolbar spacing (no longer flush to card edges).</li></ul><h4>2.13.3</h4><ul><li>Fix Extensions card layout.</li></ul>"
+      "changelog": "<h4>2.13.6</h4><ul><li>Connect page now stores, lists and revokes connections (previously created credentials were saved but never shown).</li></ul><h4>2.13.5</h4><ul><li>Fix Claude Desktop 1.17377+ tools/list rejection (properties emitted as {} not []).</li></ul><h4>2.13.4</h4><ul><li>Fix extension subpage toolbar spacing (no longer flush to card edges).</li></ul><h4>2.13.3</h4><ul><li>Fix Extensions card layout.</li></ul>"
     }
   },
   "vgc-ai-nexus-analytics": {
