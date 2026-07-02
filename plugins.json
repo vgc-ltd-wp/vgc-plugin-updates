@@ -1,17 +1,17 @@
 {
   "vgc-ai-nexus": {
     "name": "VGC AI Nexus",
-    "version": "2.13.6",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-2.13.6/vgc-ai-nexus-2.13.6.zip",
+    "version": "2.13.7",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-2.13.7/vgc-ai-nexus-2.13.7.zip",
     "requires": "6.0",
     "requires_php": "8.0",
     "tested": "6.8",
-    "last_updated": "2026-07-01",
+    "last_updated": "2026-07-02",
     "homepage": "https://tools.vgc-ltd.com",
     "author": "VGC",
     "sections": {
       "description": "The AI management layer for WordPress (MCP tools for AI agents).",
-      "changelog": "<h4>2.13.6</h4><ul><li>Connect page now stores, lists and revokes connections (previously created credentials were saved but never shown).</li></ul><h4>2.13.5</h4><ul><li>Fix Claude Desktop 1.17377+ tools/list rejection (properties emitted as {} not []).</li></ul><h4>2.13.4</h4><ul><li>Fix extension subpage toolbar spacing (no longer flush to card edges).</li></ul><h4>2.13.3</h4><ul><li>Fix Extensions card layout.</li></ul>"
+      "changelog": "<h4>2.13.7</h4><ul><li>OPcache self-heal: automatically reset OPcache after plugin installs/updates so the MCP connector never regresses to stale code.</li></ul><h4>2.13.6</h4><ul><li>Connect page now stores, lists and revokes connections (previously created credentials were saved but never shown).</li></ul><h4>2.13.5</h4><ul><li>Fix Claude Desktop 1.17377+ tools/list rejection (properties emitted as {} not []).</li></ul><h4>2.13.4</h4><ul><li>Fix extension subpage toolbar spacing (no longer flush to card edges).</li></ul><h4>2.13.3</h4><ul><li>Fix Extensions card layout.</li></ul>"
     }
   },
   "vgc-ai-nexus-analytics": {
@@ -191,7 +191,7 @@
     "author": "VGC",
     "sections": {
       "description": "Manage Elementor from AI Nexus (status to start).",
-      "changelog": "<h4>1.6.0</h4><ul><li>Step 6: Pro Theme Builder � list theme parts, read and set display conditions.</li></ul><h4>1.5.0</h4><ul><li>Step 5: templates CRUD  list, read, create and delete Elementor library templates.</li></ul><h4>1.4.1</h4><ul><li>Fix: page edits are now lossless Â no longer strip third-party/add-on element settings on save.</li></ul><h4>1.4.0</h4><ul><li>Step 4: edit page content ÃÂ update_element_settings (merge/replace an element by id).</li></ul><h4>1.3.0</h4><ul><li>Step 3: read page content (list_elementor_pages, get_builder_status, get_page_data) and the widget registry (list_widgets, get_widget_schema).</li></ul><h4>1.2.0</h4><ul><li>Step 2: edit the active Kit ÃÂÃÂ set_global_color, set_global_font, update_kit_setting (with VGC_ELEMENTOR_READONLY lockdown).</li></ul><h4>1.1.0</h4><ul><li>Step 1: read the active Kit ÃÂÃÂÃÂÃÂ global colors, global fonts, and all Kit settings (list_kit_settings, get_kit_setting, list_global_colors, list_global_fonts).</li></ul><h4>1.0.0</h4><ul><li>Scaffold + status.</li></ul>"
+      "changelog": "<h4>1.6.0</h4><ul><li>Step 6: Pro Theme Builder  list theme parts, read and set display conditions.</li></ul><h4>1.5.0</h4><ul><li>Step 5: templates CRUD Â list, read, create and delete Elementor library templates.</li></ul><h4>1.4.1</h4><ul><li>Fix: page edits are now lossless ÃÂ no longer strip third-party/add-on element settings on save.</li></ul><h4>1.4.0</h4><ul><li>Step 4: edit page content ÃÂÃÂ update_element_settings (merge/replace an element by id).</li></ul><h4>1.3.0</h4><ul><li>Step 3: read page content (list_elementor_pages, get_builder_status, get_page_data) and the widget registry (list_widgets, get_widget_schema).</li></ul><h4>1.2.0</h4><ul><li>Step 2: edit the active Kit ÃÂÃÂÃÂÃÂ set_global_color, set_global_font, update_kit_setting (with VGC_ELEMENTOR_READONLY lockdown).</li></ul><h4>1.1.0</h4><ul><li>Step 1: read the active Kit ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ global colors, global fonts, and all Kit settings (list_kit_settings, get_kit_setting, list_global_colors, list_global_fonts).</li></ul><h4>1.0.0</h4><ul><li>Scaffold + status.</li></ul>"
     }
   }
 }
