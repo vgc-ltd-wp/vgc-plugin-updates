@@ -181,8 +181,8 @@
   },
   "vgc-ai-nexus-elementor": {
     "name": "VGC AI Nexus for Elementor",
-    "version": "1.4.1",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-elementor-1.4.1/vgc-ai-nexus-elementor-1.4.1.zip",
+    "version": "1.5.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-elementor-1.5.0/vgc-ai-nexus-elementor-1.5.0.zip",
     "requires": "6.0",
     "requires_php": "8.0",
     "tested": "6.8",
@@ -191,7 +191,7 @@
     "author": "VGC",
     "sections": {
       "description": "Manage Elementor from AI Nexus (status to start).",
-      "changelog": "<h4>1.4.1</h4><ul><li>Fix: page edits are now lossless � no longer strip third-party/add-on element settings on save.</li></ul><h4>1.4.0</h4><ul><li>Step 4: edit page content  update_element_settings (merge/replace an element by id).</li></ul><h4>1.3.0</h4><ul><li>Step 3: read page content (list_elementor_pages, get_builder_status, get_page_data) and the widget registry (list_widgets, get_widget_schema).</li></ul><h4>1.2.0</h4><ul><li>Step 2: edit the active Kit Â set_global_color, set_global_font, update_kit_setting (with VGC_ELEMENTOR_READONLY lockdown).</li></ul><h4>1.1.0</h4><ul><li>Step 1: read the active Kit ÃÂ global colors, global fonts, and all Kit settings (list_kit_settings, get_kit_setting, list_global_colors, list_global_fonts).</li></ul><h4>1.0.0</h4><ul><li>Scaffold + status.</li></ul>"
+      "changelog": "<h4>1.5.0</h4><ul><li>Step 5: templates CRUD � list, read, create and delete Elementor library templates.</li></ul><h4>1.4.1</h4><ul><li>Fix: page edits are now lossless  no longer strip third-party/add-on element settings on save.</li></ul><h4>1.4.0</h4><ul><li>Step 4: edit page content Â update_element_settings (merge/replace an element by id).</li></ul><h4>1.3.0</h4><ul><li>Step 3: read page content (list_elementor_pages, get_builder_status, get_page_data) and the widget registry (list_widgets, get_widget_schema).</li></ul><h4>1.2.0</h4><ul><li>Step 2: edit the active Kit ÃÂ set_global_color, set_global_font, update_kit_setting (with VGC_ELEMENTOR_READONLY lockdown).</li></ul><h4>1.1.0</h4><ul><li>Step 1: read the active Kit ÃÂÃÂ global colors, global fonts, and all Kit settings (list_kit_settings, get_kit_setting, list_global_colors, list_global_fonts).</li></ul><h4>1.0.0</h4><ul><li>Scaffold + status.</li></ul>"
     }
   }
 }
