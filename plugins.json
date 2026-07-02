@@ -16,62 +16,62 @@
   },
   "vgc-ai-nexus-analytics": {
     "name": "VGC AI Nexus for Analytics",
-    "version": "1.6.4",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-analytics-1.6.4/vgc-ai-nexus-analytics-1.6.4.zip",
+    "version": "1.6.5",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-analytics-1.6.5/vgc-ai-nexus-analytics-1.6.5.zip",
     "requires": "6.0",
     "requires_php": "8.0",
     "tested": "6.8",
-    "last_updated": "2026-06-30",
+    "last_updated": "2026-07-02",
     "homepage": "https://tools.vgc-ltd.com",
     "author": "VGC",
     "sections": {
       "description": "GA4, Search Console and PageSpeed reporting via Site Kit.",
-      "changelog": "<h4>1.6.4</h4><ul><li>Description update; updater version fix.</li></ul><h4>1.6.3</h4><ul><li>Settings moved to AI Nexus subpage.</li></ul>"
+      "changelog": "<h4>1.6.5</h4><ul><li>Safety: group-class collision guard - a name clash with core or another extension no longer crashes the site. Updater version handling hardened.</li></ul><h4>1.6.4</h4><ul><li>Description update; updater version fix.</li></ul><h4>1.6.3</h4><ul><li>Settings moved to AI Nexus subpage.</li></ul>"
     }
   },
   "vgc-ai-nexus-wpml": {
     "name": "VGC AI Nexus for WPML",
-    "version": "1.4.1",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-wpml-1.4.1/vgc-ai-nexus-wpml-1.4.1.zip",
+    "version": "1.4.2",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-wpml-1.4.2/vgc-ai-nexus-wpml-1.4.2.zip",
     "requires": "6.0",
     "requires_php": "8.0",
     "tested": "6.8",
-    "last_updated": "2026-06-30",
+    "last_updated": "2026-07-02",
     "homepage": "https://tools.vgc-ltd.com",
     "author": "VGC",
     "sections": {
       "description": "WPML translation management abilities.",
-      "changelog": "<h4>1.4.1</h4><ul><li>Self-hosted updater: native WordPress \"Update now\" button via the public manifest (no wp-config token).</li></ul>"
+      "changelog": "<h4>1.4.2</h4><ul><li>Safety: group-class collision guard - a name clash with core or another extension no longer crashes the site. Updater version handling hardened.</li></ul><h4>1.4.1</h4><ul><li>Self-hosted updater: native WordPress \"Update now\" button via the public manifest (no wp-config token).</li></ul>"
     }
   },
   "vgc-ai-nexus-cpt": {
     "name": "VGC AI Nexus for Custom Post Types",
-    "version": "1.3.1",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-cpt-1.3.1/vgc-ai-nexus-cpt-1.3.1.zip",
+    "version": "1.3.2",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-cpt-1.3.2/vgc-ai-nexus-cpt-1.3.2.zip",
     "requires": "6.0",
     "requires_php": "8.0",
     "tested": "6.8",
-    "last_updated": "2026-06-30",
+    "last_updated": "2026-07-02",
     "homepage": "https://tools.vgc-ltd.com",
     "author": "VGC",
     "sections": {
       "description": "Create custom post types, taxonomies and assign terms.",
-      "changelog": "<h4>1.3.1</h4><ul><li>Self-hosted updater: native WordPress \"Update now\" button via the public manifest (no wp-config token).</li></ul>"
+      "changelog": "<h4>1.3.2</h4><ul><li>Safety: group-class collision guard - a name clash with core or another extension no longer crashes the site. Updater version handling hardened.</li></ul><h4>1.3.1</h4><ul><li>Self-hosted updater: native WordPress \"Update now\" button via the public manifest (no wp-config token).</li></ul>"
     }
   },
   "vgc-ai-nexus-woocommerce": {
     "name": "VGC AI Nexus for WooCommerce",
-    "version": "1.7.1",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-woocommerce-1.7.1/vgc-ai-nexus-woocommerce-1.7.1.zip",
+    "version": "1.7.2",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-woocommerce-1.7.2/vgc-ai-nexus-woocommerce-1.7.2.zip",
     "requires": "6.0",
     "requires_php": "8.0",
     "tested": "6.8",
-    "last_updated": "2026-06-30",
+    "last_updated": "2026-07-02",
     "homepage": "https://tools.vgc-ltd.com",
     "author": "VGC",
     "sections": {
       "description": "WooCommerce orders, products, customers, coupons abilities.",
-      "changelog": "<h4>1.7.1</h4><ul><li>Self-hosted updater: native WordPress \"Update now\" button via the public manifest (no wp-config token).</li></ul>"
+      "changelog": "<h4>1.7.2</h4><ul><li>Safety: group-class collision guard - a name clash with core or another extension no longer crashes the site. Updater version handling hardened.</li></ul><h4>1.7.1</h4><ul><li>Self-hosted updater: native WordPress \"Update now\" button via the public manifest (no wp-config token).</li></ul>"
     }
   },
   "vgc-mcp-claude-connector-oauth": {
