@@ -196,8 +196,8 @@
   },
   "vgc-newsletter": {
     "name": "VGC - Newsletter",
-    "version": "0.2.6",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-newsletter-0.2.6/vgc-newsletter-0.2.6.zip",
+    "version": "0.2.7",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-newsletter-0.2.7/vgc-newsletter-0.2.7.zip",
     "requires": "5.8",
     "requires_php": "7.4",
     "tested": "6.8",
@@ -206,7 +206,7 @@
     "author": "VGC",
     "sections": {
       "description": "Self-hosted WooCommerce newsletter - wp_mail sending, open/click tracking, subscribe form and checkout opt-in. No third-party services.",
-      "changelog": "<h4>0.2.6</h4><ul><li>Delete reports: bulk delete on the Reports list and a Delete report button per campaign. Removes the campaign and all its opens, clicks and purchase records; already-sent emails and WooCommerce orders are untouched.</li></ul><h4>0.2.5</h4><ul><li>Campaign report now lists every recipient with their delivery status and per-newsletter actions (opens, clicks, purchases + revenue).</li><li>Filter tabs: All / Opened / Clicked / Purchased / Not opened; unsubscribed recipients flagged.</li></ul><h4>0.2.4</h4><ul><li>WooCommerce purchase attribution: a tracked-link click credits any resulting paid order (and its value) to the campaign, last-click within a configurable window.</li><li>Reports: new Orders and Revenue columns, tiles, and an attributed-orders list per campaign.</li><li>Settings: purchase-tracking toggle and attribution window (days).</li></ul><h4>0.2.3</h4><ul><li>Rebranded as VGC - Newsletter with the self-hosted updater (native WordPress \"Update now\").</li><li>WooCommerce checkout opt-in: selectable location via standard checkout hooks, plus a custom CSS class.</li><li>Per-campaign reports: opens, clicks, unsubscribes, clicked-link breakdown, send-time failures.</li><li>Public [vgc_newsletter_form] subscribe form; unique per-subscriber unsubscribe links and tokens.</li></ul>"
+      "changelog": "<h4>0.2.7</h4><ul><li>Live email preview on the Send screen: see the newsletter exactly as recipients will (tokens filled in, unsubscribe footer added) before sending, in a sandboxed iframe with desktop/mobile width toggle.</li></ul><h4>0.2.6</h4><ul><li>Delete reports: bulk delete on the Reports list and a Delete report button per campaign. Removes the campaign and all its opens, clicks and purchase records; already-sent emails and WooCommerce orders are untouched.</li></ul><h4>0.2.5</h4><ul><li>Campaign report now lists every recipient with their delivery status and per-newsletter actions (opens, clicks, purchases + revenue).</li><li>Filter tabs: All / Opened / Clicked / Purchased / Not opened; unsubscribed recipients flagged.</li></ul><h4>0.2.4</h4><ul><li>WooCommerce purchase attribution: a tracked-link click credits any resulting paid order (and its value) to the campaign, last-click within a configurable window.</li><li>Reports: new Orders and Revenue columns, tiles, and an attributed-orders list per campaign.</li><li>Settings: purchase-tracking toggle and attribution window (days).</li></ul><h4>0.2.3</h4><ul><li>Rebranded as VGC - Newsletter with the self-hosted updater (native WordPress \"Update now\").</li><li>WooCommerce checkout opt-in: selectable location via standard checkout hooks, plus a custom CSS class.</li><li>Per-campaign reports: opens, clicks, unsubscribes, clicked-link breakdown, send-time failures.</li><li>Public [vgc_newsletter_form] subscribe form; unique per-subscriber unsubscribe links and tokens.</li></ul>"
     }
   }
 }
