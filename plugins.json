@@ -1,4 +1,34 @@
 {
+  "vgc-stock-manager": {
+    "name": "VGC Stock Manager",
+    "version": "0.4.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-stock-manager-0.4.0/vgc-stock-manager-0.4.0.zip",
+    "requires": "6.0",
+    "requires_php": "7.4",
+    "tested": "6.8",
+    "last_updated": "2026-07-13",
+    "homepage": "https://tools.vgc-ltd.com",
+    "author": "VGC",
+    "sections": {
+      "description": "Standalone workshop inventory and production system: raw materials, multi-level recipes, production runs, an auditable movement ledger, a phone PWA, and one-way stock push to a WooCommerce shop via VGC Stock Bridge.",
+      "changelog": "0.4.0 REST API + front-end SPA (dashboard, items, recipes, production), barcode scanning, installable PWA with offline write queue. 0.3.0 BOM engine + production runs. 0.2.0 front-end shell + login. 0.1.0 foundation."
+    }
+  },
+  "vgc-stock-bridge": {
+    "name": "VGC Stock Bridge",
+    "version": "0.1.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-stock-bridge-0.1.0/vgc-stock-bridge-0.1.0.zip",
+    "requires": "6.0",
+    "requires_php": "7.4",
+    "tested": "6.8",
+    "last_updated": "2026-07-13",
+    "homepage": "https://tools.vgc-ltd.com",
+    "author": "VGC",
+    "sections": {
+      "description": "Companion plugin for VGC Stock Manager. Exposes a tiny, token-authenticated REST surface for reading and adjusting WooCommerce product stock quantities only (never orders or customers).",
+      "changelog": "0.1.0 Initial release: token auth, ping, read stock, adjust (delta), set (absolute)."
+    }
+  },
   "vgc-ai-nexus": {
     "name": "VGC AI Nexus",
     "version": "2.13.8",
