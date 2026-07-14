@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.0.1** · Stock Bridge **0.3.0**
+> **Pinned to:** Stock Manager **1.1.0** · Stock Bridge **0.3.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -83,15 +83,20 @@ vgc-stock-manager-reference.md      ← THIS FILE (not shipped)
 | `boms` | One recipe per manufactured item: `output_item_id`, `yield_qty`. |
 | `bom_items` | Recipe components: `component_item_id`, `quantity`, `unit`, **`basis`** (`item`\|`run`). |
 | `bom_extras` | Non-material costs: `label`, `amount`, `basis`. |
-| `movements` | **Append-only ledger.** `type` (receive/consume/produce/ship/scrap/correct), signed `qty`, `ref_type`/`ref_id`. |
+| `movements` | **Append-only ledger.** `type` (receive/consume/produce/ship/scrap/correct/consign_out/consign_return), signed `qty`, `ref_type`/`ref_id`, `partner_id`. |
 | `production_runs` | One row per run; movements reference it. |
 | `sync_log` | Every Bridge call. |
+| `partners` | Shops we supply / makers we take from. `type` (`customer`\|`supplier`\|`both`), `active` (archived, never deleted). |
+| `partner_prices` | Agreed unit price per (partner, item). Drives note pricing. |
+| `stock_notes` | The documents. `number` (`SN-YYYY-NNNN`, assigned on issue), `partner_id`, `direction`, `type`, `status` (`draft`\|`issued`\|`settled`\|`cancelled`), `total_net`. |
+| `stock_note_lines` | `item_id`, `qty`, `unit`, `unit_price`, `line_net`. |
+| `consignment_ledger` | **Second append-only ledger**: how much of an item is at a partner. Releases add, sale reports and returns subtract; cancels write reversing rows. |
 
 ### `items` columns worth knowing
 
 `sku` (unique) · `name` · `kind` (`raw`\|`manufactured`) · `unit` (base/stock unit) · `stock_qty` (**cache**) · `reorder_level` · `is_sellable` · `woo_sku` · `woo_product_id` · `supplier` · `barcode` · `category_id` · `image_id` · `pack_label` · `pack_size` · `cost_net` · `vat_rate` (default 20) · `active` (0 = **archived**)
 
-**DB_VERSION is currently `0.6.0`.** Bump it in `vgc-stock-manager.php` whenever the schema changes — `create_tables()` runs `dbDelta` on `plugins_loaded` when it differs, which auto-migrates.
+**DB_VERSION is currently `0.7.0`.** Bump it in `vgc-stock-manager.php` whenever the schema changes — `create_tables()` runs `dbDelta` on `plugins_loaded` when it differs, which auto-migrates.
 
 ### Options
 
@@ -136,6 +141,25 @@ do_action( 'vgc_sm_production_completed', $item_id, $net_qty, $run_id );
 ### Sync — `VGC_SM_Sync`
 `request()` → Bridge with `X-VGC-Token`. `push_adjust()` (delta, the normal path), `push_set()` (reconcile only), `read_stock()`, `pull_products()`, `shop_levels()`, `push_item()`. Everything logged to `sync_log`.
 
+### Partners and stock notes — `VGC_SM_Partners`, `VGC_SM_Notes`
+
+`VGC_SM_Notes::types()` is the single table that drives everything. Each type declares its effect:
+
+| type | direction | `stock` | `consignment` | movement | owes us |
+|---|---|---|---|---|---|
+| `release` | out | −1 | +1 | `consign_out` | no |
+| `sale_report` | out | 0 | −1 | — | **yes** |
+| `return_in` | out | +1 | −1 | `consign_return` | no |
+| `direct_sale` | out | −1 | 0 | `ship` | **yes** |
+
+Read it as: *what happens to my stock* and *what happens to the pile at the partner*. A release moves goods out of stock and into the partner's pile without selling them; a sale report never touches stock (it already left) but clears the pile and creates a debt.
+
+- `save_draft()` — drafts only; an issued note is immutable. A line with no price falls back to the partner's price list.
+- `issue()` — **pre-flight first**: never release stock you do not have, never report/return more than the partner is holding. Problems → `WP_REST_Response` 409 with `problems[]` and **nothing is written**. Otherwise one transaction: movements + consignment rows + number + status, then shop pushes.
+- `cancel()` — writes **reversing entries** in both ledgers and pushes the reverse to the shop. Never deletes.
+- `outstanding()` / `outstanding_all()` / `at_partners()` / `balance_owed()` — all derived by SUM over the ledgers, so they cannot drift.
+- `push_to_shop()` — sellable + `auto_push` only, and always a **delta**.
+
 ---
 
 ## 5. REST API (`vgc-stock/v1`)
@@ -165,6 +189,12 @@ Auth: same-origin cookie + `X-WP-Nonce`. Permission: `vgc_sm_access`; `$admin` r
 | GET/POST | `/translations`, POST `/translations/reset` | *(admin)* |
 | GET | `/shop/levels`, POST `/shop/push` | |
 | GET | `/shop/products`, POST `/shop/pull` | *(admin)* pull products, incl. image sideload |
+| GET/POST | `/partners`, GET/PUT/**DELETE** `/partners/{id}` | DELETE archives. GET {id} returns outstanding + notes + price list + `owed`. |
+| POST | `/partners/{id}/prices` | upsert one agreed price (empty `unit_price` clears it) |
+| GET/POST | `/notes`, GET/PUT/DELETE `/notes/{id}` | PUT/DELETE are **drafts only** |
+| POST | `/notes/{id}/issue` | 409 + `problems[]` if it would break stock |
+| POST | `/notes/{id}/cancel`, `/notes/{id}/paid` | cancel = reversing entries; paid = `settled` |
+| GET | `/consignment/outstanding` | the "what have we shipped" report (+ totals at price and at cost) |
 | GET | `/help` | the in-app wiki |
 
 ### Bridge (`vgc-stock-bridge/v1`) — on the shop
@@ -235,10 +265,21 @@ To add a language: add a catalogue method in `class-i18n.php` and list it in `la
 | 0.24 | **Editable translations** (overrides survive updates) |
 | **1.0.0** | **In-app wiki**; first stable release |
 | 1.0.1 | Shop stock: photos fixed (`/shop/levels` now returns `image_thumb` + category), category filter + sortable Category column; sidebar category shortcuts made collapsible (open only in the Items section) |
+| **1.1.0** | **Partners + stock notes (outbound)**: price lists, `SN-YYYY-NNNN` documents (release / sale report / return / direct sale), draft → issue → settle/cancel, pre-flight validation, consignment ledger, **Out on consignment** report, "At partners" on item detail, shop reduced on release |
 
 ---
 
-## 9. Known gaps / candidate next steps
+## 9. Consignment: what is agreed but not yet built
+
+The outbound half shipped in 1.1.0. The rest of the design, as agreed with the user:
+
+- **Phase 3 — inbound notes.** Goods we *take* from other makers go into a separate **held bucket** (not our own stock): take, purchase (converting held → owned), return out, sold-from-held. Two standing defaults the user accepted: **held stock is consumed before own stock** when something sells, and **you can only release what you own** (a partner's goods cannot be released onward).
+- **Phase 4 — shop publishing of held stock**, synced *on demand* (not automatically), plus a "Reconcile from shop" action.
+- **Phase 5 — balances/statements** per partner and printable notes.
+
+---
+
+## 10. Known gaps / candidate next steps
 
 - Historical costs are **not snapshotted** at run time — reports estimate using each item's *current* unit cost.
 - Pulling many products with photos does one download per product; a huge catalogue can hit a PHP timeout (pull in batches, or move image copying to a background job).
