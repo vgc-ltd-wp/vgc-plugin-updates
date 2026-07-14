@@ -2,7 +2,9 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Last updated for:** Stock Manager **1.0.0**, Stock Bridge **0.3.0**
+> **Pinned to:** Stock Manager **1.0.1** · Stock Bridge **0.3.0**
+>
+> ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
 ---
 
@@ -198,10 +200,12 @@ To add a language: add a catalogue method in `class-i18n.php` and list it in `la
 3. **The user tests on staging** — do not run or lint the plugin locally. (`node --check app/app.js` and a CSS brace check are fine and worth doing.)
 4. **TEST MODE: publish every update immediately** (until the user says production mode). Publishing =
    - `gh release create vgc-<slug>-<version> _releases/<zip> --repo vgc-ltd-wp/vgc-plugin-updates`
-   - update `plugins.json` in that repo (`version`, `download_url`, prepend changelog), commit, push
-   - verify with `gh api .../contents/plugins.json` (the raw CDN lags ~5 min).
-5. **Self-update wiring**: instantiate `VGC_Plugin_Updater` **after** the `ABSPATH` guard. (Several older VGC plugins have it *inside* the guard, so it never runs — a real bug worth auditing separately.)
-6. Update the memory files under `.claude/projects/.../memory/` when a durable decision changes.
+   - update `plugins.json` in that repo (`version`, `download_url`, prepend changelog)
+   - **update THIS file** — the "Pinned to" line, the feature-history table, and any section the change touches — and copy it to `docs/vgc-stock-manager-reference.md` in the same commit
+   - commit, push, verify with `gh api .../contents/plugins.json` (the raw CDN lags ~5 min).
+5. **This reference is always pinned to the current version.** It is part of the release, not an afterthought: a release is not finished until the doc matches what shipped. A stale reference is worse than none, because the next session will trust it.
+6. **Self-update wiring**: instantiate `VGC_Plugin_Updater` **after** the `ABSPATH` guard. (Several older VGC plugins have it *inside* the guard, so it never runs — a real bug worth auditing separately.)
+7. Update the memory files under `.claude/projects/.../memory/` when a durable decision changes.
 
 ---
 
@@ -230,6 +234,7 @@ To add a language: add a catalogue method in `class-i18n.php` and list it in `la
 | 0.23 | Sidebar category shortcuts (`#/items?category=…`) |
 | 0.24 | **Editable translations** (overrides survive updates) |
 | **1.0.0** | **In-app wiki**; first stable release |
+| 1.0.1 | Shop stock: photos fixed (`/shop/levels` now returns `image_thumb` + category), category filter + sortable Category column; sidebar category shortcuts made collapsible (open only in the Items section) |
 
 ---
 
