@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.7.4** · Stock Bridge **0.3.0**
+> **Pinned to:** Stock Manager **1.8.0** · Stock Bridge **0.4.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -223,7 +223,7 @@ Auth: same-origin cookie + `X-WP-Nonce`. **Access levels (1.7.0)** — `VGC_SM_A
 ### Bridge (`vgc-stock-bridge/v1`) — on the shop
 Auth: `X-VGC-Token` header (shared secret) over HTTPS.
 
-`GET /ping` · `GET /products?page&per_page&search` (variations expanded; returns `image` + `image_full`) · `GET /stock?skus=` · `POST /stock/adjust` (**signed deltas — the normal path**) · `POST /stock/set` (absolute).
+`GET /ping` · `GET /products?page&per_page&search&category&type` (variations expanded; returns `image`+`image_full`, `virtual`/`downloadable`; `category`=term slug, `type`=simple/variable/grouped/external — 0.4.0) · `GET /product-categories` (0.4.0) · `GET /stock?skus=` · `POST /stock/adjust` (**signed deltas — the normal path**) · `POST /stock/set` (absolute).
 
 ---
 
@@ -296,7 +296,8 @@ To add a language: add a catalogue method in `class-i18n.php` and list it in `la
 | 1.6.0 | **Per-location contacts**: `partner_locations` gains `contact_name/role/email/phone`; the standalone `partner_contacts` list is relabelled "Additional contacts". `sync_primary_fields()` now prefers the primary location's contact (falls back to the first additional contact). Partner editor location rows gain a contact block; directory card shows each location's contact. DB_VERSION 0.10.0 (dbDelta adds the columns; no data migration). |
 | 1.7.2 | Partner name shown in the sticky top bar on the partner page (`setTopTitle()` in `viewPartner`). |
 | 1.7.3 | Pull products fetched all pages at 100/page (superseded by 1.7.4). |
-| **1.7.4** | **Pull products paginated** — `viewPull` now loads one page of `PULL_PER=20` at a time with Previous/Next (big pages could time out on large stores). Selection persists across pages in a `picks` map keyed by `product_id` (auto-tick a product the first time it's seen unless `already`); import posts the whole selection. `shop_products` still passes the Bridge `page`/`pages`/`total` through. |
+| 1.7.4 | **Pull products paginated** — `viewPull` loads one page of `PULL_PER=20` at a time with Previous/Next; selection persists across pages in a `picks` map keyed by `product_id`. |
+| **1.8.0** | **Pull filters + virtual default** (needs Bridge 0.4.0): category (`product_cat` slug) and product-type filters on the pull screen, populated from `/shop/product-categories`. Bridge `shape_product` adds `virtual`/`downloadable`; `list_products` takes `category`/`type`. Auto-tick now skips `virtual` products (shown with a tag) as well as `already`. |
 | 1.7.1 | **Settings hub**: the four admin config screens (Connection=`/settings`, `/translations`, `/team`, `/audit`) are grouped under one **Settings** sidebar entry with a shared tab bar (`settingsTabs()` + `SETTINGS_TABS`); `activeKey()` maps all four to `#/settings`. Help moved to its own bottom navlist (`NAV_HELP`). UI-only, no schema change. |
 | **1.7.0** | **Roles + audit log**: four access levels (viewer/operator/manager/admin) via `VGC_SM_Access::level()`/`at_least()`/`set_level()` (user-meta `vgc_sm_level`); every REST route gated by `$write`/`$mgr`/`$admin`; boot `perms` + level drive UI gating. `class-audit.php` (`VGC_SM_Audit::log/query`) + `audit` table; logged at the mutation handlers and on `wp_login`/`wp_logout`. New admin screens **Team** (`#/team`) and **Activity log** (`#/audit`); DB_VERSION 0.11.0. |
 
