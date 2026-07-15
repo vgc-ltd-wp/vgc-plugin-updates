@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.7.3** · Stock Bridge **0.3.0**
+> **Pinned to:** Stock Manager **1.7.4** · Stock Bridge **0.3.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -295,7 +295,8 @@ To add a language: add a catalogue method in `class-i18n.php` and list it in `la
 | 1.5.0 | **Partner statements + printable documents** (Phase 5): `VGC_SM_Notes::statement()`, `/partners/{id}/statement`; Statement screen (`#/statement/{id}`) with date range, both-way outstanding totals, net position, CSV. `@media print` letterhead (boot `siteName`) prints issued notes and statements as one clean sheet; `.vgc-sm-noprint`/`.vgc-sm-printonly`/`.vgc-sm-printhead` control what shows. **Completes the consignment feature set.** |
 | 1.6.0 | **Per-location contacts**: `partner_locations` gains `contact_name/role/email/phone`; the standalone `partner_contacts` list is relabelled "Additional contacts". `sync_primary_fields()` now prefers the primary location's contact (falls back to the first additional contact). Partner editor location rows gain a contact block; directory card shows each location's contact. DB_VERSION 0.10.0 (dbDelta adds the columns; no data migration). |
 | 1.7.2 | Partner name shown in the sticky top bar on the partner page (`setTopTitle()` in `viewPartner`). |
-| **1.7.3** | Fix: **Pull products fetches the whole catalogue** — `fetchAllShopProducts()` walks every Bridge page (100/page, `pages`/`total` from `wc_get_products` paginate) instead of only page 1, with a live count. (The separate photo-sideload-per-product timeout note still applies to the *import* step.) |
+| 1.7.3 | Pull products fetched all pages at 100/page (superseded by 1.7.4). |
+| **1.7.4** | **Pull products paginated** — `viewPull` now loads one page of `PULL_PER=20` at a time with Previous/Next (big pages could time out on large stores). Selection persists across pages in a `picks` map keyed by `product_id` (auto-tick a product the first time it's seen unless `already`); import posts the whole selection. `shop_products` still passes the Bridge `page`/`pages`/`total` through. |
 | 1.7.1 | **Settings hub**: the four admin config screens (Connection=`/settings`, `/translations`, `/team`, `/audit`) are grouped under one **Settings** sidebar entry with a shared tab bar (`settingsTabs()` + `SETTINGS_TABS`); `activeKey()` maps all four to `#/settings`. Help moved to its own bottom navlist (`NAV_HELP`). UI-only, no schema change. |
 | **1.7.0** | **Roles + audit log**: four access levels (viewer/operator/manager/admin) via `VGC_SM_Access::level()`/`at_least()`/`set_level()` (user-meta `vgc_sm_level`); every REST route gated by `$write`/`$mgr`/`$admin`; boot `perms` + level drive UI gating. `class-audit.php` (`VGC_SM_Audit::log/query`) + `audit` table; logged at the mutation handlers and on `wp_login`/`wp_logout`. New admin screens **Team** (`#/team`) and **Activity log** (`#/audit`); DB_VERSION 0.11.0. |
 
