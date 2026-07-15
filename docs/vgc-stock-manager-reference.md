@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.5.0** · Stock Bridge **0.3.0**
+> **Pinned to:** Stock Manager **1.6.0** · Stock Bridge **0.3.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -87,8 +87,8 @@ vgc-stock-manager-reference.md      ← THIS FILE (not shipped)
 | `production_runs` | One row per run; movements reference it. |
 | `sync_log` | Every Bridge call. |
 | `partners` | Shops we supply / makers we take from. `type` (`customer`\|`supplier`\|`both`), `active` (archived, never deleted). Flat `contact_name`/`email`/`phone`/`address` are a **cached mirror of the primary** child rows (kept in step by `sync_primary_fields()`). |
-| `partner_locations` | Branches/warehouses: `label`, `address`, `is_primary`, `sort_order`. |
-| `partner_contacts` | People: `name`, `role`, `email`, `phone`, `is_primary`, `sort_order`. |
+| `partner_locations` | Branches/warehouses, **each with its own contact**: `label`, `address`, `contact_name`/`contact_role`/`contact_email`/`contact_phone` (1.6.0), `is_primary`, `sort_order`. |
+| `partner_contacts` | **Additional** people not tied to a location: `name`, `role`, `email`, `phone`, `is_primary`, `sort_order`. |
 | `partner_prices` | Agreed unit price per (partner, item). Drives note pricing. |
 | `stock_notes` | The documents. `number` (`SN-YYYY-NNNN`, assigned on issue), `partner_id`, `direction`, `type`, `status` (`draft`\|`issued`\|`settled`\|`cancelled`), `total_net`. |
 | `stock_note_lines` | `item_id`, `qty`, `unit`, `unit_price`, `line_net`. |
@@ -98,7 +98,7 @@ vgc-stock-manager-reference.md      ← THIS FILE (not shipped)
 
 `sku` (unique) · `name` · `kind` (`raw`\|`manufactured`) · `unit` (base/stock unit) · `stock_qty` (**cache**) · `reorder_level` · `is_sellable` · `woo_sku` · `woo_product_id` · `supplier` · `barcode` · `category_id` · `image_id` · `pack_label` · `pack_size` · `cost_net` · `vat_rate` (default 20) · `active` (0 = **archived**) · `shop_held` (held units currently listed on the shop) · `shop_baseline` (shop qty as last accounted for, drives reconcile)
 
-**DB_VERSION is currently `0.9.0`.** Bump it in `vgc-stock-manager.php` whenever the schema changes — `create_tables()` runs `dbDelta` on `plugins_loaded` when it differs, which auto-migrates.
+**DB_VERSION is currently `0.10.0`.** Bump it in `vgc-stock-manager.php` whenever the schema changes — `create_tables()` runs `dbDelta` on `plugins_loaded` when it differs, which auto-migrates.
 
 ### Options
 
@@ -289,7 +289,8 @@ To add a language: add a catalogue method in `class-i18n.php` and list it in `la
 | 1.2.0 | **Inbound notes + held bucket**: take on consignment / purchase / buy-held / return-out / sold-from-held; `held()` + `balance_we_owe()`; partner page shows held goods + "You owe"; **Held stock** report; "Held (from makers)" on item detail; note-type dropdown grouped inbound/outbound. Also wired the `/outstanding` route that 1.1.0 shipped un-routed. |
 | 1.3.0 | **Multi-location / multi-contact partners**: `partner_locations` + `partner_contacts` child tables (one primary each), repeatable rows in the partner editor, directory card on the partner page. Flat partner fields become a cached mirror of the primaries (`sync_primary_fields()`); one-time `migrate_flat_fields()` seeds child rows from the old columns (guarded by `vgc_sm_partners_split`). Partner create/update accept `locations[]`/`contacts[]`. |
 | 1.4.0 | **Shop publishing of held stock** (Phase 4): `items.shop_held` + `shop_baseline`; publish/unpublish held units to the shop; "Reconcile from shop" reads the shop back, FIFO-splits online sales across makers, previews then books `sold_held` notes; `clamp_shop_held()` invariant keeps the shop from ever offering more than we hold. Item detail gains Publish/Unpublish + "On shop from held"; Held stock screen gains Reconcile. |
-| **1.5.0** | **Partner statements + printable documents** (Phase 5): `VGC_SM_Notes::statement()`, `/partners/{id}/statement`; Statement screen (`#/statement/{id}`) with date range, both-way outstanding totals, net position, CSV. `@media print` letterhead (boot `siteName`) prints issued notes and statements as one clean sheet; `.vgc-sm-noprint`/`.vgc-sm-printonly`/`.vgc-sm-printhead` control what shows. **Completes the consignment feature set.** |
+| 1.5.0 | **Partner statements + printable documents** (Phase 5): `VGC_SM_Notes::statement()`, `/partners/{id}/statement`; Statement screen (`#/statement/{id}`) with date range, both-way outstanding totals, net position, CSV. `@media print` letterhead (boot `siteName`) prints issued notes and statements as one clean sheet; `.vgc-sm-noprint`/`.vgc-sm-printonly`/`.vgc-sm-printhead` control what shows. **Completes the consignment feature set.** |
+| **1.6.0** | **Per-location contacts**: `partner_locations` gains `contact_name/role/email/phone`; the standalone `partner_contacts` list is relabelled "Additional contacts". `sync_primary_fields()` now prefers the primary location's contact (falls back to the first additional contact). Partner editor location rows gain a contact block; directory card shows each location's contact. DB_VERSION 0.10.0 (dbDelta adds the columns; no data migration). |
 
 ---
 
