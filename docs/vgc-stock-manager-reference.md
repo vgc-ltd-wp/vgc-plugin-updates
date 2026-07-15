@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.3.0** · Stock Bridge **0.3.0**
+> **Pinned to:** Stock Manager **1.4.0** · Stock Bridge **0.3.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -96,9 +96,9 @@ vgc-stock-manager-reference.md      ← THIS FILE (not shipped)
 
 ### `items` columns worth knowing
 
-`sku` (unique) · `name` · `kind` (`raw`\|`manufactured`) · `unit` (base/stock unit) · `stock_qty` (**cache**) · `reorder_level` · `is_sellable` · `woo_sku` · `woo_product_id` · `supplier` · `barcode` · `category_id` · `image_id` · `pack_label` · `pack_size` · `cost_net` · `vat_rate` (default 20) · `active` (0 = **archived**)
+`sku` (unique) · `name` · `kind` (`raw`\|`manufactured`) · `unit` (base/stock unit) · `stock_qty` (**cache**) · `reorder_level` · `is_sellable` · `woo_sku` · `woo_product_id` · `supplier` · `barcode` · `category_id` · `image_id` · `pack_label` · `pack_size` · `cost_net` · `vat_rate` (default 20) · `active` (0 = **archived**) · `shop_held` (held units currently listed on the shop) · `shop_baseline` (shop qty as last accounted for, drives reconcile)
 
-**DB_VERSION is currently `0.8.0`.** Bump it in `vgc-stock-manager.php` whenever the schema changes — `create_tables()` runs `dbDelta` on `plugins_loaded` when it differs, which auto-migrates.
+**DB_VERSION is currently `0.9.0`.** Bump it in `vgc-stock-manager.php` whenever the schema changes — `create_tables()` runs `dbDelta` on `plugins_loaded` when it differs, which auto-migrates.
 
 ### Options
 
@@ -170,6 +170,12 @@ Read it as: *what happens to my stock* and *what happens to the pile*. For `dire
 - `outstanding()` / `outstanding_all($partner,$direction)` / `at_partners()` / `held()` / `balance_owed()` / `balance_we_owe()` — all derived by SUM over the ledgers, so they cannot drift. `outstanding_all(..,'in')` is the held report; `held($item)` is the per-item held total.
 - `push_to_shop()` — sellable + `auto_push` only, and always a **delta**.
 
+**Shop publishing of held stock (1.4.0).** Held goods stay off the shop until the operator publishes them.
+- `publish_held($item,$qty)` — push `+qty` delta, `shop_held += qty`, set `shop_baseline` to the shop qty just read back. `unpublish_held()` is the reverse.
+- `reconcile_scan()` — for every item with `shop_held > 0`, read the shop; `sold = clamp(baseline − current, 0, shop_held)` (only the held share; own-stock sales are out of scope by the push-only design); split `sold` across makers **FIFO by earliest `created_at`** via `held_by_maker()`.
+- `reconcile_preview()` (advisory) / `reconcile_apply()` (books one issued `sold_held` note per maker with `skip_clamp`, then lowers `shop_held` and re-baselines). Both recompute live.
+- **Invariant:** the shop never lists more of a maker's goods than we still hold. `clamp_shop_held($item)` runs after any held-reducing note (`issue()` for inbound `consignment<0`; `cancel()` of a `take_in`) and pushes the surplus off. Reconcile passes `skip_clamp` because the online sale is what reduced the shop.
+
 ---
 
 ## 5. REST API (`vgc-stock/v1`)
@@ -205,6 +211,8 @@ Auth: same-origin cookie + `X-WP-Nonce`. Permission: `vgc_sm_access`; `$admin` r
 | POST | `/notes/{id}/issue` | 409 + `problems[]` if it would break stock |
 | POST | `/notes/{id}/cancel`, `/notes/{id}/paid` | cancel = reversing entries; paid = `settled` |
 | GET | `/consignment/outstanding` | `direction=out` (default, "what have we shipped") or `direction=in` (held stock); + totals at price and at cost |
+| POST | `/consignment/publish`, `/consignment/unpublish` | list/de-list an item's held units on the shop (`item_id`, `qty`; qty≤0 = all) |
+| GET/POST | `/consignment/reconcile` | GET = preview; POST = book detected shop sales as `sold_held` notes |
 | GET | `/help` | the in-app wiki |
 
 ### Bridge (`vgc-stock-bridge/v1`) — on the shop
@@ -277,18 +285,18 @@ To add a language: add a catalogue method in `class-i18n.php` and list it in `la
 | 1.0.1 | Shop stock: photos fixed (`/shop/levels` now returns `image_thumb` + category), category filter + sortable Category column; sidebar category shortcuts made collapsible (open only in the Items section) |
 | 1.1.0 | **Partners + stock notes (outbound)**: price lists, `SN-YYYY-NNNN` documents (release / sale report / return / direct sale), draft → issue → settle/cancel, pre-flight validation, consignment ledger, **Out on consignment** report, "At partners" on item detail, shop reduced on release |
 | 1.2.0 | **Inbound notes + held bucket**: take on consignment / purchase / buy-held / return-out / sold-from-held; `held()` + `balance_we_owe()`; partner page shows held goods + "You owe"; **Held stock** report; "Held (from makers)" on item detail; note-type dropdown grouped inbound/outbound. Also wired the `/outstanding` route that 1.1.0 shipped un-routed. |
-| **1.3.0** | **Multi-location / multi-contact partners**: `partner_locations` + `partner_contacts` child tables (one primary each), repeatable rows in the partner editor, directory card on the partner page. Flat partner fields become a cached mirror of the primaries (`sync_primary_fields()`); one-time `migrate_flat_fields()` seeds child rows from the old columns (guarded by `vgc_sm_partners_split`). Partner create/update accept `locations[]`/`contacts[]`. |
+| 1.3.0 | **Multi-location / multi-contact partners**: `partner_locations` + `partner_contacts` child tables (one primary each), repeatable rows in the partner editor, directory card on the partner page. Flat partner fields become a cached mirror of the primaries (`sync_primary_fields()`); one-time `migrate_flat_fields()` seeds child rows from the old columns (guarded by `vgc_sm_partners_split`). Partner create/update accept `locations[]`/`contacts[]`. |
+| **1.4.0** | **Shop publishing of held stock** (Phase 4): `items.shop_held` + `shop_baseline`; publish/unpublish held units to the shop; "Reconcile from shop" reads the shop back, FIFO-splits online sales across makers, previews then books `sold_held` notes; `clamp_shop_held()` invariant keeps the shop from ever offering more than we hold. Item detail gains Publish/Unpublish + "On shop from held"; Held stock screen gains Reconcile. |
 
 ---
 
 ## 9. Consignment: what is agreed but not yet built
 
-The outbound half shipped in 1.1.0; the inbound half (held bucket) in 1.2.0. Remaining, as agreed with the user:
+The outbound half shipped in 1.1.0; the inbound half (held bucket) in 1.2.0; shop publishing of held stock (Phase 4) in 1.4.0. Remaining, as agreed with the user:
 
-- **Phase 4 — shop publishing of held stock**, synced *on demand* (not automatically — held stock is deliberately kept out of the shop until then), plus a "Reconcile from shop" action.
 - **Phase 5 — balances/statements** per partner (both directions) and printable notes.
 
-Two standing defaults the user accepted, relevant to Phase 4: **held stock is consumed before own stock** when something sells (operator-driven for now; matters once shop sales auto-decrement), and **you can only release what you own** (a maker's held goods cannot be released onward on an outbound note).
+Standing defaults the user accepted: **held stock is consumed oldest-received-first** across makers when reconcile books shop sales (FIFO); **the shop never offers more held units than we hold** (`clamp_shop_held`); own-stock online sales remain out of scope (push-only design — the shop is authoritative for its own sales, we don't pull orders back). **You can only release what you own** (a maker's held goods cannot be released onward on an outbound note).
 
 ---
 
