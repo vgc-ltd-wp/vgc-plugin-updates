@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.1.0** · Stock Bridge **0.3.0**
+> **Pinned to:** Stock Manager **1.2.0** · Stock Bridge **0.3.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -145,19 +145,26 @@ do_action( 'vgc_sm_production_completed', $item_id, $net_qty, $run_id );
 
 `VGC_SM_Notes::types()` is the single table that drives everything. Each type declares its effect:
 
-| type | direction | `stock` | `consignment` | movement | owes us |
-|---|---|---|---|---|---|
-| `release` | out | −1 | +1 | `consign_out` | no |
-| `sale_report` | out | 0 | −1 | — | **yes** |
-| `return_in` | out | +1 | −1 | `consign_return` | no |
-| `direct_sale` | out | −1 | 0 | `ship` | **yes** |
+| type | direction | `stock` | `consignment` | movement | owes us | we owe |
+|---|---|---|---|---|---|---|
+| `release` | out | −1 | +1 | `consign_out` | no | no |
+| `sale_report` | out | 0 | −1 | — | **yes** | no |
+| `return_in` | out | +1 | −1 | `consign_return` | no | no |
+| `direct_sale` | out | −1 | 0 | `ship` | **yes** | no |
+| `take_in` | in | 0 | +1 | — | no | no |
+| `purchase_in` | in | +1 | 0 | `receive` | no | **yes** |
+| `buy_held` | in | +1 | −1 | `receive` | no | **yes** |
+| `return_out` | in | 0 | −1 | — | no | no |
+| `sold_held` | in | 0 | −1 | — | no | **yes** |
 
-Read it as: *what happens to my stock* and *what happens to the pile at the partner*. A release moves goods out of stock and into the partner's pile without selling them; a sale report never touches stock (it already left) but clears the pile and creates a debt.
+Read it as: *what happens to my stock* and *what happens to the pile*. For `direction=out` the pile is **our goods at the partner** (`consignment_ledger` direction `out`); for `direction=in` it is the **held bucket** — the maker's goods at our place (direction `in`). A release moves goods out of stock into the out-pile without selling; a sale report never touches stock but clears the out-pile and the partner owes us. Inbound mirrors it: `take_in` fills the held bucket without touching our stock; `sold_held`/`buy_held` empty it and we owe the maker; `buy_held`/`purchase_in` are the only inbound types that add to our own stock.
+
+**Held stock is never our own stock and is never pushed to the shop** (that is the on-demand Phase 4). Only `stock`-affecting movements push, so `purchase_in`/`buy_held` push a positive delta for sellable items; everything else inbound is stock-neutral.
 
 - `save_draft()` — drafts only; an issued note is immutable. A line with no price falls back to the partner's price list.
 - `issue()` — **pre-flight first**: never release stock you do not have, never report/return more than the partner is holding. Problems → `WP_REST_Response` 409 with `problems[]` and **nothing is written**. Otherwise one transaction: movements + consignment rows + number + status, then shop pushes.
 - `cancel()` — writes **reversing entries** in both ledgers and pushes the reverse to the shop. Never deletes.
-- `outstanding()` / `outstanding_all()` / `at_partners()` / `balance_owed()` — all derived by SUM over the ledgers, so they cannot drift.
+- `outstanding()` / `outstanding_all($partner,$direction)` / `at_partners()` / `held()` / `balance_owed()` / `balance_we_owe()` — all derived by SUM over the ledgers, so they cannot drift. `outstanding_all(..,'in')` is the held report; `held($item)` is the per-item held total.
 - `push_to_shop()` — sellable + `auto_push` only, and always a **delta**.
 
 ---
@@ -194,7 +201,7 @@ Auth: same-origin cookie + `X-WP-Nonce`. Permission: `vgc_sm_access`; `$admin` r
 | GET/POST | `/notes`, GET/PUT/DELETE `/notes/{id}` | PUT/DELETE are **drafts only** |
 | POST | `/notes/{id}/issue` | 409 + `problems[]` if it would break stock |
 | POST | `/notes/{id}/cancel`, `/notes/{id}/paid` | cancel = reversing entries; paid = `settled` |
-| GET | `/consignment/outstanding` | the "what have we shipped" report (+ totals at price and at cost) |
+| GET | `/consignment/outstanding` | `direction=out` (default, "what have we shipped") or `direction=in` (held stock); + totals at price and at cost |
 | GET | `/help` | the in-app wiki |
 
 ### Bridge (`vgc-stock-bridge/v1`) — on the shop
@@ -265,17 +272,19 @@ To add a language: add a catalogue method in `class-i18n.php` and list it in `la
 | 0.24 | **Editable translations** (overrides survive updates) |
 | **1.0.0** | **In-app wiki**; first stable release |
 | 1.0.1 | Shop stock: photos fixed (`/shop/levels` now returns `image_thumb` + category), category filter + sortable Category column; sidebar category shortcuts made collapsible (open only in the Items section) |
-| **1.1.0** | **Partners + stock notes (outbound)**: price lists, `SN-YYYY-NNNN` documents (release / sale report / return / direct sale), draft → issue → settle/cancel, pre-flight validation, consignment ledger, **Out on consignment** report, "At partners" on item detail, shop reduced on release |
+| 1.1.0 | **Partners + stock notes (outbound)**: price lists, `SN-YYYY-NNNN` documents (release / sale report / return / direct sale), draft → issue → settle/cancel, pre-flight validation, consignment ledger, **Out on consignment** report, "At partners" on item detail, shop reduced on release |
+| **1.2.0** | **Inbound notes + held bucket**: take on consignment / purchase / buy-held / return-out / sold-from-held; `held()` + `balance_we_owe()`; partner page shows held goods + "You owe"; **Held stock** report; "Held (from makers)" on item detail; note-type dropdown grouped inbound/outbound. Also wired the `/outstanding` route that 1.1.0 shipped un-routed. |
 
 ---
 
 ## 9. Consignment: what is agreed but not yet built
 
-The outbound half shipped in 1.1.0. The rest of the design, as agreed with the user:
+The outbound half shipped in 1.1.0; the inbound half (held bucket) in 1.2.0. Remaining, as agreed with the user:
 
-- **Phase 3 — inbound notes.** Goods we *take* from other makers go into a separate **held bucket** (not our own stock): take, purchase (converting held → owned), return out, sold-from-held. Two standing defaults the user accepted: **held stock is consumed before own stock** when something sells, and **you can only release what you own** (a partner's goods cannot be released onward).
-- **Phase 4 — shop publishing of held stock**, synced *on demand* (not automatically), plus a "Reconcile from shop" action.
-- **Phase 5 — balances/statements** per partner and printable notes.
+- **Phase 4 — shop publishing of held stock**, synced *on demand* (not automatically — held stock is deliberately kept out of the shop until then), plus a "Reconcile from shop" action.
+- **Phase 5 — balances/statements** per partner (both directions) and printable notes.
+
+Two standing defaults the user accepted, relevant to Phase 4: **held stock is consumed before own stock** when something sells (operator-driven for now; matters once shop sales auto-decrement), and **you can only release what you own** (a maker's held goods cannot be released onward on an outbound note).
 
 ---
 
