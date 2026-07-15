@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.6.0** · Stock Bridge **0.3.0**
+> **Pinned to:** Stock Manager **1.7.0** · Stock Bridge **0.3.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -93,12 +93,13 @@ vgc-stock-manager-reference.md      ← THIS FILE (not shipped)
 | `stock_notes` | The documents. `number` (`SN-YYYY-NNNN`, assigned on issue), `partner_id`, `direction`, `type`, `status` (`draft`\|`issued`\|`settled`\|`cancelled`), `total_net`. |
 | `stock_note_lines` | `item_id`, `qty`, `unit`, `unit_price`, `line_net`. |
 | `consignment_ledger` | **Second append-only ledger**: how much of an item is at a partner. Releases add, sale reports and returns subtract; cancels write reversing rows. |
+| `audit` | Activity log (1.7.0): `user_id`, `user_name`, `action` (dotted slug), `object_type`/`object_id`, `summary`, `ip`, `created_at`. Append-only, best-effort (never blocks the action it records). |
 
 ### `items` columns worth knowing
 
 `sku` (unique) · `name` · `kind` (`raw`\|`manufactured`) · `unit` (base/stock unit) · `stock_qty` (**cache**) · `reorder_level` · `is_sellable` · `woo_sku` · `woo_product_id` · `supplier` · `barcode` · `category_id` · `image_id` · `pack_label` · `pack_size` · `cost_net` · `vat_rate` (default 20) · `active` (0 = **archived**) · `shop_held` (held units currently listed on the shop) · `shop_baseline` (shop qty as last accounted for, drives reconcile)
 
-**DB_VERSION is currently `0.10.0`.** Bump it in `vgc-stock-manager.php` whenever the schema changes — `create_tables()` runs `dbDelta` on `plugins_loaded` when it differs, which auto-migrates.
+**DB_VERSION is currently `0.11.0`.** Bump it in `vgc-stock-manager.php` whenever the schema changes — `create_tables()` runs `dbDelta` on `plugins_loaded` when it differs, which auto-migrates.
 
 ### Options
 
@@ -181,7 +182,7 @@ Read it as: *what happens to my stock* and *what happens to the pile*. For `dire
 
 ## 5. REST API (`vgc-stock/v1`)
 
-Auth: same-origin cookie + `X-WP-Nonce`. Permission: `vgc_sm_access`; `$admin` routes additionally need `manage_options`.
+Auth: same-origin cookie + `X-WP-Nonce`. **Access levels (1.7.0)** — `VGC_SM_Access::level()` resolves a user to `viewer`|`operator`|`manager`|`admin`: admin = `manage_options`; otherwise the `vgc_sm_level` user-meta (default `operator`) for anyone with the `vgc_sm_access` cap; `null` = no access. Permission callbacks: `$auth` = viewer+ (reads), `$write` = `require_operator` (day-to-day writes), `$mgr` = `require_manager` (partners/prices/deletes/shop ops), `$admin` = `authorize_admin` (settings/translations/team/audit). Enforcement is server-side; the SPA hides what a level can't do via boot `perms` (`write`/`manage`/`admin`). Existing Stock Operators resolve to `operator`; nothing to migrate.
 
 | Method | Route | Notes |
 |---|---|---|
@@ -216,6 +217,8 @@ Auth: same-origin cookie + `X-WP-Nonce`. Permission: `vgc_sm_access`; `$admin` r
 | POST | `/consignment/publish`, `/consignment/unpublish` | list/de-list an item's held units on the shop (`item_id`, `qty`; qty≤0 = all) |
 | GET/POST | `/consignment/reconcile` | GET = preview; POST = book detected shop sales as `sold_held` notes |
 | GET | `/help` | the in-app wiki |
+| GET/POST | `/team`, `/team/{id}` | *(admin)* list users + levels / set a user's level (`viewer`\|`operator`\|`manager`\|`none`) |
+| GET | `/audit` | *(admin)* activity log, filtered (`search`,`user_id`,`action`,`from`,`to`,`page`) + paginated |
 
 ### Bridge (`vgc-stock-bridge/v1`) — on the shop
 Auth: `X-VGC-Token` header (shared secret) over HTTPS.
@@ -290,7 +293,8 @@ To add a language: add a catalogue method in `class-i18n.php` and list it in `la
 | 1.3.0 | **Multi-location / multi-contact partners**: `partner_locations` + `partner_contacts` child tables (one primary each), repeatable rows in the partner editor, directory card on the partner page. Flat partner fields become a cached mirror of the primaries (`sync_primary_fields()`); one-time `migrate_flat_fields()` seeds child rows from the old columns (guarded by `vgc_sm_partners_split`). Partner create/update accept `locations[]`/`contacts[]`. |
 | 1.4.0 | **Shop publishing of held stock** (Phase 4): `items.shop_held` + `shop_baseline`; publish/unpublish held units to the shop; "Reconcile from shop" reads the shop back, FIFO-splits online sales across makers, previews then books `sold_held` notes; `clamp_shop_held()` invariant keeps the shop from ever offering more than we hold. Item detail gains Publish/Unpublish + "On shop from held"; Held stock screen gains Reconcile. |
 | 1.5.0 | **Partner statements + printable documents** (Phase 5): `VGC_SM_Notes::statement()`, `/partners/{id}/statement`; Statement screen (`#/statement/{id}`) with date range, both-way outstanding totals, net position, CSV. `@media print` letterhead (boot `siteName`) prints issued notes and statements as one clean sheet; `.vgc-sm-noprint`/`.vgc-sm-printonly`/`.vgc-sm-printhead` control what shows. **Completes the consignment feature set.** |
-| **1.6.0** | **Per-location contacts**: `partner_locations` gains `contact_name/role/email/phone`; the standalone `partner_contacts` list is relabelled "Additional contacts". `sync_primary_fields()` now prefers the primary location's contact (falls back to the first additional contact). Partner editor location rows gain a contact block; directory card shows each location's contact. DB_VERSION 0.10.0 (dbDelta adds the columns; no data migration). |
+| 1.6.0 | **Per-location contacts**: `partner_locations` gains `contact_name/role/email/phone`; the standalone `partner_contacts` list is relabelled "Additional contacts". `sync_primary_fields()` now prefers the primary location's contact (falls back to the first additional contact). Partner editor location rows gain a contact block; directory card shows each location's contact. DB_VERSION 0.10.0 (dbDelta adds the columns; no data migration). |
+| **1.7.0** | **Roles + audit log**: four access levels (viewer/operator/manager/admin) via `VGC_SM_Access::level()`/`at_least()`/`set_level()` (user-meta `vgc_sm_level`); every REST route gated by `$write`/`$mgr`/`$admin`; boot `perms` + level drive UI gating. `class-audit.php` (`VGC_SM_Audit::log/query`) + `audit` table; logged at the mutation handlers and on `wp_login`/`wp_logout`. New admin screens **Team** (`#/team`) and **Activity log** (`#/audit`); DB_VERSION 0.11.0. |
 
 ---
 
