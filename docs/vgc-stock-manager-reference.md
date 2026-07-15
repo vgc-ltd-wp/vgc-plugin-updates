@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.4.0** · Stock Bridge **0.3.0**
+> **Pinned to:** Stock Manager **1.5.0** · Stock Bridge **0.3.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -168,6 +168,7 @@ Read it as: *what happens to my stock* and *what happens to the pile*. For `dire
 - `issue()` — **pre-flight first**: never release stock you do not have, never report/return more than the partner is holding. Problems → `WP_REST_Response` 409 with `problems[]` and **nothing is written**. Otherwise one transaction: movements + consignment rows + number + status, then shop pushes.
 - `cancel()` — writes **reversing entries** in both ledgers and pushes the reverse to the shop. Never deletes.
 - `outstanding()` / `outstanding_all($partner,$direction)` / `at_partners()` / `held()` / `balance_owed()` / `balance_we_owe()` — all derived by SUM over the ledgers, so they cannot drift. `outstanding_all(..,'in')` is the held report; `held($item)` is the per-item held total.
+- `statement($partner,$from,$to)` (1.5.0) — every money-bearing note both ways over a period (issued + settled), with outstanding `they_owe` / `we_owe` / `net`. Outbound money = `sale_report`,`direct_sale`; inbound money = `purchase_in`,`buy_held`,`sold_held`. Only `issued` notes count towards outstanding.
 - `push_to_shop()` — sellable + `auto_push` only, and always a **delta**.
 
 **Shop publishing of held stock (1.4.0).** Held goods stay off the shop until the operator publishes them.
@@ -207,6 +208,7 @@ Auth: same-origin cookie + `X-WP-Nonce`. Permission: `vgc_sm_access`; `$admin` r
 | GET | `/shop/products`, POST `/shop/pull` | *(admin)* pull products, incl. image sideload |
 | GET/POST | `/partners`, GET/PUT/**DELETE** `/partners/{id}` | DELETE archives. GET {id} returns outstanding + notes + price list + `owed`. |
 | POST | `/partners/{id}/prices` | upsert one agreed price (empty `unit_price` clears it) |
+| GET | `/partners/{id}/statement?from=&to=` | money owed both ways over a period (lines + totals) |
 | GET/POST | `/notes`, GET/PUT/DELETE `/notes/{id}` | PUT/DELETE are **drafts only** |
 | POST | `/notes/{id}/issue` | 409 + `problems[]` if it would break stock |
 | POST | `/notes/{id}/cancel`, `/notes/{id}/paid` | cancel = reversing entries; paid = `settled` |
@@ -286,15 +288,14 @@ To add a language: add a catalogue method in `class-i18n.php` and list it in `la
 | 1.1.0 | **Partners + stock notes (outbound)**: price lists, `SN-YYYY-NNNN` documents (release / sale report / return / direct sale), draft → issue → settle/cancel, pre-flight validation, consignment ledger, **Out on consignment** report, "At partners" on item detail, shop reduced on release |
 | 1.2.0 | **Inbound notes + held bucket**: take on consignment / purchase / buy-held / return-out / sold-from-held; `held()` + `balance_we_owe()`; partner page shows held goods + "You owe"; **Held stock** report; "Held (from makers)" on item detail; note-type dropdown grouped inbound/outbound. Also wired the `/outstanding` route that 1.1.0 shipped un-routed. |
 | 1.3.0 | **Multi-location / multi-contact partners**: `partner_locations` + `partner_contacts` child tables (one primary each), repeatable rows in the partner editor, directory card on the partner page. Flat partner fields become a cached mirror of the primaries (`sync_primary_fields()`); one-time `migrate_flat_fields()` seeds child rows from the old columns (guarded by `vgc_sm_partners_split`). Partner create/update accept `locations[]`/`contacts[]`. |
-| **1.4.0** | **Shop publishing of held stock** (Phase 4): `items.shop_held` + `shop_baseline`; publish/unpublish held units to the shop; "Reconcile from shop" reads the shop back, FIFO-splits online sales across makers, previews then books `sold_held` notes; `clamp_shop_held()` invariant keeps the shop from ever offering more than we hold. Item detail gains Publish/Unpublish + "On shop from held"; Held stock screen gains Reconcile. |
+| 1.4.0 | **Shop publishing of held stock** (Phase 4): `items.shop_held` + `shop_baseline`; publish/unpublish held units to the shop; "Reconcile from shop" reads the shop back, FIFO-splits online sales across makers, previews then books `sold_held` notes; `clamp_shop_held()` invariant keeps the shop from ever offering more than we hold. Item detail gains Publish/Unpublish + "On shop from held"; Held stock screen gains Reconcile. |
+| **1.5.0** | **Partner statements + printable documents** (Phase 5): `VGC_SM_Notes::statement()`, `/partners/{id}/statement`; Statement screen (`#/statement/{id}`) with date range, both-way outstanding totals, net position, CSV. `@media print` letterhead (boot `siteName`) prints issued notes and statements as one clean sheet; `.vgc-sm-noprint`/`.vgc-sm-printonly`/`.vgc-sm-printhead` control what shows. **Completes the consignment feature set.** |
 
 ---
 
 ## 9. Consignment: what is agreed but not yet built
 
-The outbound half shipped in 1.1.0; the inbound half (held bucket) in 1.2.0; shop publishing of held stock (Phase 4) in 1.4.0. Remaining, as agreed with the user:
-
-- **Phase 5 — balances/statements** per partner (both directions) and printable notes.
+All five phases have shipped: outbound (1.1.0), inbound/held bucket (1.2.0), multi-location/contact partners (1.3.0), shop publishing of held stock (1.4.0), and partner statements + printable notes (1.5.0). The consignment feature set is complete.
 
 Standing defaults the user accepted: **held stock is consumed oldest-received-first** across makers when reconcile books shop sales (FIFO); **the shop never offers more held units than we hold** (`clamp_shop_held`); own-stock online sales remain out of scope (push-only design — the shop is authoritative for its own sales, we don't pull orders back). **You can only release what you own** (a maker's held goods cannot be released onward on an outbound note).
 
