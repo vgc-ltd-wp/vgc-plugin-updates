@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.10.1** · Stock Bridge **0.4.0**
+> **Pinned to:** Stock Manager **1.11.0** · Stock Bridge **0.4.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -93,13 +93,15 @@ vgc-stock-manager-reference.md      ← THIS FILE (not shipped)
 | `stock_notes` | The documents. `number` (`SN-YYYY-NNNN`), `partner_id`, `location_id` (destination), `direction`, `type`, `status`, `note_date` (user-set; drives `issued_at`), `due_date` (note_date + partner terms; money notes only), `skip_stock` ("already sent" — no stock effect), `is_refund` (a return that credits money and skips the pile), `total_net`/`total_vat`/`total_gross`. |
 | `stock_note_lines` | `item_id`, `qty`, `unit`, `unit_price` (**net**), `vat_rate`, `line_net`/`line_vat`/`line_gross`, `line_note`, `is_display` (a display piece on loan). |
 | `consignment_ledger` | **Second append-only ledger**: how much of an item is at a partner. Releases add, sale reports and returns subtract; cancels write reversing rows. `is_display` splits the pile into **sellable vs display pools** — a sale report can only draw on the sellable pool. |
+| `orders` | **The order model (1.11.0) — deliberately MUTABLE.** One living doc per customer order: `number` (`ORD-YYYY-NNNN`), `partner_id`, `location_id`, `date_ordered`/`date_sent`/`date_received`, `payment_mode` (`full`\|`on_sale`), `payment_terms_days`, `due_date`, `transport_cost`/`transport_payer` (`us`\|`customer`), `already_sent`, `paid_amount`, `status` (`open`\|`completed` — never final). |
+| `order_lines` | `item_id`, `qty_ordered`/`qty_sent`/`qty_sold`/`qty_returned`, `unit_price`, `unit_cost` (**snapshot**, so margin never drifts), `vat_rate`, `is_display`, `line_note`, plus **`applied_out`/`applied_pile`** — what the ledgers already reflect for this line. |
 | `audit` | Activity log (1.7.0): `user_id`, `user_name`, `action` (dotted slug), `object_type`/`object_id`, `summary`, `ip`, `created_at`. Append-only, best-effort (never blocks the action it records). |
 
 ### `items` columns worth knowing
 
 `sku` (unique) · `name` · `kind` (`raw`\|`manufactured`) · `unit` (base/stock unit) · `stock_qty` (**cache**) · `reorder_level` · `is_sellable` · `woo_sku` · `woo_product_id` · `supplier` · `barcode` · `category_id` · `image_id` · `pack_label` · `pack_size` · `cost_net` · `vat_rate` (default 20) · `active` (0 = **archived**) · `shop_held` (held units currently listed on the shop) · `shop_baseline` (shop qty as last accounted for, drives reconcile)
 
-**DB_VERSION is currently `0.13.0`.** Bump it in `vgc-stock-manager.php` whenever the schema changes — `create_tables()` runs `dbDelta` on `plugins_loaded` when it differs, which auto-migrates.
+**DB_VERSION is currently `0.14.0`.** Bump it in `vgc-stock-manager.php` whenever the schema changes — `create_tables()` runs `dbDelta` on `plugins_loaded` when it differs, which auto-migrates.
 
 ### Options
 
@@ -179,6 +181,20 @@ Read it as: *what happens to my stock* and *what happens to the pile*. For `dire
 - `reconcile_preview()` (advisory) / `reconcile_apply()` (books one issued `sold_held` note per maker with `skip_clamp`, then lowers `shop_held` and re-baselines). Both recompute live.
 - **Invariant:** the shop never lists more of a maker's goods than we still hold. `clamp_shop_held($item)` runs after any held-reducing note (`issue()` for inbound `consignment<0`; `cancel()` of a `take_in`) and pushes the surplus off. Reconcile passes `skip_clamp` because the online sale is what reduced the shop.
 
+### Orders — `VGC_SM_Orders` (1.11.0)
+
+The user asked for a spreadsheet, not a stack of immutable documents. So an order is **fully editable, forever** — and the ledgers stay append-only anyway, via reconciliation rather than rewriting.
+
+- **The invariant:** every line stores `applied_out` / `applied_pile` = what the movement ledger and the consignment ledger already reflect for it. On each `save()` → `reconcile()`, the engine computes the *desired* state and writes **only the delta**:
+  - `want_out  = already_sent ? 0 : (qty_sent - qty_returned)` → movement of `-(want_out - applied_out)`
+  - `want_pile = qty_sent - qty_sold - qty_returned` → consignment row of `want_pile - applied_pile`
+  This is why editing a sent qty from 3 → 5 a week later Just Works, and why history is never rewritten.
+- **Removing a line** zeroes its quantities first so reconcile releases the stock, *then* deletes the row (same for `delete()` of a whole order).
+- `billable_qty()` is the one place the payment mode lives: `full` → `sent - returned`; `on_sale` → `sold`. Display lines are **never** billable.
+- `totals()` derives everything (net/VAT/gross/cost/**margin**/paid/balance/out_there). Transport lands on whoever `transport_payer` says: on the customer it adds to gross; on us it comes out of margin.
+- `set_complete()` only flips `status`. **No status is final** — this is a product requirement, not an oversight.
+- Orders write to the **same** ledgers as stock notes, so "Out on consignment", item stock and the shop push all keep working across both models.
+
 ---
 
 ## 5. REST API (`vgc-stock/v1`)
@@ -217,6 +233,8 @@ Auth: same-origin cookie + `X-WP-Nonce`. **Access levels (1.7.0)** — `VGC_SM_A
 | GET | `/consignment/outstanding` | `direction=out` (default, "what have we shipped") or `direction=in` (held stock); + totals at price and at cost |
 | POST | `/consignment/publish`, `/consignment/unpublish` | list/de-list an item's held units on the shop (`item_id`, `qty`; qty≤0 = all) |
 | GET/POST | `/consignment/reconcile` | GET = preview; POST = book detected shop sales as `sold_held` notes |
+| GET/POST | `/orders`, GET/PUT/DELETE `/orders/{id}` | the order model; PUT is always allowed (never locks) |
+| POST | `/orders/{id}/complete` | `{complete:0\|1}` — reversible |
 | GET | `/help` | the in-app wiki |
 | GET/POST | `/team`, `/team/{id}` | *(admin)* list users + levels / set a user's level (`viewer`\|`operator`\|`manager`\|`none`) |
 | GET | `/audit` | *(admin)* activity log, filtered (`search`,`user_id`,`action`,`from`,`to`,`page`) + paginated |
@@ -298,6 +316,7 @@ To add a language: add a catalogue method in `class-i18n.php` and list it in `la
 | 1.7.2 | Partner name shown in the sticky top bar on the partner page (`setTopTitle()` in `viewPartner`). |
 | 1.7.3 | Pull products fetched all pages at 100/page (superseded by 1.7.4). |
 | 1.7.4 | **Pull products paginated** — `viewPull` loads one page of `PULL_PER=20` at a time with Previous/Next; selection persists across pages in a `picks` map keyed by `product_id`. |
+| **1.11.0** | **Orders** — a mutable, order-centric model replacing the note-per-event dance for customer orders. `class-orders.php`, `orders`/`order_lines` (DB 0.14.0). Ordered/sent/sold/returned per line on one screen; payment mode `full`\|`on_sale`; transport + payer; paid/balance; **margin** from a snapshotted `unit_cost`; complete/reopen. Editing reconciles the ledgers by delta (`applied_out`/`applied_pile`). Stock notes remain for ad-hoc/inbound movements and share the same ledgers. |
 | **1.10.0** | **Payment terms, refundable returns, display flag, print fixes** (DB 0.13.0). `partners.payment_terms_days` → `stock_notes.due_date` on issue (only for `is_money_note()` types; credits never fall due); statement gains due/overdue + an `overdue` total. `stock_notes.is_refund` on a `return_in`: credits `balance_owed`, skips the consignment write **and** its pre-flight (those goods were billed, not lent). `is_display` on note lines **and** the consignment ledger splits the pile into sellable/display pools — `outstanding()` takes a `$display` filter, sale reports can only draw on the sellable pool, `outstanding_all()` returns `display_qty`. Print: `@page A4 portrait`, cards `break-inside:auto` (they *must* flow), `thead` repeats, rows never split, `.vgc-sm-tablewrap` overflow visible (it was clipping), thumbs hidden. |
 | 1.9.0 | **Note dates, "already sent", destinations, per-line VAT + notes, partner VAT** (DB 0.12.0). `note_date` drives `issued_at` on issue; `skip_stock` makes `issue()`/`cancel()` bypass the stock ledger *and* its pre-flight (consignment still applies); `location_id` = destination (validated against the partner's own locations). Lines gain `vat_rate`/`line_vat`/`line_gross`/`line_note`; net↔gross auto-fill is client-side, net is what's stored. **Balances + statements now sum `total_gross`** — one-time `backfill_vat()` sets legacy notes to gross=net/0% so they still read correctly. Partner `vat_registered`/`vat_number`. Editor lines are one flex row (`.vgc-sm-nline`). `list_partners` now returns `locations` via `locations_map()` (one query). |
 | 1.8.0 | **Pull filters + virtual default** (needs Bridge 0.4.0): category (`product_cat` slug) and product-type filters on the pull screen, populated from `/shop/product-categories`. Bridge `shape_product` adds `virtual`/`downloadable`; `list_products` takes `category`/`type`. Auto-tick now skips `virtual` products (shown with a tag) as well as `already`. |
