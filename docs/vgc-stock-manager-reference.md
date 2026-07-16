@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.8.0** · Stock Bridge **0.4.0**
+> **Pinned to:** Stock Manager **1.9.0** · Stock Bridge **0.4.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -86,12 +86,12 @@ vgc-stock-manager-reference.md      ← THIS FILE (not shipped)
 | `movements` | **Append-only ledger.** `type` (receive/consume/produce/ship/scrap/correct/consign_out/consign_return), signed `qty`, `ref_type`/`ref_id`, `partner_id`. |
 | `production_runs` | One row per run; movements reference it. |
 | `sync_log` | Every Bridge call. |
-| `partners` | Shops we supply / makers we take from. `type` (`customer`\|`supplier`\|`both`), `active` (archived, never deleted). Flat `contact_name`/`email`/`phone`/`address` are a **cached mirror of the primary** child rows (kept in step by `sync_primary_fields()`). |
+| `partners` | Shops we supply / makers we take from. `type` (`customer`\|`supplier`\|`both`), `active` (archived, never deleted), `vat_registered`/`vat_number` (1.9.0). Flat `contact_name`/`email`/`phone`/`address` are a **cached mirror of the primary** child rows (kept in step by `sync_primary_fields()`). |
 | `partner_locations` | Branches/warehouses, **each with its own contact**: `label`, `address`, `contact_name`/`contact_role`/`contact_email`/`contact_phone` (1.6.0), `is_primary`, `sort_order`. |
 | `partner_contacts` | **Additional** people not tied to a location: `name`, `role`, `email`, `phone`, `is_primary`, `sort_order`. |
 | `partner_prices` | Agreed unit price per (partner, item). Drives note pricing. |
-| `stock_notes` | The documents. `number` (`SN-YYYY-NNNN`, assigned on issue), `partner_id`, `direction`, `type`, `status` (`draft`\|`issued`\|`settled`\|`cancelled`), `total_net`. |
-| `stock_note_lines` | `item_id`, `qty`, `unit`, `unit_price`, `line_net`. |
+| `stock_notes` | The documents. `number` (`SN-YYYY-NNNN`, assigned on issue), `partner_id`, `location_id` (destination, 1.9.0), `direction`, `type`, `status` (`draft`\|`issued`\|`settled`\|`cancelled`), `note_date` (user-set document date — `issue()` derives `issued_at` from it), `skip_stock` ("already sent" — issue/cancel touch no stock), `total_net`/`total_vat`/`total_gross`. |
+| `stock_note_lines` | `item_id`, `qty`, `unit`, `unit_price` (**net**), `vat_rate`, `line_net`/`line_vat`/`line_gross`, `line_note`. |
 | `consignment_ledger` | **Second append-only ledger**: how much of an item is at a partner. Releases add, sale reports and returns subtract; cancels write reversing rows. |
 | `audit` | Activity log (1.7.0): `user_id`, `user_name`, `action` (dotted slug), `object_type`/`object_id`, `summary`, `ip`, `created_at`. Append-only, best-effort (never blocks the action it records). |
 
@@ -99,7 +99,7 @@ vgc-stock-manager-reference.md      ← THIS FILE (not shipped)
 
 `sku` (unique) · `name` · `kind` (`raw`\|`manufactured`) · `unit` (base/stock unit) · `stock_qty` (**cache**) · `reorder_level` · `is_sellable` · `woo_sku` · `woo_product_id` · `supplier` · `barcode` · `category_id` · `image_id` · `pack_label` · `pack_size` · `cost_net` · `vat_rate` (default 20) · `active` (0 = **archived**) · `shop_held` (held units currently listed on the shop) · `shop_baseline` (shop qty as last accounted for, drives reconcile)
 
-**DB_VERSION is currently `0.11.0`.** Bump it in `vgc-stock-manager.php` whenever the schema changes — `create_tables()` runs `dbDelta` on `plugins_loaded` when it differs, which auto-migrates.
+**DB_VERSION is currently `0.12.0`.** Bump it in `vgc-stock-manager.php` whenever the schema changes — `create_tables()` runs `dbDelta` on `plugins_loaded` when it differs, which auto-migrates.
 
 ### Options
 
@@ -107,6 +107,7 @@ vgc-stock-manager-reference.md      ← THIS FILE (not shipped)
 |---|---|
 | `vgc_sm_db_version` | Schema version guard. |
 | `vgc_sm_partners_split` | Set once the 1.3.0 flat→child partner migration has run. |
+| `vgc_sm_notes_vat_backfill` | Set once the 1.9.0 backfill (pre-VAT notes → `total_gross = total_net`, 0% VAT) has run. |
 | `vgc_sm_settings` | `bridge_url`, `bridge_token`, `auto_push`, `currency` (default `€`), `language` (default `en`). |
 | `vgc_sm_units` | Custom (non-builtin) unit codes. |
 | `vgc_sm_i18n_overrides` | `{ lang: { source_string: translation } }` — user-edited wording. |
@@ -297,7 +298,8 @@ To add a language: add a catalogue method in `class-i18n.php` and list it in `la
 | 1.7.2 | Partner name shown in the sticky top bar on the partner page (`setTopTitle()` in `viewPartner`). |
 | 1.7.3 | Pull products fetched all pages at 100/page (superseded by 1.7.4). |
 | 1.7.4 | **Pull products paginated** — `viewPull` loads one page of `PULL_PER=20` at a time with Previous/Next; selection persists across pages in a `picks` map keyed by `product_id`. |
-| **1.8.0** | **Pull filters + virtual default** (needs Bridge 0.4.0): category (`product_cat` slug) and product-type filters on the pull screen, populated from `/shop/product-categories`. Bridge `shape_product` adds `virtual`/`downloadable`; `list_products` takes `category`/`type`. Auto-tick now skips `virtual` products (shown with a tag) as well as `already`. |
+| **1.9.0** | **Note dates, "already sent", destinations, per-line VAT + notes, partner VAT** (DB 0.12.0). `note_date` drives `issued_at` on issue; `skip_stock` makes `issue()`/`cancel()` bypass the stock ledger *and* its pre-flight (consignment still applies); `location_id` = destination (validated against the partner's own locations). Lines gain `vat_rate`/`line_vat`/`line_gross`/`line_note`; net↔gross auto-fill is client-side, net is what's stored. **Balances + statements now sum `total_gross`** — one-time `backfill_vat()` sets legacy notes to gross=net/0% so they still read correctly. Partner `vat_registered`/`vat_number`. Editor lines are one flex row (`.vgc-sm-nline`). `list_partners` now returns `locations` via `locations_map()` (one query). |
+| 1.8.0 | **Pull filters + virtual default** (needs Bridge 0.4.0): category (`product_cat` slug) and product-type filters on the pull screen, populated from `/shop/product-categories`. Bridge `shape_product` adds `virtual`/`downloadable`; `list_products` takes `category`/`type`. Auto-tick now skips `virtual` products (shown with a tag) as well as `already`. |
 | 1.7.1 | **Settings hub**: the four admin config screens (Connection=`/settings`, `/translations`, `/team`, `/audit`) are grouped under one **Settings** sidebar entry with a shared tab bar (`settingsTabs()` + `SETTINGS_TABS`); `activeKey()` maps all four to `#/settings`. Help moved to its own bottom navlist (`NAV_HELP`). UI-only, no schema change. |
 | **1.7.0** | **Roles + audit log**: four access levels (viewer/operator/manager/admin) via `VGC_SM_Access::level()`/`at_least()`/`set_level()` (user-meta `vgc_sm_level`); every REST route gated by `$write`/`$mgr`/`$admin`; boot `perms` + level drive UI gating. `class-audit.php` (`VGC_SM_Audit::log/query`) + `audit` table; logged at the mutation handlers and on `wp_login`/`wp_logout`. New admin screens **Team** (`#/team`) and **Activity log** (`#/audit`); DB_VERSION 0.11.0. |
 
