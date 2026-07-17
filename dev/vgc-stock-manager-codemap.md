@@ -26,16 +26,16 @@
 | 3046 | Screen: Orders |
 | 3050 | Screen: Purchases — the inbound mirror of an order |
 | 3100 | Screen: Purchase — a living, always-editable document |
-| 3665 | Screen: Order — a living, always-editable document |
-| 4115 | Screen: Stock notes |
-| 4176 | Screen: Note editor / viewer |
-| 4623 | Screen: Out on consignment |
-| 4703 | Screen: Held stock (goods we hold from makers) |
-| 4831 | Screen: Help / wiki |
-| 4904 | Screen: Translations editor |
-| 5037 | Screen: Pull products from the shop |
-| 5302 | Screen: Team (admin) |
-| 5356 | Screen: Activity log (admin) |
+| 3661 | Screen: Order — a living, always-editable document |
+| 4111 | Screen: Stock notes |
+| 4172 | Screen: Note editor / viewer |
+| 4619 | Screen: Out on consignment |
+| 4699 | Screen: Held stock (goods we hold from makers) |
+| 4827 | Screen: Help / wiki |
+| 4900 | Screen: Translations editor |
+| 5033 | Screen: Pull products from the shop |
+| 5298 | Screen: Team (admin) |
+| 5352 | Screen: Activity log (admin) |
 
 ### Functions
 
@@ -210,89 +210,90 @@
 | 3214 | `f(label, html)` |  |
 | 3239 | `costBasis()` |  |
 | 3244 | `linesHtml()` |  |
-| 3248 | `refreshTotals()` |  |
-| 3263 | `set(idAttr, val)` |  |
-| 3268 | `render()` |  |
-| 3362 | `paymentsCard()` |  |
-| 3385 | `save()` |  |
-| 3402 | `wire()` |  |
-| 3543 | `addLine(base)` |  |
-| 3560 | `quickItemHtml()` | modal — the app has no dialog system and this needs no new one. |
-| 3577 | `wireQuickItem()` |  |
-| 3622 | `viewOrders()` |  |
-| 3668 | `viewOrder(id, query)` |  |
-| 3704 | `curPartner()` |  |
-| 3708 | `billable(l)` |  |
-| 3717 | `stripVat(amount, l)` | checkbox can never mean two things. Mirrors VGC_SM_Orders::strip_vat(). |
-| 3722 | `netUnit(l)` |  |
-| 3725 | `vatBasis()` | both of them, and a mis-read here is a wrong margin. |
-| 3730 | `netCost(l)` | Margin is ex-VAT on both sides — input VAT on materials is reclaimable. |
-| 3731 | `totals()` |  |
-| 3753 | `syncForm()` |  |
-| 3771 | `f(label, inner)` | field labels itself — so the numbers are never anonymous. |
-| 3775 | `lineHtml(l, idx)` |  |
-| 3777 | `q(field, label)` |  |
-| 3816 | `linesHtml(wantDisplay)` | though they are rendered in two groups. |
-| 3823 | `anyDisplay()` |  |
-| 3826 | `anyNormal()` |  |
-| 3833 | `orderTiles(tt)` | balance, a negative margin) follows the numbers. |
-| 3844 | `refresh()` |  |
-| 3858 | `render()` |  |
-| 3970 | `bind()` |  |
-| 4085 | `save()` |  |
-| 4134 | `statusTag(s)` |  |
-| 4147 | `notesListHtml(notes, compact)` |  |
-| 4158 | `viewNotes()` |  |
-| 4179 | `viewNote(id, query)` |  |
-| 4209 | `curPartner()` |  |
-| 4216 | `netOf(l)` | from it and the line's VAT rate (and vice versa when you type gross). |
-| 4217 | `vatOf(l)` |  |
-| 4218 | `grossUnitOf(l)` |  |
-| 4222 | `totals()` |  |
-| 4229 | `syncForm()` | Keep whatever is typed in the shell before a re-render throws it away. |
-| 4242 | `render()` |  |
-| 4318 | `lineHtml(l, idx)` |  |
-| 4338 | `refreshTotals(skip)` | so we never overwrite what the user is in the middle of entering. |
-| 4360 | `payload()` |  |
-| 4383 | `saveDraft()` |  |
-| 4392 | `bind()` |  |
-| 4524 | `typeHint(type)` |  |
-| 4539 | `renderIssued(n)` |  |
-| 4633 | `viewOutstanding()` |  |
-| 4657 | `renderBody()` |  |
-| 4713 | `viewHeld()` |  |
-| 4742 | `renderBody()` |  |
-| 4783 | `wireReconcile()` |  |
-| 4837 | `viewHelp(query)` |  |
-| 4848 | `matches(s)` |  |
-| 4856 | `toc()` |  |
-| 4875 | `article()` |  |
-| 4909 | `viewTranslations()` |  |
-| 4919 | `visible()` |  |
-| 4929 | `rowsHtml()` |  |
-| 4949 | `render()` |  |
-| 4978 | `bindRows()` |  |
-| 4992 | `bind()` |  |
-| 5042 | `viewPull()` |  |
-| 5052 | `qp()` |  |
-| 5059 | `selectedRows()` |  |
-| 5060 | `updateCount()` |  |
-| 5064 | `findRow(id)` |  |
-| 5069 | `rowHtml(p)` |  |
-| 5090 | `renderBody()` |  |
-| 5112 | `renderPager()` |  |
-| 5127 | `renderShell()` |  |
-| 5190 | `doImport()` |  |
-| 5223 | `apply(d)` |  |
-| 5235 | `load(n)` |  |
-| 5247 | `notConnected()` |  |
-| 5252 | `pullError(e)` |  |
-| 5287 | `parseHash()` |  |
-| 5313 | `viewTeam()` |  |
-| 5361 | `viewAudit()` |  |
-| 5400 | `apply()` |  |
-| 5417 | `router()` |  |
-| 5470 | `viewItemForm(id, query)`  ⟵reassigned |  |
+| 3249 | `purchaseTiles(tt)` | The document summary tiles (design v2), re-rendered wholesale on edit. |
+| 3261 | `refreshTotals()` |  |
+| 3270 | `set(idAttr, val)` |  |
+| 3275 | `render()` |  |
+| 3358 | `paymentsCard()` |  |
+| 3381 | `save()` |  |
+| 3398 | `wire()` |  |
+| 3539 | `addLine(base)` |  |
+| 3556 | `quickItemHtml()` | modal — the app has no dialog system and this needs no new one. |
+| 3573 | `wireQuickItem()` |  |
+| 3618 | `viewOrders()` |  |
+| 3664 | `viewOrder(id, query)` |  |
+| 3700 | `curPartner()` |  |
+| 3704 | `billable(l)` |  |
+| 3713 | `stripVat(amount, l)` | checkbox can never mean two things. Mirrors VGC_SM_Orders::strip_vat(). |
+| 3718 | `netUnit(l)` |  |
+| 3721 | `vatBasis()` | both of them, and a mis-read here is a wrong margin. |
+| 3726 | `netCost(l)` | Margin is ex-VAT on both sides — input VAT on materials is reclaimable. |
+| 3727 | `totals()` |  |
+| 3749 | `syncForm()` |  |
+| 3767 | `f(label, inner)` | field labels itself — so the numbers are never anonymous. |
+| 3771 | `lineHtml(l, idx)` |  |
+| 3773 | `q(field, label)` |  |
+| 3812 | `linesHtml(wantDisplay)` | though they are rendered in two groups. |
+| 3819 | `anyDisplay()` |  |
+| 3822 | `anyNormal()` |  |
+| 3829 | `orderTiles(tt)` | balance, a negative margin) follows the numbers. |
+| 3840 | `refresh()` |  |
+| 3854 | `render()` |  |
+| 3966 | `bind()` |  |
+| 4081 | `save()` |  |
+| 4130 | `statusTag(s)` |  |
+| 4143 | `notesListHtml(notes, compact)` |  |
+| 4154 | `viewNotes()` |  |
+| 4175 | `viewNote(id, query)` |  |
+| 4205 | `curPartner()` |  |
+| 4212 | `netOf(l)` | from it and the line's VAT rate (and vice versa when you type gross). |
+| 4213 | `vatOf(l)` |  |
+| 4214 | `grossUnitOf(l)` |  |
+| 4218 | `totals()` |  |
+| 4225 | `syncForm()` | Keep whatever is typed in the shell before a re-render throws it away. |
+| 4238 | `render()` |  |
+| 4314 | `lineHtml(l, idx)` |  |
+| 4334 | `refreshTotals(skip)` | so we never overwrite what the user is in the middle of entering. |
+| 4356 | `payload()` |  |
+| 4379 | `saveDraft()` |  |
+| 4388 | `bind()` |  |
+| 4520 | `typeHint(type)` |  |
+| 4535 | `renderIssued(n)` |  |
+| 4629 | `viewOutstanding()` |  |
+| 4653 | `renderBody()` |  |
+| 4709 | `viewHeld()` |  |
+| 4738 | `renderBody()` |  |
+| 4779 | `wireReconcile()` |  |
+| 4833 | `viewHelp(query)` |  |
+| 4844 | `matches(s)` |  |
+| 4852 | `toc()` |  |
+| 4871 | `article()` |  |
+| 4905 | `viewTranslations()` |  |
+| 4915 | `visible()` |  |
+| 4925 | `rowsHtml()` |  |
+| 4945 | `render()` |  |
+| 4974 | `bindRows()` |  |
+| 4988 | `bind()` |  |
+| 5038 | `viewPull()` |  |
+| 5048 | `qp()` |  |
+| 5055 | `selectedRows()` |  |
+| 5056 | `updateCount()` |  |
+| 5060 | `findRow(id)` |  |
+| 5065 | `rowHtml(p)` |  |
+| 5086 | `renderBody()` |  |
+| 5108 | `renderPager()` |  |
+| 5123 | `renderShell()` |  |
+| 5186 | `doImport()` |  |
+| 5219 | `apply(d)` |  |
+| 5231 | `load(n)` |  |
+| 5243 | `notConnected()` |  |
+| 5248 | `pullError(e)` |  |
+| 5283 | `parseHash()` |  |
+| 5309 | `viewTeam()` |  |
+| 5357 | `viewAudit()` |  |
+| 5396 | `apply()` |  |
+| 5413 | `router()` |  |
+| 5466 | `viewItemForm(id, query)`  ⟵reassigned |  |
 
 ## PHP classes (includes/)
 
