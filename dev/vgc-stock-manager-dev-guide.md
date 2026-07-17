@@ -195,6 +195,7 @@ The single most common task. Touch these, in order:
 
 ## 10. Gotchas index (things that have actually bitten)
 
+- **Two UI elements using the same words for different concepts.** After the material/product split, the `kind` tag (`tagHtml`) still rendered "Product"/"Material" — the same words as the new `for_sale` role badge — so a made item marked as a material showed *both* "Material" and "Product", and a saved role change looked like it "didn't save" because the second tag never moved. Fix: the sourcing tag says "Made"/"Bought", the role badge owns "Product"/"Material". **When you add a concept that reuses existing words, grep for the old use.** (1.22.1)
 - **Helper out of scope for `i`.** A view helper defined outside the `.then` closure referencing `i` → "i is not defined", blank screen. Fix: pass `i` in. (1.20.0)
 - **A wrapper that drops a new argument.** `viewItemForm` is reassigned by a barcode-prefill wrapper `function (id){ origItemForm(id) }`; adding a 2nd param (`query`) silently failed until the wrapper forwarded it. **When you add a parameter, grep for `X = function` / `var origX = X` wrappers.** (1.21.0)
 - **CSS class-name collision.** New tiles reused `.vgc-sm-stat`, an orphan rule from a replaced component, and inherited flex layout. **Grep the class before naming.** (1.16.1)
