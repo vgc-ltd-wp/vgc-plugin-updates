@@ -8,34 +8,34 @@
 
 | line | section |
 |---|---|
-| 573 | Screen: Overview |
-| 624 | Screen: Items |
-| 751 | Screen: Item detail |
-| 1062 | Screen: Item form |
-| 1358 | Screen: Recipe editor |
-| 1589 | Screen: Produce |
-| 1785 | Screen: Scan |
-| 1854 | Screen: Shop stock |
-| 1988 | Screen: Settings |
-| 2051 | Screen: Categories |
-| 2106 | Screen: Reports |
-| 2268 | Screen: Import |
-| 2360 | Screen: Partners |
-| 2534 | Screen: Partner detail |
-| 2795 | Screen: Partner statement |
-| 2937 | Screen: Orders |
-| 2941 | Screen: Purchases — the inbound mirror of an order |
-| 2991 | Screen: Purchase — a living, always-editable document |
-| 3556 | Screen: Order — a living, always-editable document |
-| 4010 | Screen: Stock notes |
-| 4071 | Screen: Note editor / viewer |
-| 4518 | Screen: Out on consignment |
-| 4598 | Screen: Held stock (goods we hold from makers) |
-| 4726 | Screen: Help / wiki |
-| 4799 | Screen: Translations editor |
-| 4932 | Screen: Pull products from the shop |
-| 5197 | Screen: Team (admin) |
-| 5251 | Screen: Activity log (admin) |
+| 682 | Screen: Overview |
+| 733 | Screen: Items |
+| 860 | Screen: Item detail |
+| 1171 | Screen: Item form |
+| 1467 | Screen: Recipe editor |
+| 1698 | Screen: Produce |
+| 1894 | Screen: Scan |
+| 1963 | Screen: Shop stock |
+| 2097 | Screen: Settings |
+| 2160 | Screen: Categories |
+| 2215 | Screen: Reports |
+| 2377 | Screen: Import |
+| 2469 | Screen: Partners |
+| 2643 | Screen: Partner detail |
+| 2904 | Screen: Partner statement |
+| 3046 | Screen: Orders |
+| 3050 | Screen: Purchases — the inbound mirror of an order |
+| 3100 | Screen: Purchase — a living, always-editable document |
+| 3665 | Screen: Order — a living, always-editable document |
+| 4119 | Screen: Stock notes |
+| 4180 | Screen: Note editor / viewer |
+| 4627 | Screen: Out on consignment |
+| 4707 | Screen: Held stock (goods we hold from makers) |
+| 4835 | Screen: Help / wiki |
+| 4908 | Screen: Translations editor |
+| 5041 | Screen: Pull products from the shop |
+| 5306 | Screen: Team (admin) |
+| 5360 | Screen: Activity log (admin) |
 
 ### Functions
 
@@ -47,242 +47,252 @@
 | 29 | `isAdmin()` |  |
 | 39 | `t(s)` |  |
 | 43 | `translateTree(root)` | in a freshly rendered subtree. Composed strings use t() at the source. |
-| 94 | `icon(name, size)` |  |
-| 105 | `esc(s)` |  |
-| 111 | `fmt(n)` |  |
-| 117 | `money(n)` |  |
-| 123 | `toast(msg, kind)` |  |
-| 130 | `go(hash)` |  |
-| 131 | `debounce(fn, ms)` |  |
-| 133 | `thumbHtml(url, kind, size)` |  |
-| 137 | `tagHtml(kind)` |  |
-| 142 | `sectionLabel(t)` |  |
-| 143 | `emptyState(title, sub)` |  |
-| 148 | `btn(label, ic, attrs, variant)` |  |
-| 152 | `linkBtn(label, ic, href, variant)` |  |
-| 167 | `sortState(table, defCol, defDir)` | A table's sort state, restored from the last visit if we have one. |
-| 172 | `rememberSort(table, col, dir)` |  |
-| 178 | `sortRows(rows, state, cols)` | Blanks always sort last, whichever direction you're going. |
-| 198 | `sortTh(state, key, cols)` |  |
-| 206 | `bindSort(container, table, state, cols, rerender)` |  |
-| 228 | `idb()` |  |
-| 237 | `idbAll(store)` |  |
-| 246 | `idbAdd(store, val)` |  |
-| 255 | `idbDel(store, id)` |  |
-| 269 | `url(path)` |  |
-| 271 | `rawFetch(path, opts)` |  |
-| 290 | `get(path)` |  |
-| 292 | `upload(path, file)` |  |
-| 307 | `write(path, method, body, label)` | Writes: try now; if offline, queue and replay later. |
-| 318 | `flushQueue()` |  |
-| 336 | `updateOffline()` |  |
-| 408 | `getCategories(force)` |  |
-| 414 | `refreshCategories()` |  |
-| 419 | `activeKey(path)` |  |
-| 431 | `routeTitle(path)` |  |
-| 443 | `showsBack(path)` |  |
-| 448 | `renderChrome(path)` |  |
-| 505 | `renderCategoryNav(path)` | The group is collapsed unless you're actually in the Items section. |
-| 536 | `apply()` |  |
-| 547 | `navItem(n, active)` |  |
-| 554 | `settingsTabs(activePath)` | The tab bar shared by every screen inside the Settings hub. |
-| 560 | `screen(html)` |  |
-| 563 | `setTopTitle(text)` | next route change by renderChrome(). |
-| 564 | `loading()` |  |
-| 565 | `errorView(e)` |  |
-| 576 | `viewDashboard()` |  |
-| 579 | `lowCard(title, rows, empty, kind)` |  |
-| 629 | `viewItems(scope)` |  |
-| 686 | `loadItems()` |  |
-| 705 | `renderItems()` | Sorting re-renders from the already-fetched rows — no round trip. |
-| 717 | `th(key)` |  |
-| 756 | `priceMarginStrip(i)` | only once a price is set; nothing to say for a pure material. |
-| 757 | `tile(label, price, gross, margin, pct)` |  |
-| 774 | `viewItem(id)` |  |
-| 971 | `removePanel(i)` | (safe) or, when it has no history at all, delete permanently. |
-| 1021 | `movementForm(item, type)` |  |
-| 1041 | `inPacks()` |  |
-| 1042 | `baseQty()` |  |
-| 1043 | `updateHint()` |  |
-| 1065 | `viewItemForm(id, query)` |  |
-| 1076 | `field(name, label, value, type, wide)` |  |
-| 1081 | `group(title, inner)` |  |
-| 1141 | `genSku()` |  |
-| 1179 | `unitSelectHtml(units, current)` |  |
-| 1185 | `bindUnitSelect(units)` |  |
-| 1202 | `categorySelectHtml(cats, current)` |  |
-| 1208 | `bindCategorySelect(cats)` |  |
-| 1225 | `bindImage()` |  |
-| 1250 | `pricingHtml(i)` |  |
-| 1283 | `bindPricing(i)` |  |
-| 1301 | `rnd(x, d)` |  |
-| 1302 | `vat()` |  |
-| 1303 | `packSize()` |  |
-| 1304 | `fromNet()` |  |
-| 1305 | `fromGross()` |  |
-| 1306 | `fromPack()` |  |
-| 1314 | `currentCost()` | recipe's computed cost unless a manual override is in effect. |
-| 1322 | `wirePrice(netId, grossId, marginId)` | A net<->gross price pair, plus its live margin line. |
-| 1326 | `line()` |  |
-| 1347 | `refreshMargins()` | Cost, VAT and the manual toggle all move the margins. |
-| 1355 | `val(id)` |  |
-| 1361 | `viewRecipe(id)` |  |
-| 1374 | `dimOf(u)` |  |
-| 1375 | `factorOf(u)` |  |
-| 1376 | `compatUnits(base)` |  |
-| 1377 | `conv(q, from, to)` |  |
-| 1378 | `curYield()` |  |
-| 1379 | `perItemQty(c)` |  |
-| 1380 | `lineCostPerItem(c)` |  |
-| 1381 | `extraPerItem(e)` |  |
-| 1383 | `updateCosts()` |  |
-| 1402 | `setText(id2, t)` |  |
-| 1404 | `compRow(c, idx)` |  |
-| 1430 | `extraRow(e, idx)` |  |
-| 1447 | `render()` |  |
-| 1495 | `bind()` |  |
-| 1592 | `viewProduce(query)` |  |
-| 1625 | `pick(id, name, unit, yieldQty, img)` |  |
-| 1645 | `out()` |  |
-| 1654 | `checkPlan()` |  |
-| 1736 | `refresh()` |  |
-| 1766 | `runIt(qty, allowNeg, scrap, scrapNote)` |  |
-| 1788 | `viewScan()` |  |
-| 1805 | `onCode(code)` |  |
-| 1814 | `startScanner(host, cb)` |  |
-| 1840 | `stopScanner()` |  |
-| 1843 | `scanOnce(cb)` |  |
-| 1868 | `viewShop()` |  |
-| 1916 | `renderShopBody()` |  |
-| 1991 | `viewSettings()` |  |
-| 2054 | `viewCategories()` |  |
-| 2119 | `viewReports()` |  |
-| 2171 | `renderStockBody()` |  |
-| 2226 | `csvCell(v)` |  |
-| 2230 | `downloadCsv(filename, headers, rows)` |  |
-| 2240 | `splitCsvLine(line, delim)` |  |
-| 2254 | `parseCsv(text)` |  |
-| 2273 | `viewImport()` |  |
-| 2312 | `preview()` |  |
-| 2365 | `partnerRole(p)` | front only ever got in the way: everyone can trade both ways. |
-| 2372 | `viewPartners()` |  |
-| 2398 | `partnerForm(p)` |  |
-| 2408 | `locRowHtml(l, i)` |  |
-| 2427 | `conRowHtml(c, i)` |  |
-| 2442 | `readLocs()` |  |
-| 2455 | `readCons()` |  |
-| 2466 | `renderLocs()` |  |
-| 2474 | `renderCons()` |  |
-| 2537 | `viewPartner(id)` |  |
-| 2552 | `consignTable(rows, emptyTitle, emptySub, outstandingLabel)` |  |
-| 2603 | `directoryCard()` |  |
-| 2608 | `contactBits(name, role, email, phone)` |  |
-| 2749 | `savePrice(itemId, price)` |  |
-| 2785 | `printLetterhead(title, subtitle)` |  |
-| 2800 | `stat(label, value, mod)` | A handful of headline figures wants figures, not a chart. |
-| 2806 | `qual(text)` |  |
-| 2810 | `statRow(tiles)` | to CSS. Half the tiles per row, rounded up = exactly two rows on desktop. |
-| 2820 | `viewStatement(id, query)` |  |
-| 2829 | `setRange()` |  |
-| 2944 | `viewPurchases()` |  |
-| 2994 | `viewPurchase(id, query)` |  |
-| 3031 | `field(label, inner)` | The house form idiom: a labelled control inside .vgc-sm-formgrid. |
-| 3034 | `check(label, attrs)` |  |
-| 3038 | `vendor()` |  |
-| 3048 | `netCost(l)` | this is a no-op — one path, both kinds of vendor. |
-| 3053 | `sellNet(l)` |  |
-| 3054 | `sellGross(l)` |  |
-| 3055 | `billable(l)` |  |
-| 3062 | `marginOfMarkup(m)` | on the order screen later is never a surprise. |
-| 3067 | `totals()` |  |
-| 3093 | `syncForm()` |  |
-| 3104 | `lineHtml(l, idx)` |  |
-| 3105 | `f(label, html)` |  |
-| 3130 | `costBasis()` |  |
-| 3135 | `linesHtml()` |  |
-| 3139 | `refreshTotals()` |  |
-| 3154 | `set(idAttr, val)` |  |
-| 3159 | `render()` |  |
-| 3253 | `paymentsCard()` |  |
-| 3276 | `save()` |  |
-| 3293 | `wire()` |  |
-| 3434 | `addLine(base)` |  |
-| 3451 | `quickItemHtml()` | modal — the app has no dialog system and this needs no new one. |
-| 3468 | `wireQuickItem()` |  |
-| 3513 | `viewOrders()` |  |
-| 3559 | `viewOrder(id, query)` |  |
-| 3595 | `curPartner()` |  |
-| 3599 | `billable(l)` |  |
-| 3608 | `stripVat(amount, l)` | checkbox can never mean two things. Mirrors VGC_SM_Orders::strip_vat(). |
-| 3613 | `netUnit(l)` |  |
-| 3616 | `vatBasis()` | both of them, and a mis-read here is a wrong margin. |
-| 3621 | `netCost(l)` | Margin is ex-VAT on both sides — input VAT on materials is reclaimable. |
-| 3622 | `totals()` |  |
-| 3644 | `syncForm()` |  |
-| 3662 | `f(label, inner)` | field labels itself — so the numbers are never anonymous. |
-| 3666 | `lineHtml(l, idx)` |  |
-| 3668 | `q(field, label)` |  |
-| 3707 | `linesHtml(wantDisplay)` | though they are rendered in two groups. |
-| 3714 | `anyDisplay()` |  |
-| 3717 | `anyNormal()` |  |
-| 3721 | `refresh()` |  |
-| 3729 | `set(elId, txt)`  ⟵reassigned |  |
-| 3742 | `render()` |  |
-| 3865 | `bind()` |  |
-| 3980 | `save()` |  |
-| 4029 | `statusTag(s)` |  |
-| 4042 | `notesListHtml(notes, compact)` |  |
-| 4053 | `viewNotes()` |  |
-| 4074 | `viewNote(id, query)` |  |
-| 4104 | `curPartner()` |  |
-| 4111 | `netOf(l)` | from it and the line's VAT rate (and vice versa when you type gross). |
-| 4112 | `vatOf(l)` |  |
-| 4113 | `grossUnitOf(l)` |  |
-| 4117 | `totals()` |  |
-| 4124 | `syncForm()` | Keep whatever is typed in the shell before a re-render throws it away. |
-| 4137 | `render()` |  |
-| 4213 | `lineHtml(l, idx)` |  |
-| 4233 | `refreshTotals(skip)` | so we never overwrite what the user is in the middle of entering. |
-| 4255 | `payload()` |  |
-| 4278 | `saveDraft()` |  |
-| 4287 | `bind()` |  |
-| 4419 | `typeHint(type)` |  |
-| 4434 | `renderIssued(n)` |  |
-| 4528 | `viewOutstanding()` |  |
-| 4552 | `renderBody()` |  |
-| 4608 | `viewHeld()` |  |
-| 4637 | `renderBody()` |  |
-| 4678 | `wireReconcile()` |  |
-| 4732 | `viewHelp(query)` |  |
-| 4743 | `matches(s)` |  |
-| 4751 | `toc()` |  |
-| 4770 | `article()` |  |
-| 4804 | `viewTranslations()` |  |
-| 4814 | `visible()` |  |
-| 4824 | `rowsHtml()` |  |
-| 4844 | `render()` |  |
-| 4873 | `bindRows()` |  |
-| 4887 | `bind()` |  |
-| 4937 | `viewPull()` |  |
-| 4947 | `qp()` |  |
-| 4954 | `selectedRows()` |  |
-| 4955 | `updateCount()` |  |
-| 4959 | `findRow(id)` |  |
-| 4964 | `rowHtml(p)` |  |
-| 4985 | `renderBody()` |  |
-| 5007 | `renderPager()` |  |
-| 5022 | `renderShell()` |  |
-| 5085 | `doImport()` |  |
-| 5118 | `apply(d)` |  |
-| 5130 | `load(n)` |  |
-| 5142 | `notConnected()` |  |
-| 5147 | `pullError(e)` |  |
-| 5182 | `parseHash()` |  |
-| 5208 | `viewTeam()` |  |
-| 5256 | `viewAudit()` |  |
-| 5295 | `apply()` |  |
-| 5312 | `router()` |  |
-| 5365 | `viewItemForm(id, query)`  ⟵reassigned |  |
+| 100 | `icon(name, size)` |  |
+| 111 | `esc(s)` |  |
+| 117 | `fmt(n)` |  |
+| 123 | `money(n)` |  |
+| 129 | `toast(msg, kind)` |  |
+| 136 | `go(hash)` |  |
+| 137 | `debounce(fn, ms)` |  |
+| 139 | `thumbHtml(url, kind, size)` |  |
+| 146 | `tagHtml(kind)` | showing both made an item read as "product AND material". |
+| 151 | `sectionLabel(t)` |  |
+| 162 | `badge(text, kind)` | sellable\|store\|consignment\|supplier\|customer. |
+| 166 | `roleBadges(forSale, kind)` | Role (filled) + sourcing (outlined) together — the pair that once collided. |
+| 172 | `statusBadge(status)` |  |
+| 185 | `statTiles(tiles)` | Falsy tiles are dropped, so callers can inline conditionals. |
+| 196 | `docHeader(id, partnerName, status, mode, partnerHref)` | A trade-document header: mono id + status/mode badges + the partner as a link. |
+| 208 | `cellIn(value, attrs)` | Line-grid cells: an editable numeric cell, and a read-only cell. |
+| 211 | `cellRO(value, tone)` |  |
+| 219 | `_drawerKey(e)` |  |
+| 220 | `openDrawer(html)` |  |
+| 239 | `closeDrawer(immediate)` |  |
+| 252 | `emptyState(title, sub)` |  |
+| 257 | `btn(label, ic, attrs, variant)` |  |
+| 261 | `linkBtn(label, ic, href, variant)` |  |
+| 276 | `sortState(table, defCol, defDir)` | A table's sort state, restored from the last visit if we have one. |
+| 281 | `rememberSort(table, col, dir)` |  |
+| 287 | `sortRows(rows, state, cols)` | Blanks always sort last, whichever direction you're going. |
+| 307 | `sortTh(state, key, cols)` |  |
+| 315 | `bindSort(container, table, state, cols, rerender)` |  |
+| 337 | `idb()` |  |
+| 346 | `idbAll(store)` |  |
+| 355 | `idbAdd(store, val)` |  |
+| 364 | `idbDel(store, id)` |  |
+| 378 | `url(path)` |  |
+| 380 | `rawFetch(path, opts)` |  |
+| 399 | `get(path)` |  |
+| 401 | `upload(path, file)` |  |
+| 416 | `write(path, method, body, label)` | Writes: try now; if offline, queue and replay later. |
+| 427 | `flushQueue()` |  |
+| 445 | `updateOffline()` |  |
+| 517 | `getCategories(force)` |  |
+| 523 | `refreshCategories()` |  |
+| 528 | `activeKey(path)` |  |
+| 540 | `routeTitle(path)` |  |
+| 552 | `showsBack(path)` |  |
+| 557 | `renderChrome(path)` |  |
+| 614 | `renderCategoryNav(path)` | The group is collapsed unless you're actually in the Items section. |
+| 645 | `apply()` |  |
+| 656 | `navItem(n, active)` |  |
+| 663 | `settingsTabs(activePath)` | The tab bar shared by every screen inside the Settings hub. |
+| 669 | `screen(html)` |  |
+| 672 | `setTopTitle(text)` | next route change by renderChrome(). |
+| 673 | `loading()` |  |
+| 674 | `errorView(e)` |  |
+| 685 | `viewDashboard()` |  |
+| 688 | `lowCard(title, rows, empty, kind)` |  |
+| 738 | `viewItems(scope)` |  |
+| 795 | `loadItems()` |  |
+| 814 | `renderItems()` | Sorting re-renders from the already-fetched rows — no round trip. |
+| 826 | `th(key)` |  |
+| 865 | `priceMarginStrip(i)` | only once a price is set; nothing to say for a pure material. |
+| 866 | `tile(label, price, gross, margin, pct)` |  |
+| 883 | `viewItem(id)` |  |
+| 1080 | `removePanel(i)` | (safe) or, when it has no history at all, delete permanently. |
+| 1130 | `movementForm(item, type)` |  |
+| 1150 | `inPacks()` |  |
+| 1151 | `baseQty()` |  |
+| 1152 | `updateHint()` |  |
+| 1174 | `viewItemForm(id, query)` |  |
+| 1185 | `field(name, label, value, type, wide)` |  |
+| 1190 | `group(title, inner)` |  |
+| 1250 | `genSku()` |  |
+| 1288 | `unitSelectHtml(units, current)` |  |
+| 1294 | `bindUnitSelect(units)` |  |
+| 1311 | `categorySelectHtml(cats, current)` |  |
+| 1317 | `bindCategorySelect(cats)` |  |
+| 1334 | `bindImage()` |  |
+| 1359 | `pricingHtml(i)` |  |
+| 1392 | `bindPricing(i)` |  |
+| 1410 | `rnd(x, d)` |  |
+| 1411 | `vat()` |  |
+| 1412 | `packSize()` |  |
+| 1413 | `fromNet()` |  |
+| 1414 | `fromGross()` |  |
+| 1415 | `fromPack()` |  |
+| 1423 | `currentCost()` | recipe's computed cost unless a manual override is in effect. |
+| 1431 | `wirePrice(netId, grossId, marginId)` | A net<->gross price pair, plus its live margin line. |
+| 1435 | `line()` |  |
+| 1456 | `refreshMargins()` | Cost, VAT and the manual toggle all move the margins. |
+| 1464 | `val(id)` |  |
+| 1470 | `viewRecipe(id)` |  |
+| 1483 | `dimOf(u)` |  |
+| 1484 | `factorOf(u)` |  |
+| 1485 | `compatUnits(base)` |  |
+| 1486 | `conv(q, from, to)` |  |
+| 1487 | `curYield()` |  |
+| 1488 | `perItemQty(c)` |  |
+| 1489 | `lineCostPerItem(c)` |  |
+| 1490 | `extraPerItem(e)` |  |
+| 1492 | `updateCosts()` |  |
+| 1511 | `setText(id2, t)` |  |
+| 1513 | `compRow(c, idx)` |  |
+| 1539 | `extraRow(e, idx)` |  |
+| 1556 | `render()` |  |
+| 1604 | `bind()` |  |
+| 1701 | `viewProduce(query)` |  |
+| 1734 | `pick(id, name, unit, yieldQty, img)` |  |
+| 1754 | `out()` |  |
+| 1763 | `checkPlan()` |  |
+| 1845 | `refresh()` |  |
+| 1875 | `runIt(qty, allowNeg, scrap, scrapNote)` |  |
+| 1897 | `viewScan()` |  |
+| 1914 | `onCode(code)` |  |
+| 1923 | `startScanner(host, cb)` |  |
+| 1949 | `stopScanner()` |  |
+| 1952 | `scanOnce(cb)` |  |
+| 1977 | `viewShop()` |  |
+| 2025 | `renderShopBody()` |  |
+| 2100 | `viewSettings()` |  |
+| 2163 | `viewCategories()` |  |
+| 2228 | `viewReports()` |  |
+| 2280 | `renderStockBody()` |  |
+| 2335 | `csvCell(v)` |  |
+| 2339 | `downloadCsv(filename, headers, rows)` |  |
+| 2349 | `splitCsvLine(line, delim)` |  |
+| 2363 | `parseCsv(text)` |  |
+| 2382 | `viewImport()` |  |
+| 2421 | `preview()` |  |
+| 2474 | `partnerRole(p)` | front only ever got in the way: everyone can trade both ways. |
+| 2481 | `viewPartners()` |  |
+| 2507 | `partnerForm(p)` |  |
+| 2517 | `locRowHtml(l, i)` |  |
+| 2536 | `conRowHtml(c, i)` |  |
+| 2551 | `readLocs()` |  |
+| 2564 | `readCons()` |  |
+| 2575 | `renderLocs()` |  |
+| 2583 | `renderCons()` |  |
+| 2646 | `viewPartner(id)` |  |
+| 2661 | `consignTable(rows, emptyTitle, emptySub, outstandingLabel)` |  |
+| 2712 | `directoryCard()` |  |
+| 2717 | `contactBits(name, role, email, phone)` |  |
+| 2858 | `savePrice(itemId, price)` |  |
+| 2894 | `printLetterhead(title, subtitle)` |  |
+| 2909 | `stat(label, value, mod)` | A handful of headline figures wants figures, not a chart. |
+| 2915 | `qual(text)` |  |
+| 2919 | `statRow(tiles)` | to CSS. Half the tiles per row, rounded up = exactly two rows on desktop. |
+| 2929 | `viewStatement(id, query)` |  |
+| 2938 | `setRange()` |  |
+| 3053 | `viewPurchases()` |  |
+| 3103 | `viewPurchase(id, query)` |  |
+| 3140 | `field(label, inner)` | The house form idiom: a labelled control inside .vgc-sm-formgrid. |
+| 3143 | `check(label, attrs)` |  |
+| 3147 | `vendor()` |  |
+| 3157 | `netCost(l)` | this is a no-op — one path, both kinds of vendor. |
+| 3162 | `sellNet(l)` |  |
+| 3163 | `sellGross(l)` |  |
+| 3164 | `billable(l)` |  |
+| 3171 | `marginOfMarkup(m)` | on the order screen later is never a surprise. |
+| 3176 | `totals()` |  |
+| 3202 | `syncForm()` |  |
+| 3213 | `lineHtml(l, idx)` |  |
+| 3214 | `f(label, html)` |  |
+| 3239 | `costBasis()` |  |
+| 3244 | `linesHtml()` |  |
+| 3248 | `refreshTotals()` |  |
+| 3263 | `set(idAttr, val)` |  |
+| 3268 | `render()` |  |
+| 3362 | `paymentsCard()` |  |
+| 3385 | `save()` |  |
+| 3402 | `wire()` |  |
+| 3543 | `addLine(base)` |  |
+| 3560 | `quickItemHtml()` | modal — the app has no dialog system and this needs no new one. |
+| 3577 | `wireQuickItem()` |  |
+| 3622 | `viewOrders()` |  |
+| 3668 | `viewOrder(id, query)` |  |
+| 3704 | `curPartner()` |  |
+| 3708 | `billable(l)` |  |
+| 3717 | `stripVat(amount, l)` | checkbox can never mean two things. Mirrors VGC_SM_Orders::strip_vat(). |
+| 3722 | `netUnit(l)` |  |
+| 3725 | `vatBasis()` | both of them, and a mis-read here is a wrong margin. |
+| 3730 | `netCost(l)` | Margin is ex-VAT on both sides — input VAT on materials is reclaimable. |
+| 3731 | `totals()` |  |
+| 3753 | `syncForm()` |  |
+| 3771 | `f(label, inner)` | field labels itself — so the numbers are never anonymous. |
+| 3775 | `lineHtml(l, idx)` |  |
+| 3777 | `q(field, label)` |  |
+| 3816 | `linesHtml(wantDisplay)` | though they are rendered in two groups. |
+| 3823 | `anyDisplay()` |  |
+| 3826 | `anyNormal()` |  |
+| 3830 | `refresh()` |  |
+| 3838 | `set(elId, txt)`  ⟵reassigned |  |
+| 3851 | `render()` |  |
+| 3974 | `bind()` |  |
+| 4089 | `save()` |  |
+| 4138 | `statusTag(s)` |  |
+| 4151 | `notesListHtml(notes, compact)` |  |
+| 4162 | `viewNotes()` |  |
+| 4183 | `viewNote(id, query)` |  |
+| 4213 | `curPartner()` |  |
+| 4220 | `netOf(l)` | from it and the line's VAT rate (and vice versa when you type gross). |
+| 4221 | `vatOf(l)` |  |
+| 4222 | `grossUnitOf(l)` |  |
+| 4226 | `totals()` |  |
+| 4233 | `syncForm()` | Keep whatever is typed in the shell before a re-render throws it away. |
+| 4246 | `render()` |  |
+| 4322 | `lineHtml(l, idx)` |  |
+| 4342 | `refreshTotals(skip)` | so we never overwrite what the user is in the middle of entering. |
+| 4364 | `payload()` |  |
+| 4387 | `saveDraft()` |  |
+| 4396 | `bind()` |  |
+| 4528 | `typeHint(type)` |  |
+| 4543 | `renderIssued(n)` |  |
+| 4637 | `viewOutstanding()` |  |
+| 4661 | `renderBody()` |  |
+| 4717 | `viewHeld()` |  |
+| 4746 | `renderBody()` |  |
+| 4787 | `wireReconcile()` |  |
+| 4841 | `viewHelp(query)` |  |
+| 4852 | `matches(s)` |  |
+| 4860 | `toc()` |  |
+| 4879 | `article()` |  |
+| 4913 | `viewTranslations()` |  |
+| 4923 | `visible()` |  |
+| 4933 | `rowsHtml()` |  |
+| 4953 | `render()` |  |
+| 4982 | `bindRows()` |  |
+| 4996 | `bind()` |  |
+| 5046 | `viewPull()` |  |
+| 5056 | `qp()` |  |
+| 5063 | `selectedRows()` |  |
+| 5064 | `updateCount()` |  |
+| 5068 | `findRow(id)` |  |
+| 5073 | `rowHtml(p)` |  |
+| 5094 | `renderBody()` |  |
+| 5116 | `renderPager()` |  |
+| 5131 | `renderShell()` |  |
+| 5194 | `doImport()` |  |
+| 5227 | `apply(d)` |  |
+| 5239 | `load(n)` |  |
+| 5251 | `notConnected()` |  |
+| 5256 | `pullError(e)` |  |
+| 5291 | `parseHash()` |  |
+| 5317 | `viewTeam()` |  |
+| 5365 | `viewAudit()` |  |
+| 5404 | `apply()` |  |
+| 5421 | `router()` |  |
+| 5474 | `viewItemForm(id, query)`  ⟵reassigned |  |
 
 ## PHP classes (includes/)
 
@@ -517,26 +527,28 @@
 | 122 | `get_item_by_sku($sku)` | Fetch one item by SKU. |
 | 137 | `get_item_by_barcode($code)` | Fetch one item by scanned barcode (falls back to SKU match). |
 | 162 | `seed_for_sale()` | One-time seed of the for_sale flag when the column is first added: an item |
-| 171 | `list_items(array $args = array()` |  |
-| 222 | `get_categories()` | All categories, ordered. |
-| 236 | `create_category($name)` | Create a category (returns the existing one if the name already exists). |
-| 273 | `update_category($id, $name)` | Rename a category. |
-| 288 | `delete_category($id)` | Delete a category; items in it become uncategorised. |
-| 300 | `category_map()` | Map of category id => name. |
-| 319 | `get_units()` | The list of selectable units, seeded with the base set. |
-| 333 | `add_unit($unit)` | Add a unit to the list (case-insensitive de-dupe). Returns the full list. |
-| 366 | `item_usage($item_id)` | Names of the products whose recipe uses this item as a component. |
-| 386 | `movement_count($item_id)` | How many ledger movements an item has (its history). |
-| 400 | `archive_item($item_id)` | Archive an item: hidden everywhere, but its history and any recipe it owns |
-| 419 | `delete_item($item_id)` | Permanently delete an item and everything that belongs to it: its recipe |
-| 451 | `record_movement($item_id, $type, $qty, array $meta = array()` | Append a signed movement and update the cached stock. This is the single |
-| 505 | `recompute_stock($item_id)` | Rebuild the cached stock_qty for an item from the ledger. |
-| 520 | `get_stock($item_id)` | Current cached stock for an item. |
-| 537 | `get_bom($output_item_id)` | Get the recipe header for a manufactured item, or null. |
-| 552 | `get_bom_items($bom_id)` | Get the component rows of a recipe. |
-| 568 | `save_bom($output_item_id, $yield_qty, array $components, array $extra)` | Create or replace a recipe for an output item. |
-| 650 | `get_bom_extras($bom_id)` | Get the extra (non-material) cost rows of a recipe. |
-| 668 | `sanitize_item(array $data)` | Whitelist + sanitize the writable item fields. |
+| 180 | `maybe_seed_for_sale()` | Seed the product/material split only if it never took — i.e. nothing is |
+| 199 | `ensure_item_columns()` | Ensure the newer item columns exist, adding any that are missing. |
+| 221 | `list_items(array $args = array()` |  |
+| 272 | `get_categories()` | All categories, ordered. |
+| 286 | `create_category($name)` | Create a category (returns the existing one if the name already exists). |
+| 323 | `update_category($id, $name)` | Rename a category. |
+| 338 | `delete_category($id)` | Delete a category; items in it become uncategorised. |
+| 350 | `category_map()` | Map of category id => name. |
+| 369 | `get_units()` | The list of selectable units, seeded with the base set. |
+| 383 | `add_unit($unit)` | Add a unit to the list (case-insensitive de-dupe). Returns the full list. |
+| 416 | `item_usage($item_id)` | Names of the products whose recipe uses this item as a component. |
+| 436 | `movement_count($item_id)` | How many ledger movements an item has (its history). |
+| 450 | `archive_item($item_id)` | Archive an item: hidden everywhere, but its history and any recipe it owns |
+| 469 | `delete_item($item_id)` | Permanently delete an item and everything that belongs to it: its recipe |
+| 501 | `record_movement($item_id, $type, $qty, array $meta = array()` | Append a signed movement and update the cached stock. This is the single |
+| 555 | `recompute_stock($item_id)` | Rebuild the cached stock_qty for an item from the ledger. |
+| 570 | `get_stock($item_id)` | Current cached stock for an item. |
+| 587 | `get_bom($output_item_id)` | Get the recipe header for a manufactured item, or null. |
+| 602 | `get_bom_items($bom_id)` | Get the component rows of a recipe. |
+| 618 | `save_bom($output_item_id, $yield_qty, array $components, array $extra)` | Create or replace a recipe for an output item. |
+| 700 | `get_bom_extras($bom_id)` | Get the extra (non-material) cost rows of a recipe. |
+| 718 | `sanitize_item(array $data)` | Whitelist + sanitize the writable item fields. |
 
 ### class-rest-api.php
 

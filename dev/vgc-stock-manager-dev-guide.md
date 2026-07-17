@@ -126,6 +126,18 @@ Rules that must hold:
 | `canWrite`/`canManage`/`isAdmin` | — | UI permission gates (server also enforces). |
 | `translateTree` | `translateTree(root)` | Walks text nodes + `placeholder/title/aria-label`, replacing any that **exactly** match an i18n key. |
 
+**Design-v2 primitives** (Phase 0 of the redesign, `vgc-stock-manager-design-v2.html`) — global helpers, adopted screen-by-screen:
+
+| Helper | Renders |
+|---|---|
+| `badge(text, kind)` | A `.vgc-sm-tag--{kind}` pill. Taxonomy: **roles** filled (`product`/`material`/`customer`/`supplier`), **sourcing** outlined (`made`/`bought`/`draft`), **status** semantic (`open`/`completed`/`overdue`), attributes (`sellable`/`store`/`consignment`). |
+| `roleBadges(forSale, kind)` | Role + sourcing pair (the two that once collided). |
+| `statusBadge(status)` | Maps a status string → the right badge kind. |
+| `statTiles(tiles)` | The unified document summary — `.vgc-sm-tiles`/`.vgc-sm-tile`, `tone: 'hero'` (dark inverted) / `'good'` / `'bad'`, mono tabular values. Falsy tiles dropped. |
+| `docHeader(id, partner, status, mode, href)` | Trade-document header (`.vgc-sm-dochead`). |
+| `cellIn(value, attrs)` / `cellRO(value, tone)` | Editable / read-only line-grid cells (`.vgc-sm-cellin` / `.vgc-sm-cellro`). |
+| `openDrawer(html)` / `closeDrawer()` | Right-side slide-in drawer (`.vgc-sm-drawerov`/`.vgc-sm-drawer`, `__head`/`__body`/`__foot`). Closes on overlay, Escape, or `[data-drawer-close]`; moves focus in and restores it. |
+
 **Routing:** `router()` calls `parseHash()` → `{ path, query }`, then a chain of `if (r.path === '/x')` → `viewX()`. Add a route there. `activeKey(path)` decides which nav entry highlights.
 
 **i18n in views:** you can either wrap a string in `t('…')` **or** write the English literal directly — `translateTree` (run by `screen()`) translates exact text-node matches. Either way the **English string must exist as a key** in `class-i18n.php`. New strings → add the key + BG value.
@@ -199,7 +211,7 @@ The single most common task. Touch these, in order:
 - **Two UI elements using the same words for different concepts.** After the material/product split, the `kind` tag (`tagHtml`) still rendered "Product"/"Material" — the same words as the new `for_sale` role badge — so a made item marked as a material showed *both* "Material" and "Product", and a saved role change looked like it "didn't save" because the second tag never moved. Fix: the sourcing tag says "Made"/"Bought", the role badge owns "Product"/"Material". **When you add a concept that reuses existing words, grep for the old use.** (1.22.1)
 - **Helper out of scope for `i`.** A view helper defined outside the `.then` closure referencing `i` → "i is not defined", blank screen. Fix: pass `i` in. (1.20.0)
 - **A wrapper that drops a new argument.** `viewItemForm` is reassigned by a barcode-prefill wrapper `function (id){ origItemForm(id) }`; adding a 2nd param (`query`) silently failed until the wrapper forwarded it. **When you add a parameter, grep for `X = function` / `var origX = X` wrappers.** (1.21.0)
-- **CSS class-name collision.** New tiles reused `.vgc-sm-stat`, an orphan rule from a replaced component, and inherited flex layout. **Grep the class before naming.** (1.16.1)
+- **CSS class-name collision.** New tiles reused `.vgc-sm-stat`, an orphan rule from a replaced component, and inherited flex layout. **Grep the class before naming.** (1.16.1) — averted again in Phase 0: `.vgc-sm-badge` was already the nav notification dot, so the design's pill "badges" map onto `.vgc-sm-tag` instead.
 - **`.vgc-sm-ov` didn't exist** — invented a class instead of the real `.vgc-sm-of__ro`. Verify classes exist.
 - **Invented helper names** (`post`/`put`/`del_`/`dialog`/`today`) — the real ones are `rawFetch`/`confirm()`/`new Date().toISOString().slice(0,10)`. Check §5 before calling.
 - **Translation said the opposite:** cost was labelled «Единична цена» (unit *price*) → users typed sale prices into the cost field. Now «Себестойност». Read the BG value, not just the key.
