@@ -27,15 +27,15 @@
 | 3050 | Screen: Purchases — the inbound mirror of an order |
 | 3100 | Screen: Purchase — a living, always-editable document |
 | 3665 | Screen: Order — a living, always-editable document |
-| 4119 | Screen: Stock notes |
-| 4180 | Screen: Note editor / viewer |
-| 4627 | Screen: Out on consignment |
-| 4707 | Screen: Held stock (goods we hold from makers) |
-| 4835 | Screen: Help / wiki |
-| 4908 | Screen: Translations editor |
-| 5041 | Screen: Pull products from the shop |
-| 5306 | Screen: Team (admin) |
-| 5360 | Screen: Activity log (admin) |
+| 4115 | Screen: Stock notes |
+| 4176 | Screen: Note editor / viewer |
+| 4623 | Screen: Out on consignment |
+| 4703 | Screen: Held stock (goods we hold from makers) |
+| 4831 | Screen: Help / wiki |
+| 4904 | Screen: Translations editor |
+| 5037 | Screen: Pull products from the shop |
+| 5302 | Screen: Team (admin) |
+| 5356 | Screen: Activity log (admin) |
 
 ### Functions
 
@@ -235,64 +235,64 @@
 | 3816 | `linesHtml(wantDisplay)` | though they are rendered in two groups. |
 | 3823 | `anyDisplay()` |  |
 | 3826 | `anyNormal()` |  |
-| 3830 | `refresh()` |  |
-| 3838 | `set(elId, txt)`  ⟵reassigned |  |
-| 3851 | `render()` |  |
-| 3974 | `bind()` |  |
-| 4089 | `save()` |  |
-| 4138 | `statusTag(s)` |  |
-| 4151 | `notesListHtml(notes, compact)` |  |
-| 4162 | `viewNotes()` |  |
-| 4183 | `viewNote(id, query)` |  |
-| 4213 | `curPartner()` |  |
-| 4220 | `netOf(l)` | from it and the line's VAT rate (and vice versa when you type gross). |
-| 4221 | `vatOf(l)` |  |
-| 4222 | `grossUnitOf(l)` |  |
-| 4226 | `totals()` |  |
-| 4233 | `syncForm()` | Keep whatever is typed in the shell before a re-render throws it away. |
-| 4246 | `render()` |  |
-| 4322 | `lineHtml(l, idx)` |  |
-| 4342 | `refreshTotals(skip)` | so we never overwrite what the user is in the middle of entering. |
-| 4364 | `payload()` |  |
-| 4387 | `saveDraft()` |  |
-| 4396 | `bind()` |  |
-| 4528 | `typeHint(type)` |  |
-| 4543 | `renderIssued(n)` |  |
-| 4637 | `viewOutstanding()` |  |
-| 4661 | `renderBody()` |  |
-| 4717 | `viewHeld()` |  |
-| 4746 | `renderBody()` |  |
-| 4787 | `wireReconcile()` |  |
-| 4841 | `viewHelp(query)` |  |
-| 4852 | `matches(s)` |  |
-| 4860 | `toc()` |  |
-| 4879 | `article()` |  |
-| 4913 | `viewTranslations()` |  |
-| 4923 | `visible()` |  |
-| 4933 | `rowsHtml()` |  |
-| 4953 | `render()` |  |
-| 4982 | `bindRows()` |  |
-| 4996 | `bind()` |  |
-| 5046 | `viewPull()` |  |
-| 5056 | `qp()` |  |
-| 5063 | `selectedRows()` |  |
-| 5064 | `updateCount()` |  |
-| 5068 | `findRow(id)` |  |
-| 5073 | `rowHtml(p)` |  |
-| 5094 | `renderBody()` |  |
-| 5116 | `renderPager()` |  |
-| 5131 | `renderShell()` |  |
-| 5194 | `doImport()` |  |
-| 5227 | `apply(d)` |  |
-| 5239 | `load(n)` |  |
-| 5251 | `notConnected()` |  |
-| 5256 | `pullError(e)` |  |
-| 5291 | `parseHash()` |  |
-| 5317 | `viewTeam()` |  |
-| 5365 | `viewAudit()` |  |
-| 5404 | `apply()` |  |
-| 5421 | `router()` |  |
-| 5474 | `viewItemForm(id, query)`  ⟵reassigned |  |
+| 3833 | `orderTiles(tt)` | balance, a negative margin) follows the numbers. |
+| 3844 | `refresh()` |  |
+| 3858 | `render()` |  |
+| 3970 | `bind()` |  |
+| 4085 | `save()` |  |
+| 4134 | `statusTag(s)` |  |
+| 4147 | `notesListHtml(notes, compact)` |  |
+| 4158 | `viewNotes()` |  |
+| 4179 | `viewNote(id, query)` |  |
+| 4209 | `curPartner()` |  |
+| 4216 | `netOf(l)` | from it and the line's VAT rate (and vice versa when you type gross). |
+| 4217 | `vatOf(l)` |  |
+| 4218 | `grossUnitOf(l)` |  |
+| 4222 | `totals()` |  |
+| 4229 | `syncForm()` | Keep whatever is typed in the shell before a re-render throws it away. |
+| 4242 | `render()` |  |
+| 4318 | `lineHtml(l, idx)` |  |
+| 4338 | `refreshTotals(skip)` | so we never overwrite what the user is in the middle of entering. |
+| 4360 | `payload()` |  |
+| 4383 | `saveDraft()` |  |
+| 4392 | `bind()` |  |
+| 4524 | `typeHint(type)` |  |
+| 4539 | `renderIssued(n)` |  |
+| 4633 | `viewOutstanding()` |  |
+| 4657 | `renderBody()` |  |
+| 4713 | `viewHeld()` |  |
+| 4742 | `renderBody()` |  |
+| 4783 | `wireReconcile()` |  |
+| 4837 | `viewHelp(query)` |  |
+| 4848 | `matches(s)` |  |
+| 4856 | `toc()` |  |
+| 4875 | `article()` |  |
+| 4909 | `viewTranslations()` |  |
+| 4919 | `visible()` |  |
+| 4929 | `rowsHtml()` |  |
+| 4949 | `render()` |  |
+| 4978 | `bindRows()` |  |
+| 4992 | `bind()` |  |
+| 5042 | `viewPull()` |  |
+| 5052 | `qp()` |  |
+| 5059 | `selectedRows()` |  |
+| 5060 | `updateCount()` |  |
+| 5064 | `findRow(id)` |  |
+| 5069 | `rowHtml(p)` |  |
+| 5090 | `renderBody()` |  |
+| 5112 | `renderPager()` |  |
+| 5127 | `renderShell()` |  |
+| 5190 | `doImport()` |  |
+| 5223 | `apply(d)` |  |
+| 5235 | `load(n)` |  |
+| 5247 | `notConnected()` |  |
+| 5252 | `pullError(e)` |  |
+| 5287 | `parseHash()` |  |
+| 5313 | `viewTeam()` |  |
+| 5361 | `viewAudit()` |  |
+| 5400 | `apply()` |  |
+| 5417 | `router()` |  |
+| 5470 | `viewItemForm(id, query)`  ⟵reassigned |  |
 
 ## PHP classes (includes/)
 
