@@ -77,7 +77,7 @@ def index_php(path):
     rows = []
     cls = None
     for i, ln in enumerate(lines):
-        m = re.match(r'\s*(?:abstract\s+|final\s+)?class ([A-Za-z0-9_]+)', ln)
+        m = re.match(r'\s*(?:abstract\s+|final\s+)?(?:class|trait|interface) ([A-Za-z0-9_]+)', ln)
         if m:
             cls = m.group(1)
             rows.append((i + 1, 'class', cls, ''))
@@ -120,13 +120,17 @@ def main():
     # ---- PHP ----
     out.append('## PHP classes (includes/)')
     out.append('')
-    for fn in sorted(os.listdir(os.path.join(PLUGIN, 'includes'))):
-        if not fn.endswith('.php'):
-            continue
-        rows = index_php(os.path.join(PLUGIN, 'includes', fn))
+    php_files = []
+    for dirpath, _dirs, files in os.walk(os.path.join(PLUGIN, 'includes')):
+        for fn in files:
+            if fn.endswith('.php'):
+                php_files.append(os.path.join(dirpath, fn))
+    for full in sorted(php_files, key=lambda p: os.path.relpath(p, os.path.join(PLUGIN, 'includes'))):
+        rel = os.path.relpath(full, os.path.join(PLUGIN, 'includes')).replace('\\', '/')
+        rows = index_php(full)
         if not rows:
             continue
-        out.append('### %s' % fn)
+        out.append('### %s' % rel)
         out.append('')
         out.append('| line | member | purpose |')
         out.append('|---|---|---|')

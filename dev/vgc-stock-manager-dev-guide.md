@@ -39,7 +39,8 @@ PHP (`includes/`), one class per concern:
 | `class-purchases.php` | `VGC_SM_Purchases` | **Purchases** — mutable inbound document (buy/consignment), mirror of Orders |
 | `class-store.php` | `VGC_SM_Store` | Physical-store allocation (`store_qty` bucket, `store_ledger`) |
 | `class-sync-client.php` | `VGC_SM_Sync` | Talks to the Bridge (push stock, read shop stock) |
-| `class-rest-api.php` | `VGC_SM_REST_API` | **Every REST route + handler + `shape_*` decorators.** The other monster (3k lines) |
+| `class-rest-api.php` | `VGC_SM_REST_API` | The **route table** (`register_routes`), permission callbacks, `error_response`. ~620 lines. |
+| `rest/trait-*.php` | traits on `VGC_SM_REST_API` | **Handlers + `shape_*`**, grouped by resource: items, production, partners, notes, orders, purchases, shop, reports, admin. Composed into the main class (1.22.0). |
 | `class-i18n.php` | `VGC_SM_I18n` | The Bulgarian catalogue (English source string → BG), overrides |
 | `class-access.php` | `VGC_SM_Access` | The 4 permission levels (viewer/operator/manager/admin) |
 | `class-audit.php` | `VGC_SM_Audit` | Activity log |
@@ -87,7 +88,8 @@ Rules that must hold:
 
 ## 4. PHP conventions
 
-- **REST routes** live in `VGC_SM_REST_API::init()` via `register_rest_route`. Permission callbacks are set once near the top: `$auth` (viewer+), `$write` (operator+), `$mgr` (manager+), `$admin`. Pick the tightest that fits.
+- **REST routes** are all registered in one place — `VGC_SM_REST_API::register_routes()` in `class-rest-api.php` (the whole API surface at a glance). Permission callbacks are set once near the top: `$auth` (viewer+), `$write` (operator+), `$mgr` (manager+), `$admin`. Pick the tightest that fits.
+- **REST handlers live in resource traits** (`includes/rest/trait-<resource>.php`), composed into `VGC_SM_REST_API`. To add an endpoint: register the route in `register_routes()`, add the handler method to the matching trait. `self::`, `__CLASS__` and `array( __CLASS__, 'x' )` all resolve to the composed class, so a handler in one trait can call a `shape_*`/helper in another (or in the main class) freely. Every method name must be unique across all traits + the main class (PHP fatals on a trait collision — which is a useful guard). Verify a REST refactor with the route-dump + reflection harnesses in scratch (see §9).
 - **`shape_*($row)`** functions turn a DB row into the JSON the app expects (numbers as numbers, derived fields, translated where needed). One per entity: `shape_item`, `shape_order`, `shape_purchase`, `shape_partner`, `shape_note`. The list endpoints map `shape_*` over rows.
 - **Writable columns are whitelisted** in `VGC_SM_Repository::sanitize_item` (and the parallel lists in `item_input` / `shape_item`). A column not in the whitelist can't be written — that's how `stock_qty`/`store_qty` stay guarded.
 - **Migrations:** bump `VGC_STOCK_MANAGER_DB_VERSION` and add a `dbDelta` for new tables/columns in `class-install.php` (dbDelta adds columns in place). Data backfills go in `vgc-stock-manager.php` as **one-time, option-guarded** blocks (`if ( ! get_option('vgc_sm_x') ) { …; update_option('vgc_sm_x', 1); }`).
@@ -213,7 +215,7 @@ The app works and is only tested on staging, so **a big-bang refactor is high-ri
 
 1. **Regenerate the codemap after structural edits** (`python vgc-stock-manager-codemap.py`) — near-zero cost, keeps navigation fast. (This is the real speed unlock.)
 2. **Extract one shared money helper.** `strip_vat`/net↔gross/margin logic is duplicated across `class-orders.php`, `class-purchases.php`, and the item form JS. A shared PHP trait/util and one JS helper would remove ~4 copies. Do it the next time one of them changes.
-3. **Split `class-rest-api.php` (3.2k lines)** by resource (items / orders / purchases / partners / notes) using PHP traits or per-resource classes that register their own routes. Mechanical and safe-ish; big readability win.
+3. ~~**Split `class-rest-api.php` (3.2k lines)** by resource.~~ **DONE (1.22.0)** — handlers moved into 9 resource traits under `includes/rest/`; the main class kept the route table + permission callbacks (~620 lines). Verified route-for-route identical (route-dump harness) and all 98 methods present with none extra (reflection harness). Scratch harnesses: `route-dump.php`, `reflect-check2.php`, `extract-traits.php`.
 4. **`app.js` is one 5.4k-line IIFE.** A build-free split into several `<script>` files sharing one namespace object is *possible* but touches the frontend enqueue and the closure model — only worth it if it keeps growing. Not now.
 5. **Kill dead code** as found (e.g. the `type` partner column is retained but unread since 1.18.0; `itemsState.kind` removed in 1.21.0). Grep-verify before deleting.
 

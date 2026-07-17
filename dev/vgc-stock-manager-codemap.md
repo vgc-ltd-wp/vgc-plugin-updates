@@ -542,105 +542,15 @@
 
 | line | member | purpose |
 |---|---|---|
-| 19 | **VGC_SM_REST_API** |  |
-| 24 | `init()` | Hook registration. |
-| 33 | `authorize()` | Shared permission check. |
-| 45 | `authorize_admin()` | Admin-only permission check (connection settings). |
-| 57 | `require_operator()` | Require at least the operator level (day-to-day changes). |
-| 66 | `require_manager()` | Require at least the manager level (partners, prices, deletes, shop ops). |
-| 76 | `require_level($level)` | Shared level gate. |
-| 90 | `register_routes()` | Register all routes. |
-| 601 | `shop_products(WP_REST_Request $req)` | GET /shop/products — list products on the shop, via the Bridge. |
-| 639 | `shop_product_categories(WP_REST_Request $req)` | GET /shop/product-categories — shop categories for the pull filter. |
-| 664 | `shop_pull(WP_REST_Request $req)` | POST /shop/pull — create local items from shop products. |
-| 771 | `sideload_image($url, $desc)` | Download a remote image into the media library and return its attachment id. |
-| 808 | `item_shop_stock(WP_REST_Request $req)` | GET /items/{id}/shop-stock — how many of this item the shop currently holds. |
-| 845 | `report_stock()` | GET /reports/stock — everything currently in stock, with value at cost. |
-| 897 | `report_production(WP_REST_Request $req)` | GET /reports/production?days=30 — completed runs (and scrap) in the period. |
-| 1008 | `import_items(WP_REST_Request $req)` | POST /items/import — upsert items by SKU. |
-| 1089 | `get_settings()` | GET /settings — never returns the token itself, only whether one is set. |
-| 1110 | `save_settings(WP_REST_Request $req)` | POST /settings |
-| 1129 | `test_connection()` | POST /settings/test — ping the Bridge. |
-| 1142 | `help()` | GET /help — the in-app wiki. |
-| 1161 | `shape_partner($p)` | Shape a partner row for JSON. |
-| 1196 | `shape_location($l)` | Shape a location row. |
-| 1215 | `shape_contact($c)` | Shape a contact row. |
-| 1232 | `list_partners(WP_REST_Request $req)` | GET /partners |
-| 1260 | `get_partner(WP_REST_Request $req)` | GET /partners/{id} — with outstanding stock, notes and price list. |
-| 1318 | `create_partner(WP_REST_Request $req)` | POST /partners |
-| 1334 | `update_partner(WP_REST_Request $req)` | PUT /partners/{id} |
-| 1354 | `save_partner_relations($id, WP_REST_Request $req)` | Persist a partner's locations and contacts if the request carried them, |
-| 1379 | `get_partner_by_id($id)` | Build the full partner response for a given id (a WP_REST_Request wrapper |
-| 1391 | `archive_partner(WP_REST_Request $req)` | DELETE /partners/{id} — archives (its notes and ledger must survive). |
-| 1405 | `set_partner_price(WP_REST_Request $req)` | POST /partners/{id}/prices — set or clear one agreed price. |
-| 1421 | `partner_statement(WP_REST_Request $req)` | GET /partners/{id}/statement?from=&to= — money owed both ways over a period. |
-| 1445 | `clean_date($v)` | Validate a Y-m-d date parameter, or null. |
-| 1456 | `partner_input(WP_REST_Request $req)` | Writable partner fields. |
-| 1477 | `shape_note($n)` | Shape a note (with lines if present). |
-| 1551 | `list_notes(WP_REST_Request $req)` | GET /notes |
-| 1573 | `get_note(WP_REST_Request $req)` | GET /notes/{id} |
-| 1587 | `save_note(WP_REST_Request $req)` | POST /notes (create) or PUT /notes/{id} (edit a draft). |
-| 1616 | `delete_note(WP_REST_Request $req)` | DELETE /notes/{id} — drafts only. |
-| 1630 | `issue_note(WP_REST_Request $req)` | POST /notes/{id}/issue |
-| 1649 | `cancel_note(WP_REST_Request $req)` | POST /notes/{id}/cancel |
-| 1664 | `pay_note(WP_REST_Request $req)` | POST /notes/{id}/paid |
-| 1680 | `outstanding(WP_REST_Request $req)` | GET /consignment/outstanding — what we have shipped (direction=out, the |
-| 1714 | `publish_held(WP_REST_Request $req)` | POST /consignment/publish — list held units for an item on the shop. |
-| 1731 | `unpublish_held(WP_REST_Request $req)` | POST /consignment/unpublish — pull an item's published held units back off. |
-| 1748 | `reconcile_preview(WP_REST_Request $req)` | GET /consignment/reconcile — preview what shop sales would be booked. |
-| 1761 | `reconcile_apply(WP_REST_Request $req)` | POST /consignment/reconcile — book the detected shop sales as sold_held notes. |
-| 1781 | `get_translations(WP_REST_Request $req)` | GET /translations?lang=bg — every translatable string with its shipped |
-| 1816 | `save_translations(WP_REST_Request $req)` | POST /translations — save edited strings. |
-| 1834 | `reset_translations(WP_REST_Request $req)` | POST /translations/reset — drop all edits for a language. |
-| 1850 | `shop_levels()` | GET /shop/levels — sellable items with local vs shop stock. |
-| 1867 | `shop_push(WP_REST_Request $req)` | POST /shop/push — push one item to the shop (set = local, or a delta). |
-| 1886 | `list_items(WP_REST_Request $req)` | GET /items |
-| 1912 | `get_item(WP_REST_Request $req)` | GET /items/{id} |
-| 1935 | `lookup_item(WP_REST_Request $req)` | GET /items/lookup?code= |
-| 1961 | `remove_item(WP_REST_Request $req)` | DELETE /items/{id} — archive (default) or permanently delete. |
-| 2010 | `suggest_sku(WP_REST_Request $req)` | GET /items/suggest-sku?name= |
-| 2020 | `create_item(WP_REST_Request $req)` | POST /items |
-| 2036 | `update_item(WP_REST_Request $req)` | PUT/PATCH /items/{id} |
-| 2053 | `item_movements(WP_REST_Request $req)` | GET /items/{id}/movements |
-| 2089 | `create_movement(WP_REST_Request $req)` | POST /movements — receive, ship, adjust (signed delta) or set (absolute). |
-| 2157 | `store_distribute(WP_REST_Request $req)` | POST /items/{id}/store-distribute — move units between workshop and store |
-| 2182 | `store_sell(WP_REST_Request $req)` | POST /items/{id}/store-sell — record a sale at the store: units leave the |
-| 2217 | `upload_media(WP_REST_Request $req)` | POST /media — upload an image (multipart 'file') into the media library. |
-| 2273 | `list_categories()` | GET /categories |
-| 2289 | `add_category(WP_REST_Request $req)` | POST /categories |
-| 2306 | `rename_category(WP_REST_Request $req)` | PUT /categories/{id} |
-| 2317 | `remove_category(WP_REST_Request $req)` | DELETE /categories/{id} |
-| 2322 | `list_units()` |  |
-| 2332 | `add_unit(WP_REST_Request $req)` | POST /units |
-| 2350 | `get_recipe(WP_REST_Request $req)` | GET /recipe/{id} |
-| 2392 | `save_recipe(WP_REST_Request $req)` | PUT /recipe/{id} — replace the recipe (with cycle protection). |
-| 2440 | `production_preview(WP_REST_Request $req)` | GET /production/preview |
-| 2451 | `production_plan(WP_REST_Request $req)` | GET /production/plan |
-| 2462 | `production_run(WP_REST_Request $req)` | POST /production/run |
-| 2491 | `dashboard()` | GET /dashboard — low-stock lists and headline counts. |
-| 2517 | `category_names()` | Category id => name, memoised per request (shape_item runs per row). |
-| 2531 | `shape_item($row)` | Cast a DB item row into a JSON-friendly shape (numbers as numbers). |
-| 2619 | `item_input(WP_REST_Request $req)` | Collect writable item fields from a request. |
-| 2637 | `error_response(WP_Error $err)` | Turn a WP_Error into a REST response carrying its data (e.g. shortages). |
-| 2656 | `list_team(WP_REST_Request $req)` | GET /team — every user, with their app level. Admins are shown locked. |
-| 2687 | `set_team_level(WP_REST_Request $req)` | POST /team/{id} — set a user's app level (viewer\|operator\|manager\|none). |
-| 2726 | `shape_order($o)` | Shape an order for JSON, with its lines and rolled-up totals. |
-| 2827 | `shape_purchase($p)` | Shape a purchase for the app. |
-| 2917 | `list_purchases(WP_REST_Request $req)` | GET /purchases |
-| 2939 | `get_purchase(WP_REST_Request $req)` | GET /purchases/{id} |
-| 2953 | `save_purchase(WP_REST_Request $req)` | POST /purchases \| PUT /purchases/{id} |
-| 2968 | `delete_purchase(WP_REST_Request $req)` | DELETE /purchases/{id} |
-| 2982 | `add_purchase_payment(WP_REST_Request $req)` | POST /purchases/{id}/payments |
-| 2996 | `delete_purchase_payment(WP_REST_Request $req)` | DELETE /purchases/{id}/payments/{pid} |
-| 3010 | `complete_purchase(WP_REST_Request $req)` | POST /purchases/{id}/complete |
-| 3025 | `list_orders(WP_REST_Request $req)` | GET /orders |
-| 3049 | `get_order(WP_REST_Request $req)` | GET /orders/{id} |
-| 3063 | `save_order(WP_REST_Request $req)` | POST /orders (create) or PUT /orders/{id} (edit — always allowed). |
-| 3113 | `delete_order(WP_REST_Request $req)` | DELETE /orders/{id} |
-| 3130 | `add_order_payment(WP_REST_Request $req)` | POST /orders/{id}/payments — record one payment towards the order. |
-| 3165 | `delete_order_payment(WP_REST_Request $req)` | DELETE /orders/{id}/payments/{pid} |
-| 3177 | `complete_order(WP_REST_Request $req)` | POST /orders/{id}/complete — body { complete: 0\|1 }. Never final. |
-| 3198 | `list_audit(WP_REST_Request $req)` | GET /audit — the activity log, filtered and paginated. |
+| 37 | **VGC_SM_REST_API** |  |
+| 44 | `init()` | Hook registration. |
+| 53 | `authorize()` | Shared permission check. |
+| 65 | `authorize_admin()` | Admin-only permission check (connection settings). |
+| 77 | `require_operator()` | Require at least the operator level (day-to-day changes). |
+| 86 | `require_manager()` | Require at least the manager level (partners, prices, deletes, shop ops). |
+| 96 | `require_level($level)` | Shared level gate. |
+| 110 | `register_routes()` | Register all routes. |
+| 621 | `error_response(WP_Error $err)` | Turn a WP_Error into a REST response carrying its data (e.g. shortages). |
 
 ### class-store.php
 
@@ -702,3 +612,147 @@
 | 98 | `plugin_info($result, $action, $args)` |  |
 | 123 | `fix_source_dir($source, $remote_source, $upgrader, $args = array()` |  |
 | 138 | `flush_cache()` |  |
+
+### rest/trait-admin.php
+
+| line | member | purpose |
+|---|---|---|
+| 12 | **VGC_SM_REST_Admin** |  |
+| 28 | `import_items(WP_REST_Request $req)` | POST /items/import — upsert items by SKU. |
+| 106 | `list_team(WP_REST_Request $req)` | GET /team — every user, with their app level. Admins are shown locked. |
+| 137 | `set_team_level(WP_REST_Request $req)` | POST /team/{id} — set a user's app level (viewer\|operator\|manager\|none). |
+| 172 | `list_audit(WP_REST_Request $req)` | GET /audit — the activity log, filtered and paginated. |
+
+### rest/trait-items.php
+
+| line | member | purpose |
+|---|---|---|
+| 12 | **VGC_SM_REST_Items** |  |
+| 20 | `list_items(WP_REST_Request $req)` | GET /items |
+| 46 | `get_item(WP_REST_Request $req)` | GET /items/{id} |
+| 69 | `lookup_item(WP_REST_Request $req)` | GET /items/lookup?code= |
+| 95 | `remove_item(WP_REST_Request $req)` | DELETE /items/{id} — archive (default) or permanently delete. |
+| 144 | `suggest_sku(WP_REST_Request $req)` | GET /items/suggest-sku?name= |
+| 154 | `create_item(WP_REST_Request $req)` | POST /items |
+| 170 | `update_item(WP_REST_Request $req)` | PUT/PATCH /items/{id} |
+| 187 | `item_movements(WP_REST_Request $req)` | GET /items/{id}/movements |
+| 223 | `create_movement(WP_REST_Request $req)` | POST /movements — receive, ship, adjust (signed delta) or set (absolute). |
+| 291 | `store_distribute(WP_REST_Request $req)` | POST /items/{id}/store-distribute — move units between workshop and store |
+| 316 | `store_sell(WP_REST_Request $req)` | POST /items/{id}/store-sell — record a sale at the store: units leave the |
+| 342 | `upload_media(WP_REST_Request $req)` | POST /media — upload an image (multipart 'file') into the media library. |
+| 398 | `list_categories()` | GET /categories |
+| 414 | `add_category(WP_REST_Request $req)` | POST /categories |
+| 431 | `rename_category(WP_REST_Request $req)` | PUT /categories/{id} |
+| 442 | `remove_category(WP_REST_Request $req)` | DELETE /categories/{id} |
+| 447 | `list_units()` |  |
+| 457 | `add_unit(WP_REST_Request $req)` | POST /units |
+| 470 | `category_names()` | Category id => name, memoised per request (shape_item runs per row). |
+| 484 | `shape_item($row)` | Cast a DB item row into a JSON-friendly shape (numbers as numbers). |
+| 572 | `item_input(WP_REST_Request $req)` | Collect writable item fields from a request. |
+
+### rest/trait-notes.php
+
+| line | member | purpose |
+|---|---|---|
+| 12 | **VGC_SM_REST_Notes** |  |
+| 20 | `shape_note($n)` | Shape a note (with lines if present). |
+| 94 | `list_notes(WP_REST_Request $req)` | GET /notes |
+| 116 | `get_note(WP_REST_Request $req)` | GET /notes/{id} |
+| 130 | `save_note(WP_REST_Request $req)` | POST /notes (create) or PUT /notes/{id} (edit a draft). |
+| 159 | `delete_note(WP_REST_Request $req)` | DELETE /notes/{id} — drafts only. |
+| 173 | `issue_note(WP_REST_Request $req)` | POST /notes/{id}/issue |
+| 192 | `cancel_note(WP_REST_Request $req)` | POST /notes/{id}/cancel |
+| 207 | `pay_note(WP_REST_Request $req)` | POST /notes/{id}/paid |
+| 223 | `outstanding(WP_REST_Request $req)` | GET /consignment/outstanding — what we have shipped (direction=out, the |
+| 257 | `publish_held(WP_REST_Request $req)` | POST /consignment/publish — list held units for an item on the shop. |
+| 274 | `unpublish_held(WP_REST_Request $req)` | POST /consignment/unpublish — pull an item's published held units back off. |
+| 291 | `reconcile_preview(WP_REST_Request $req)` | GET /consignment/reconcile — preview what shop sales would be booked. |
+| 304 | `reconcile_apply(WP_REST_Request $req)` | POST /consignment/reconcile — book the detected shop sales as sold_held notes. |
+
+### rest/trait-orders.php
+
+| line | member | purpose |
+|---|---|---|
+| 12 | **VGC_SM_REST_Orders** |  |
+| 20 | `shape_order($o)` | Shape an order for JSON, with its lines and rolled-up totals. |
+| 121 | `list_orders(WP_REST_Request $req)` | GET /orders |
+| 145 | `get_order(WP_REST_Request $req)` | GET /orders/{id} |
+| 159 | `save_order(WP_REST_Request $req)` | POST /orders (create) or PUT /orders/{id} (edit — always allowed). |
+| 209 | `delete_order(WP_REST_Request $req)` | DELETE /orders/{id} |
+| 226 | `add_order_payment(WP_REST_Request $req)` | POST /orders/{id}/payments — record one payment towards the order. |
+| 261 | `delete_order_payment(WP_REST_Request $req)` | DELETE /orders/{id}/payments/{pid} |
+| 273 | `complete_order(WP_REST_Request $req)` | POST /orders/{id}/complete — body { complete: 0\|1 }. Never final. |
+
+### rest/trait-partners.php
+
+| line | member | purpose |
+|---|---|---|
+| 12 | **VGC_SM_REST_Partners** |  |
+| 20 | `shape_partner($p)` | Shape a partner row for JSON. |
+| 55 | `shape_location($l)` | Shape a location row. |
+| 74 | `shape_contact($c)` | Shape a contact row. |
+| 91 | `list_partners(WP_REST_Request $req)` | GET /partners |
+| 119 | `get_partner(WP_REST_Request $req)` | GET /partners/{id} — with outstanding stock, notes and price list. |
+| 177 | `create_partner(WP_REST_Request $req)` | POST /partners |
+| 193 | `update_partner(WP_REST_Request $req)` | PUT /partners/{id} |
+| 213 | `save_partner_relations($id, WP_REST_Request $req)` | Persist a partner's locations and contacts if the request carried them, |
+| 238 | `get_partner_by_id($id)` | Build the full partner response for a given id (a WP_REST_Request wrapper |
+| 250 | `archive_partner(WP_REST_Request $req)` | DELETE /partners/{id} — archives (its notes and ledger must survive). |
+| 264 | `set_partner_price(WP_REST_Request $req)` | POST /partners/{id}/prices — set or clear one agreed price. |
+| 280 | `partner_statement(WP_REST_Request $req)` | GET /partners/{id}/statement?from=&to= — money owed both ways over a period. |
+| 304 | `clean_date($v)` | Validate a Y-m-d date parameter, or null. |
+| 315 | `partner_input(WP_REST_Request $req)` | Writable partner fields. |
+
+### rest/trait-production.php
+
+| line | member | purpose |
+|---|---|---|
+| 12 | **VGC_SM_REST_Production** |  |
+| 20 | `get_recipe(WP_REST_Request $req)` | GET /recipe/{id} |
+| 62 | `save_recipe(WP_REST_Request $req)` | PUT /recipe/{id} — replace the recipe (with cycle protection). |
+| 106 | `production_preview(WP_REST_Request $req)` | GET /production/preview |
+| 117 | `production_plan(WP_REST_Request $req)` | GET /production/plan |
+| 128 | `production_run(WP_REST_Request $req)` | POST /production/run |
+
+### rest/trait-purchases.php
+
+| line | member | purpose |
+|---|---|---|
+| 12 | **VGC_SM_REST_Purchases** |  |
+| 20 | `shape_purchase($p)` | Shape a purchase for the app. |
+| 110 | `list_purchases(WP_REST_Request $req)` | GET /purchases |
+| 132 | `get_purchase(WP_REST_Request $req)` | GET /purchases/{id} |
+| 146 | `save_purchase(WP_REST_Request $req)` | POST /purchases \| PUT /purchases/{id} |
+| 161 | `delete_purchase(WP_REST_Request $req)` | DELETE /purchases/{id} |
+| 175 | `add_purchase_payment(WP_REST_Request $req)` | POST /purchases/{id}/payments |
+| 189 | `delete_purchase_payment(WP_REST_Request $req)` | DELETE /purchases/{id}/payments/{pid} |
+| 203 | `complete_purchase(WP_REST_Request $req)` | POST /purchases/{id}/complete |
+
+### rest/trait-reports.php
+
+| line | member | purpose |
+|---|---|---|
+| 12 | **VGC_SM_REST_Reports** |  |
+| 19 | `report_stock()` | GET /reports/stock — everything currently in stock, with value at cost. |
+| 71 | `report_production(WP_REST_Request $req)` | GET /reports/production?days=30 — completed runs (and scrap) in the period. |
+| 169 | `help()` | GET /help — the in-app wiki. |
+| 185 | `get_translations(WP_REST_Request $req)` | GET /translations?lang=bg — every translatable string with its shipped |
+| 220 | `save_translations(WP_REST_Request $req)` | POST /translations — save edited strings. |
+| 238 | `reset_translations(WP_REST_Request $req)` | POST /translations/reset — drop all edits for a language. |
+| 254 | `dashboard()` | GET /dashboard — low-stock lists and headline counts. |
+
+### rest/trait-shop.php
+
+| line | member | purpose |
+|---|---|---|
+| 12 | **VGC_SM_REST_Shop** |  |
+| 20 | `shop_products(WP_REST_Request $req)` | GET /shop/products — list products on the shop, via the Bridge. |
+| 58 | `shop_product_categories(WP_REST_Request $req)` | GET /shop/product-categories — shop categories for the pull filter. |
+| 83 | `shop_pull(WP_REST_Request $req)` | POST /shop/pull — create local items from shop products. |
+| 190 | `sideload_image($url, $desc)` | Download a remote image into the media library and return its attachment id. |
+| 227 | `item_shop_stock(WP_REST_Request $req)` | GET /items/{id}/shop-stock — how many of this item the shop currently holds. |
+| 260 | `get_settings()` | GET /settings — never returns the token itself, only whether one is set. |
+| 281 | `save_settings(WP_REST_Request $req)` | POST /settings |
+| 300 | `test_connection()` | POST /settings/test — ping the Bridge. |
+| 313 | `shop_levels()` | GET /shop/levels — sellable items with local vs shop stock. |
+| 330 | `shop_push(WP_REST_Request $req)` | POST /shop/push — push one item to the shop (set = local, or a delta). |
