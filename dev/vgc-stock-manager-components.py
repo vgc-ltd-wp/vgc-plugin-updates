@@ -16,11 +16,11 @@ APP = os.path.join(ROOT, 'vgc-stock-manager', 'app', 'app.js')
 MD = os.path.join(ROOT, 'vgc-stock-manager-components.md')
 
 _src = io.open(APP, encoding='utf-8').read()
-# Literal attributes, plus the item-form group() helper's dynamic devids, which
-# are passed as a string arg (group(title, inner, 'itemform-pricing')) rather
-# than written inline. Those all share the 'itemform-' prefix.
+# Literal attributes, plus the dynamic devids passed as string args to helpers
+# that emit data-devid themselves — group() on the item form ('itemform-*') and
+# lowCard() on the dashboard ('home-low-*').
 ids = set(re.findall(r'data-devid="([^"]+)"', _src))
-ids |= set(re.findall(r"'(itemform-[a-z]+)'", _src))
+ids |= set(re.findall(r"'((?:itemform|home-low)-[a-z]+)'", _src))
 # Drop the group() helper's own dynamic construction (data-devid="' + devid + '").
 ids = sorted(i for i in ids if re.match(r'^[a-z0-9]+(-[a-z0-9]+)+$', i))
 groups = {}
