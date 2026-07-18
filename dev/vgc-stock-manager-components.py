@@ -15,7 +15,14 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 APP = os.path.join(ROOT, 'vgc-stock-manager', 'app', 'app.js')
 MD = os.path.join(ROOT, 'vgc-stock-manager-components.md')
 
-ids = sorted(set(re.findall(r'data-devid="([^"]+)"', io.open(APP, encoding='utf-8').read())))
+_src = io.open(APP, encoding='utf-8').read()
+# Literal attributes, plus the item-form group() helper's dynamic devids, which
+# are passed as a string arg (group(title, inner, 'itemform-pricing')) rather
+# than written inline. Those all share the 'itemform-' prefix.
+ids = set(re.findall(r'data-devid="([^"]+)"', _src))
+ids |= set(re.findall(r"'(itemform-[a-z]+)'", _src))
+# Drop the group() helper's own dynamic construction (data-devid="' + devid + '").
+ids = sorted(i for i in ids if re.match(r'^[a-z0-9]+(-[a-z0-9]+)+$', i))
 groups = {}
 for i in ids:
     page = i.split('-', 1)[0]
