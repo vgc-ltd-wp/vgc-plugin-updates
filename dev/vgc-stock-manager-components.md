@@ -250,6 +250,7 @@ recent movements.
 | ID | Panel | What it is |
 |----|-------|------------|
 | `settings-connection` | Shop connection card | Bridge URL/token, auto-push, currency, language, save/test. |
+| `settings-print` | Printed documents card | Business name/address/VAT/IBAN and footer note shown on the order print letterhead. |
 | `settings-devmode` | Developer mode card | The toggle for this very feature. |
 
 ## Team — `#/team`
