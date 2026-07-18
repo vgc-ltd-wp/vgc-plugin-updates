@@ -37,7 +37,7 @@ and flags any not yet described here.
 Tagging is rolling out screen by screen. Status:
 
 - [x] **Item detail** (Phase 1)
-- [ ] Orders/Purchases lists, Order, Purchase, Statement, Partner, Partners list (Phase 2)
+- [x] **Orders list, Purchases list, Partners list, Order, Purchase, Statement, Partner** (Phase 2)
 - [ ] Catalogue, Item form, Recipe, Produce, Scan (Phase 3)
 - [ ] Stock notes list/editor, Consignment out/held, Pull, Home, Shop (Phase 4)
 - [ ] Settings, Team, Translations, Audit, Import, Login (Phase 5)
@@ -56,3 +56,74 @@ recent movements.
 | `item-store` | Physical-store card | The store vs workshop split (only when the item is stocked at the store) and its distribute / sold-at-store actions. |
 | `item-actions` | Actions card | Receive, Scrap, Set qty, Edit, Recipe, Produce, publish/unpublish, remove/restore. |
 | `item-movements` | Recent movements card | The item's latest stock movements (in/out, note, date, signed quantity). |
+
+---
+
+## Orders list — `#/orders`
+
+| ID | Panel | What it is |
+|----|-------|------------|
+| `orders-toolbar` | Toolbar | The intro line and the **New order** button. |
+| `orders-list` | Orders table | Every order — number, partner, sent date, still-out, total, paid, balance, margin, status. |
+
+## Purchases list — `#/purchases`
+
+| ID | Panel | What it is |
+|----|-------|------------|
+| `purchases-toolbar` | Toolbar | The intro line and the **New purchase** button. |
+| `purchases-list` | Purchases table | Every purchase — number, vendor, received date, mode, still-held, total, paid, balance, potential profit, status. |
+
+## Partners list — `#/partners`
+
+| ID | Panel | What it is |
+|----|-------|------------|
+| `partners-toolbar` | Toolbar | The **New partner** button. |
+| `partners-list` | Partners list | Each partner — name, role, contact, and what they owe. |
+
+## Order — `#/order/{id}`
+
+| ID | Panel | What it is |
+|----|-------|------------|
+| `order-header` | Document header | Order number, partner link, status/mode badges. |
+| `order-summary` | Summary tiles | Net, VAT, Total (hero), Paid, Balance, Margin, Still-out. |
+| `order-details` | Details card | Partner, destination, dates, payment mode/terms, transport, "already sent". |
+| `order-lines` | Lines card | The order's item lines (qty ordered/sent/sold/returned, price, cost, VAT, margin, note) + add-item. |
+| `order-onloan` | Display-pieces card | Items sent on loan (never priced/billed) — the blue panel. |
+| `order-sales` | Sales-from-sent card | Recorded consignment sales log + **Record sale** (consignment orders only). |
+| `order-payments` | Payments card | The payment trail and the add-payment row. |
+| `order-actions` | Note & actions card | Order note, Save, Complete/Reopen, Print, Delete. |
+
+## Purchase — `#/purchase/{id}`
+
+| ID | Panel | What it is |
+|----|-------|------------|
+| `purchase-header` | Document header | Purchase number, vendor link, status/mode badges. |
+| `purchase-summary` | Summary tiles | Cost, VAT, We-owe-them (hero), Paid, Balance, Retail value, Potential profit, Still-held. |
+| `purchase-details` | Vendor & terms card | Vendor, buy/consignment mode, dates, terms, transport, VAT-registered and cost-basis options, note. |
+| `purchase-lines` | Lines card | The delivery's lines (qty, cost, VAT, markup, sell price, note) + bulk markup + add-item. |
+| `purchase-payments` | Payments card | The payment trail and the add-payment row. |
+| `purchase-actions` | Actions | Save, Complete/Reopen, Delete. |
+
+## Statement — `#/statement/{id}`
+
+| ID | Panel | What it is |
+|----|-------|------------|
+| `statement-filter` | Date-range card | From/To date filter and Apply/Clear. |
+| `statement-tiles` | KPI tiles | Turnover (hero), Billed, VAT, Paid, They-owe, Profit, Items sold, Documents, Average value. |
+| `statement-timeline` | Money-bearing notes table | Every money-bearing document in the period — date, number, type, due, total, paid, balances, status. |
+| `statement-actions` | Actions | Print and CSV export. |
+
+## Partner — `#/partner/{id}`
+
+| ID | Panel | What it is |
+|----|-------|------------|
+| `partner-header` | Header | Avatar, name, role/VAT pills and VAT number. |
+| `partner-summary` | Summary tiles | Out on consignment, Owes you, Held from them, You owe. |
+| `partner-actions` | Action bar | New order/purchase, release/sale-report/return, statement, edit. |
+| `partner-directory` | Locations & contacts card | Branches and the people you deal with. |
+| `partner-outstanding` | Our goods at this partner | Items out on consignment there. |
+| `partner-held` | Their goods we hold | Items we're holding from this maker. |
+| `partner-orders` | Orders card | This partner's orders. |
+| `partner-purchases` | Purchases card | Purchases from this partner. |
+| `partner-notes` | Stock notes card | Stock notes involving this partner. |
+| `partner-prices` | Price list card | Agreed per-item prices with this partner. |
