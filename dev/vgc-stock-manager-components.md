@@ -39,7 +39,7 @@ Tagging is rolling out screen by screen. Status:
 - [x] **Item detail** (Phase 1)
 - [x] **Orders list, Purchases list, Partners list, Order, Purchase, Statement, Partner** (Phase 2)
 - [x] **Catalogue, Item form, Recipe, Produce, Scan** (Phase 3)
-- [ ] Stock notes list/editor, Consignment out/held, Pull, Home, Shop (Phase 4)
+- [x] **Home, Stock notes list/editor/view, Consignment out/held, Pull, Shop** (Phase 4)
 - [ ] Settings, Team, Translations, Audit, Import, Login (Phase 5)
 
 ---
@@ -176,3 +176,64 @@ recent movements.
 |----|-------|------------|
 | `scan-camera` | Camera area | The live barcode scanner viewport. |
 | `scan-entry` | Manual entry card | Type a barcode/SKU and Find. |
+
+---
+
+## Home / Overview — `#/`
+
+| ID | Panel | What it is |
+|----|-------|------------|
+| `home-quick` | Quick actions | Scan barcode / Run production / New item shortcuts. |
+| `home-low-materials` | Low materials card | Materials at or below their reorder level. |
+| `home-low-products` | Low products card | Products at or below their reorder level. |
+| `home-shop` | Shop connection card | Link to shop stock and (admins) settings. |
+
+## Stock notes list — `#/notes`
+
+| ID | Panel | What it is |
+|----|-------|------------|
+| `notes-toolbar` | Toolbar | Intro line and New-note button. |
+| `notes-list` | Notes list | Each note — icon, number, type pill, partner/date, amount, status. |
+
+## Stock note editor — `#/note/new`, `#/note/{id}` (draft)
+
+| ID | Panel | What it is |
+|----|-------|------------|
+| `note-details` | Details card | Partner, type, date, destination, already-sent/refund options, and the type description banner. |
+| `note-lines` | Lines card | The items this note covers + add. |
+| `note-total` | Total panel | Note net / VAT / gross. |
+| `note-actions` | Note & actions card | Optional note text, Save draft, Issue note. |
+
+## Stock note (issued, read-only) — `#/note/{id}`
+
+| ID | Panel | What it is |
+|----|-------|------------|
+| `noteview-header` | Header card | Status, type, partner, date, VAT/destination/note. |
+| `noteview-lines` | Lines table | The note's item lines. |
+| `noteview-total` | Total panel | Net / VAT / gross and settlement status. |
+
+## Out on consignment — `#/outstanding`
+
+| ID | Panel | What it is |
+|----|-------|------------|
+| `outstanding-list` | Shipped-goods table | Our goods currently at partners. |
+
+## Held stock — `#/held`
+
+| ID | Panel | What it is |
+|----|-------|------------|
+| `held-list` | Held-goods table | Goods we're holding from makers. |
+
+## Pull from shop — `#/pull`
+
+| ID | Panel | What it is |
+|----|-------|------------|
+| `pull-options` | Import options card | How to import (product/material), stock/photos, select/import buttons. |
+| `pull-products` | Shop products card | The paged, filterable list of shop products to import. |
+
+## Shop stock — `#/shop`
+
+| ID | Panel | What it is |
+|----|-------|------------|
+| `shop-status` | Connection status card | Bridge status, counts, value, pull/reconcile actions. |
+| `shop-items` | Sellable items card | Local vs shop stock per sellable item, with a category filter. |
