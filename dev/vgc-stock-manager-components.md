@@ -40,7 +40,12 @@ Tagging is rolling out screen by screen. Status:
 - [x] **Orders list, Purchases list, Partners list, Order, Purchase, Statement, Partner** (Phase 2)
 - [x] **Catalogue, Item form, Recipe, Produce, Scan** (Phase 3)
 - [x] **Home, Stock notes list/editor/view, Consignment out/held, Pull, Shop** (Phase 4)
-- [ ] Settings, Team, Translations, Audit, Import, Login (Phase 5)
+- [x] **Settings, Team, Translations, Activity log, Import** (Phase 5) — Login is out of scope (see below)
+
+Dev mode covers **every in-app screen**. The **sign-in screen is intentionally not
+tagged**: it's rendered by PHP *before* login and never loads the app's JavaScript, so
+the badge machinery (which lives in `app.js` and needs your saved preference) can't run
+there.
 
 ---
 
@@ -237,3 +242,38 @@ recent movements.
 |----|-------|------------|
 | `shop-status` | Connection status card | Bridge status, counts, value, pull/reconcile actions. |
 | `shop-items` | Sellable items card | Local vs shop stock per sellable item, with a category filter. |
+
+---
+
+## Settings — `#/settings`
+
+| ID | Panel | What it is |
+|----|-------|------------|
+| `settings-connection` | Shop connection card | Bridge URL/token, auto-push, currency, language, save/test. |
+| `settings-devmode` | Developer mode card | The toggle for this very feature. |
+
+## Team — `#/team`
+
+| ID | Panel | What it is |
+|----|-------|------------|
+| `team-help` | Access-levels card | What each access level can do. |
+| `team-list` | Team table | Each user and their access level. |
+
+## Translations — `#/translations`
+
+| ID | Panel | What it is |
+|----|-------|------------|
+| `translations-panel` | Translations card | Language picker, search, and the editable source→translation rows. |
+
+## Activity log — `#/audit`
+
+| ID | Panel | What it is |
+|----|-------|------------|
+| `audit-filter` | Filter card | Search and date-range filter. |
+| `audit-list` | Log table | Who did what, when (paged). |
+
+## Import — `#/import`
+
+| ID | Panel | What it is |
+|----|-------|------------|
+| `import-form` | Import card | CSV file/paste, template download, and the import controls. |
