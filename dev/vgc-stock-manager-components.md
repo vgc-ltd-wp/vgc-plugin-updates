@@ -38,7 +38,7 @@ Tagging is rolling out screen by screen. Status:
 
 - [x] **Item detail** (Phase 1)
 - [x] **Orders list, Purchases list, Partners list, Order, Purchase, Statement, Partner** (Phase 2)
-- [ ] Catalogue, Item form, Recipe, Produce, Scan (Phase 3)
+- [x] **Catalogue, Item form, Recipe, Produce, Scan** (Phase 3)
 - [ ] Stock notes list/editor, Consignment out/held, Pull, Home, Shop (Phase 4)
 - [ ] Settings, Team, Translations, Audit, Import, Login (Phase 5)
 
@@ -127,3 +127,52 @@ recent movements.
 | `partner-purchases` | Purchases card | Purchases from this partner. |
 | `partner-notes` | Stock notes card | Stock notes involving this partner. |
 | `partner-prices` | Price list card | Agreed per-item prices with this partner. |
+
+---
+
+## Catalogue — `#/items`, `#/products`, `#/materials`
+
+| ID | Panel | What it is |
+|----|-------|------------|
+| `catalogue-toolbar` | Toolbar | Search box, category filter, Import and Add-item buttons. |
+| `catalogue-filters` | Filter chips | Low / Archived toggles. |
+| `catalogue-list` | Items list/table | The items — desktop table (name+role badges, SKU, category, cost, stock) or phone cards. |
+
+## Item form — `#/item/new`, `#/item/{id}/edit`
+
+| ID | Panel | What it is |
+|----|-------|------------|
+| `itemform-identity` | Identity card | Photo, name, SKU. |
+| `itemform-classification` | Classification card | Product/material, made/bought, unit, category, sellable, store-stocked. |
+| `itemform-sourcing` | Stock & sourcing card | Reorder level, supplier, barcode, shop SKU. |
+| `itemform-packaging` | Packaging card | Pack label and units per pack. |
+| `itemform-pricing` | Pricing card | Cost and the retail/B2B selling prices. |
+| `itemform-actions` | Actions | Cancel and Save item. |
+
+## Recipe — `#/recipe/{id}`
+
+| ID | Panel | What it is |
+|----|-------|------------|
+| `recipe-header` | Product & yield card | The product, its SKU, and how much one run yields. |
+| `recipe-components` | Components card | What the product is made from (with quantities) + add. |
+| `recipe-othercosts` | Other costs card | Labour/overhead/misc costs (no stock used). |
+| `recipe-cost` | Cost summary panel | Recipe unit cost, batch cost, materials vs labour split. |
+| `recipe-actions` | Actions | Save recipe. |
+
+## Produce — `#/produce`
+
+| ID | Panel | What it is |
+|----|-------|------------|
+| `produce-picker` | Product picker | Choose the product to make and the number of runs. |
+| `produce-consumes` | Consumes card | Materials this run will use, with any shortages. |
+| `produce-plan` | Build-plan card | Sub-builds needed and raw-material shortages (when it can't run directly). |
+| `produce-cost` | Batch-cost panel | Total and per-unit cost, materials vs labour split. |
+| `produce-scrap` | Scrap card | Optional defective-units count for this run. |
+| `produce-run` | Run bar | The Run-production button and "run anyway" option. |
+
+## Scan — `#/scan`
+
+| ID | Panel | What it is |
+|----|-------|------------|
+| `scan-camera` | Camera area | The live barcode scanner viewport. |
+| `scan-entry` | Manual entry card | Type a barcode/SKU and Find. |
