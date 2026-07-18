@@ -120,18 +120,22 @@ recent movements.
 
 ## Partner — `#/partner/{id}`
 
+Tabbed: a fixed header + action bar + tab strip, then one tab's body at a time.
+
 | ID | Panel | What it is |
 |----|-------|------------|
-| `partner-header` | Header | Avatar, name, role/VAT pills and VAT number. |
-| `partner-summary` | Summary tiles | Out on consignment, Owes you, Held from them, You owe. |
-| `partner-actions` | Action bar | New order/purchase, release/sale-report/return, statement, edit. |
-| `partner-directory` | Locations & contacts card | Branches and the people you deal with. |
-| `partner-outstanding` | Our goods at this partner | Items out on consignment there. |
-| `partner-held` | Their goods we hold | Items we're holding from this maker. |
-| `partner-orders` | Orders card | This partner's orders. |
-| `partner-purchases` | Purchases card | Purchases from this partner. |
-| `partner-notes` | Stock notes card | Stock notes involving this partner. |
-| `partner-prices` | Price list card | Agreed per-item prices with this partner. |
+| `partner-header` | Header (fixed) | Avatar, name, role/VAT pills and VAT number. |
+| `partner-actions` | Action bar (fixed) | New order/purchase, release/sale-report/return, statement, edit. |
+| `partner-tabs` | Tab strip (fixed) | Overview · Orders · Purchases · Consignment · Prices · Details. |
+| `partner-summary` | Overview → summary tiles | Out on consignment, Owes you, Held from them, You owe. |
+| `partner-recent` | Overview → recent documents | Latest orders, purchases and notes (newest first). |
+| `partner-orders` | Orders tab | This partner's orders. |
+| `partner-purchases` | Purchases tab | Purchases from this partner. |
+| `partner-outstanding` | Consignment tab | Our goods out on consignment there. |
+| `partner-held` | Consignment tab | Their goods we're holding. |
+| `partner-notes` | Consignment tab | Stock notes involving this partner. |
+| `partner-prices` | Prices tab | Agreed per-item prices (search-to-add + inline edit). |
+| `partner-directory` | Details tab | Locations & contacts. |
 
 ---
 
