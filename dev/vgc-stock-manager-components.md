@@ -9,11 +9,14 @@ at exactly what you want changed ("in `item-header`, make the image larger").
 - **Turn it on:** Settings → *Developer mode* → tick *Show component IDs on every panel*.
   It's a per-user preference, saved to your account (server-side), so it persists across
   sessions and follows your login — and it never affects other users' view.
-- **Read the badge:** each tagged panel gets a small brand-coloured label above its
-  top-left corner and a dashed outline around it.
-- **Copy an ID:** hold **Alt** and click any tagged panel — its ID is copied to the
-  clipboard (with a confirmation toast), so you can paste it straight into a message.
-- **Print:** badges and outlines never appear on printouts/PDFs.
+- **Read the badge:** each tagged panel gets a small brand-coloured ID badge at its
+  **top-right** corner and a dashed outline around it.
+- **Comment & copy:** click the badge — a small note box opens. Type what you'd like
+  changed (optional), then hit **Copy**. It puts a ready-to-send line on your clipboard —
+  `` In `item-header`: make the image larger `` — which you paste straight into a message
+  to the dev, who then knows the exact component *and* your comment. (Leave the note empty
+  and Copy just gives you the `` `id` ``.)
+- **Print:** badges, outlines and the popover never appear on printouts/PDFs.
 
 ## ID convention
 
