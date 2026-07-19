@@ -110,6 +110,13 @@ Rules that must hold:
 - **Adding a screen:** put `viewX` in the domain file (or a new file — add it to `Frontend::app_scripts()`, which also feeds the SW precache), register it, add the route in core's `router()`.
 - ⚠️ **Never declare a top-level name in a screen file that collides with a core export** — the preamble's `var x = V.x` assignment would silently overwrite your function (var-over-function hoisting). The split scripts enforce this; keep it true by hand for new code.
 
+**Templates vs logic (`app/js/tpl/`, rolling out since 1.54.0 — shop is the reference).** Each domain is being split into a **template file** (`tpl/<domain>.tpl.js` → `V.tpl.<domain>`) and a **logic file** (`<domain>.js`):
+- **A template is pure: data in → HTML string out.** It may call core rendering atoms (`esc`/`fmt`/`money`/`btn`/`icon`/`sortTh`/`emptyState`…) and other templates in its file — and NOTHING else. No `document`, no `get`/`rawFetch`, no reading or writing state. Everything it renders arrives as a parameter (pass `desk: isDesk()` in rather than calling it inside).
+- **Logic owns** fetching, screen state, `screen(T.page(data))`, and all event binding after insertion (`data-*` hooks + `getElementById`). `data-devid` attributes live in the templates.
+- Template files load after core, before the logic files (`app_scripts()` order); a logic file grabs `var T = V.tpl.<domain>;` in its preamble.
+- Naming inside a tpl namespace: `page`/`<x>Shell` for full screens, `rows*`/`<x>Row` for repeatables, distinct functions per state (`bodyEmpty`, `notConnected`, `…Result`) — see `tpl/shop.tpl.js`.
+- **Extraction is NOT mechanical** (closure vars become parameters) — after extracting a domain, re-verify its screens' *behaviour* in the harness (filters, paging, selection, saves), not just that routes render.
+
 **The helper vocabulary** (memorise — these are used everywhere):
 
 | Helper | Signature | Does |
