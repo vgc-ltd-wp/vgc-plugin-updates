@@ -16,7 +16,7 @@ Companion docs at the project root:
 ## 1. Orientation
 
 - **Two plugins.** `vgc-stock-manager` (this repo) is a **standalone** backoffice app served at a site root, behind a login. `vgc-stock-bridge` is a thin WooCommerce companion on the *shop* site; the app talks to it over REST (`X-VGC-Token`) for **stock push + low-stock read only** — never orders/customers.
-- **No build step.** `app/app.js` is one hand-written ES5 IIFE loaded via `<script>`. `app/app.css` is hand-written. No bundler, no transpile, no npm. Edit the files directly.
+- **No build step.** The SPA is hand-written ES5 in plain `<script>` files under `app/js/` (split by domain since 1.53.0 — see §5). `app/app.css` is hand-written. No bundler, no transpile, no npm. Edit the files directly.
 - **Testing is on staging.** The user tests on their own WordPress staging site. I do **not** run WordPress locally. I verify with: PHP lint, `node --check`, and a **browser harness** for UI (see §9).
 - **PHP CLI is available:** `/c/xampp/php/php.exe` (7.4.10 — the declared minimum). Lint every PHP file before shipping.
 - **The project root is not a git repo.** Release zips in `_releases/` are the only local backup. Releases live in the **`vgc-ltd-wp/vgc-plugin-updates`** GitHub repo (see §8).
@@ -44,11 +44,15 @@ PHP (`includes/`), one class per concern:
 | `class-i18n.php` | `VGC_SM_I18n` | The Bulgarian catalogue (English source string → BG), overrides |
 | `class-access.php` | `VGC_SM_Access` | The 4 permission levels (viewer/operator/manager/admin) |
 | `class-audit.php` | `VGC_SM_Audit` | Activity log |
-| `class-frontend.php` | `VGC_SM_Frontend` | Serves the SPA shell, enqueues app.js/css, boot payload, root-scoping |
+| `class-frontend.php` | `VGC_SM_Frontend` | Serves the SPA shell, `app_scripts()` file list (script tags + SW precache), boot payload, root-scoping |
 | `class-help.php` | `VGC_SM_Help` | The in-app wiki text. **Highest apostrophe-risk file** (long single-quoted prose) |
 
-Front end:
-- `app/app.js` — the entire SPA (router + every screen + helpers). ~5.4k lines, one IIFE.
+Front end (`app/js/`, one IIFE per file, loaded in the order `VGC_SM_Frontend::app_scripts()` lists them):
+- `js/core.js` — helpers, REST + offline queue, chrome/nav, dashboard, router, dev mode, `window.VGCSM` namespace, `V.start()`.
+- `js/catalogue.js` — items list/page/form, recipe editor, quick-add drawer, movements.
+- `js/production.js` — produce + barcode scan. · `js/shop.js` — shop stock + pull.
+- `js/partners.js` — list, editor, tabbed partner page, statement. · `js/purchases.js`, `js/orders.js` — the two document screens.
+- `js/consignment.js` — stock notes, outstanding, held. · `js/admin.js` — settings, categories, reports, import, help, translations, team, audit.
 - `app/app.css` — all styles. `vgc-sm-*` naming.
 
 `vgc-stock-manager.php` — bootstrap: table-name helpers, `require_once` order, DB-version check, **one-time migrations** (option-guarded).
@@ -99,7 +103,12 @@ Rules that must hold:
 
 ## 5. app.js conventions
 
-**Structure:** one IIFE. At top: `boot` (the `window.VGC_SM` payload), DOM handles (`APP`, `NAV`, `SIDEBAR`, `TITLE`, `BACKBTN`), then helpers, then one `viewX()` function per screen, then the router, then boot (`router()` at the very end). Banner comments `/* Screen: X */` mark each screen — the codemap lists them with line numbers.
+**Structure (since 1.51.0–1.53.0):** the SPA is split across `app/js/*.js`, one IIFE per file, glued by the **`window.VGCSM` namespace** (`V`):
+- `core.js` builds `V`: it exports every core helper (`V.esc = esc; …` at the bottom), owns `V.screens` (the route registry), `V.register(obj)` (merge into `V.screens`), and `V.start()` (event wiring + first `router()` — called from an inline `<script>` after all files load).
+- **Screen files** follow the same skeleton: header comment → IIFE → `var V = window.VGCSM;` → a preamble of `var esc = V.esc; …` aliases → the screens verbatim (banner comments `/* Screen: X */`) → `V.register({ viewX: viewX, … })`.
+- The **router** (in core) dispatches `V.screens.viewX(...)`; cross-file calls go through the registry at call time (e.g. purchases → `V.screens.openItemQuickAdd(...)`). Registered non-view entries: `itemsState`, `loadItems`, `stopScanner`, `scanOnce`, `openItemQuickAdd`, `partnerForm`, `movementForm`.
+- **Adding a screen:** put `viewX` in the domain file (or a new file — add it to `Frontend::app_scripts()`, which also feeds the SW precache), register it, add the route in core's `router()`.
+- ⚠️ **Never declare a top-level name in a screen file that collides with a core export** — the preamble's `var x = V.x` assignment would silently overwrite your function (var-over-function hoisting). The split scripts enforce this; keep it true by hand for new code.
 
 **The helper vocabulary** (memorise — these are used everywhere):
 
@@ -194,12 +203,12 @@ The single most common task. Touch these, in order:
 
 **Lint gauntlet:**
 - `php -l` on **every** PHP file (a broken string literal takes the whole site down — this is not optional). `for f in $(find . -name '*.php'); do /c/xampp/php/php.exe -l "$f"; done`
-- `node --check app/app.js`.
+- `node --check` on **every** `app/js/*.js` file: `for f in app/js/*.js; do node --check "$f"; done`
 - Apostrophe/lexer safety on `class-i18n.php`/`class-help.php` via `token_get_all`.
 - i18n dupes + coverage (a small script; only the pre-existing `Remove` dup is acceptable).
 
-**`node --check` catches syntax, NOT scope/DOM/runtime bugs.** For any non-trivial `app.js` view change, **render it in a browser** (this has caught real, shipping bugs three+ times):
-- A static HTML harness in the project root with the DOM shell (`#vgc-sm-app`, `#vgc-sm-nav`, `#vgc-sm-sidebar`, `#vgc-sm-toast`, `#vgc-sm-title`, `#vgc-sm-back`, `#vgc-sm-offline`), a `window.VGC_SM` boot object (`restUrl`, `nonce`, `perms:{write,manage,admin}`, `currency`, `strings:{}`, `user`, `level`, `logoutUrl`), a `window.fetch` stub returning mock JSON by URL, then `location.hash='#/…'` and `<script src="vgc-stock-manager/app/app.js">`.
+**`node --check` catches syntax, NOT scope/DOM/runtime bugs.** For any non-trivial view change, **render it in a browser** (this has caught real, shipping bugs three+ times):
+- A static HTML harness (e.g. `_harness/index.html` served from the project root) with the DOM shell (`#vgc-sm-app`, `#vgc-sm-nav`, `#vgc-sm-sidebar`, `#vgc-sm-toast`, `#vgc-sm-title`, `#vgc-sm-back`, `#vgc-sm-offline`), a `window.VGC_SM` boot object (`restUrl`, `nonce`, `perms:{write,manage,admin}`, `currency`, `strings:{}`, `user`, `level`, `logoutUrl`), a `window.fetch` stub returning mock JSON by URL, then the `app/js/*.js` files in `app_scripts()` order + `window.VGCSM.start()`, and `location.hash='#/…'` to drive routes.
 - Serve via a temporary `.claude/launch.json` (`python -m http.server 8791`) + `preview_start`, drive with the `javascript_tool` (assert DOM/console — **screenshots time out; measure instead**), then delete the harness + launch.json.
 - To find *why* something is wrong, stash state on `window` (`window.__x = …`) or capture `(new Error()).stack` and reload — that's how the arg-dropping wrapper was found.
 
@@ -230,7 +239,7 @@ The app works and is only tested on staging, so **a big-bang refactor is high-ri
 1. **Regenerate the codemap after structural edits** (`python vgc-stock-manager-codemap.py`) — near-zero cost, keeps navigation fast. (This is the real speed unlock.)
 2. **Extract one shared money helper.** `strip_vat`/net↔gross/margin logic is duplicated across `class-orders.php`, `class-purchases.php`, and the item form JS. A shared PHP trait/util and one JS helper would remove ~4 copies. Do it the next time one of them changes.
 3. ~~**Split `class-rest-api.php` (3.2k lines)** by resource.~~ **DONE (1.22.0)** — handlers moved into 9 resource traits under `includes/rest/`; the main class kept the route table + permission callbacks (~620 lines). Verified route-for-route identical (route-dump harness) and all 98 methods present with none extra (reflection harness). Scratch harnesses: `route-dump.php`, `reflect-check2.php`, `extract-traits.php`.
-4. **`app.js` is one 5.4k-line IIFE.** A build-free split into several `<script>` files sharing one namespace object is *possible* but touches the frontend enqueue and the closure model — only worth it if it keeps growing. Not now.
+4. ~~**`app.js` is one 5.4k-line IIFE.**~~ **DONE (1.51.0–1.53.0)** — split into 9 files under `app/js/` glued by the `window.VGCSM` registry (see §5). Byte-identical mechanical moves verified per phase in the browser harness (all 34 routes + interactions); the splitter scripts enforced no core-export collisions and no stray cross-file references.
 5. **Kill dead code** as found (e.g. the `type` partner column is retained but unread since 1.18.0; `itemsState.kind` removed in 1.21.0). Grep-verify before deleting.
 
 Whenever a gotcha recurs, add it to §10. Whenever a convention is discovered, add it to the relevant section. This file paying for itself = fewer of the bugs in §10 shipping.
