@@ -110,7 +110,7 @@ Rules that must hold:
 - **Adding a screen:** put `viewX` in the domain file (or a new file — add it to `Frontend::app_scripts()`, which also feeds the SW precache), register it, add the route in core's `router()`.
 - ⚠️ **Never declare a top-level name in a screen file that collides with a core export** — the preamble's `var x = V.x` assignment would silently overwrite your function (var-over-function hoisting). The split scripts enforce this; keep it true by hand for new code.
 
-**Templates vs logic (`app/js/tpl/`, rolling out since 1.54.0 — shop is the reference).** Each domain is being split into a **template file** (`tpl/<domain>.tpl.js` → `V.tpl.<domain>`) and a **logic file** (`<domain>.js`):
+**Templates vs logic (`app/js/tpl/`, COMPLETE since 1.60.0 — every domain has a tpl file).** Each domain is split into a **template file** (`tpl/<domain>.tpl.js` → `V.tpl.<domain>`) and a **logic file** (`<domain>.js`):
 - **A template is pure: data in → HTML string out.** It may call core rendering atoms (`esc`/`fmt`/`money`/`btn`/`icon`/`sortTh`/`emptyState`…) and other templates in its file — and NOTHING else. No `document`, no `get`/`rawFetch`, no reading or writing state. Everything it renders arrives as a parameter (pass `desk: isDesk()` in rather than calling it inside).
 - **Logic owns** fetching, screen state, `screen(T.page(data))`, and all event binding after insertion (`data-*` hooks + `getElementById`). `data-devid` attributes live in the templates.
 - Template files load after core, before the logic files (`app_scripts()` order); a logic file grabs `var T = V.tpl.<domain>;` in its preamble.
@@ -236,6 +236,7 @@ The single most common task. Touch these, in order:
 - **Printing re-rendered the page:** the desktop media-query `change` listener fired against the A4 paper box. Guard with a `printing` flag.
 - **`Compress-Archive`** writes backslash paths that break the plugin on Linux — build zips via `System.IO.Compression`.
 - **`cd "path" && cmd`** in Bash triggers a permission prompt every time; use absolute paths instead (67% of prompts came from this).
+- **A mechanical file split can strand a cross-file call.** The 1.51–1.53 splitters checked extracted-vs-kept references but not extracted-vs-EXTRACTED: `scanOnce` moved to production.js while catalogue's item form still called it bare — the Scan button threw a silent ReferenceError from 1.52.0 until 1.59.0. When moving code between files, grep every moved top-level name across ALL sibling files, and route cross-domain calls through `V.screens.*` at call time. (1.59.0)
 
 ---
 
