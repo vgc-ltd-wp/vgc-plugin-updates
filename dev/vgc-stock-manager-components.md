@@ -58,9 +58,25 @@ recent movements.
 |----|-------|------------|
 | `item-header` | Header card | Thumbnail image, name, SKU and role/kind/category/sellable badges. |
 | `item-stock` | Stock & cost card | "In stock" big number, packs/reorder/at-partners/held lines, manufacturing cost, the retail/B2B price-margin strip, and any shop/buildable banners. |
-| `item-store` | Physical-store card | The store vs workshop split (only when the item is stocked at the store) and its distribute / sold-at-store actions. |
+| `item-locations` | Sale-locations card | Where the item is stocked across sale locations (per-location on-hand), each linking to that location. |
 | `item-actions` | Actions card | Receive, Scrap, Set qty, Edit, Recipe, Produce, publish/unpublish, remove/restore. |
 | `item-movements` | Recent movements card | The item's latest stock movements (in/out, note, date, signed quantity). |
+
+## Sale locations — `#/locations`
+
+| ID | Panel | What it is |
+|---|---|---|
+| `locations-toolbar` | Toolbar | The intro line and the **New location** button (manager). |
+| `locations-list` | Locations list | Every sale location — name, active state, item/unit counts, retail value. |
+
+## Sale location — `#/location/{id}`
+
+| ID | Panel | What it is |
+|---|---|---|
+| `location-header` | Header | Location name, active/inactive badge, note. |
+| `location-actions` | Action bar | Edit (manager). |
+| `location-push` | Push-stock card | Search an item and push workshop stock onto this location's shelves (manager). |
+| `location-inventory` | Inventory card | Items stocked here — on-hand, retail price, value, and pull-back (manager). |
 
 ---
 
