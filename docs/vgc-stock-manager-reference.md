@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.69.0** · Stock Bridge **0.4.0**
+> **Pinned to:** Stock Manager **1.70.0** · Stock Bridge **0.4.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -269,6 +269,8 @@ Auth: `X-VGC-Token` header (shared secret) over HTTPS.
 **Refund / void (1.66.0, DB 0.23.0).** `VGC_SM_Sales::refund($sale_id, $lines, $note, $void)` returns units to the selling location via `VGC_SM_Locations::return_from_sale` (a `sale_return` location-ledger entry, mirror of `deduct_for_sale`; no stock movement). Per-line refund value is proportional to the stored post-discount line totals; **clearing a line takes the exact stored remainder**, so a full void returns precisely what was charged. New columns: `sale_lines.refunded_{qty,net,vat,gross}`, `sales.refunded_{net,vat,gross}` + `refunded_at`/`refunded_by`; `sales.status` moves `completed`→`partial_refund`→`voided`. `recent()` surfaces `status`, `refunded_gross`, `net_gross`. Manager-only, on the main-app receipt (`receipt-refund` card) — the till stays sell-only. Defensive `ensure_refund_columns()` (guarded by option `vgc_sm_sales_refund_columns`) adds the columns if dbDelta skipped them.
 
 **Printable receipt (1.67.0).** The receipt page has **Print 80mm slip** / **Print A4** buttons → `openReceiptPrint(mode, sale)` mounts the shared `.vgc-sm-printov` overlay (same mechanism as the order print sheet) with `V.tpl.locations.receiptSheet` (single-column `.vgc-sm-rsheet`, `.is-80` = compact thermal slip). Paper size is set per mode by injecting a `<style id="vgc-sm-pagesize">@page{size:80mm auto|A4}</style>` at print time (removed on close). Letterhead comes from `boot.print` (Settings). No server side — pure print/PDF.
+
+**Location-stock cache is ledger-derived (1.70.0 fix).** `location_stock` is now **recomputed from `location_ledger`** after every write via `VGC_SM_Locations::sync_stock_cache($loc,$item)` (SELECT SUM → upsert as a `%s` canonical-decimal string, not a `%f` delta), so it can't drift. Bug it fixed: pushed stock left the workshop but never appeared in the location because the cache table had been silently skipped by dbDelta / was out of sync. One-time repair on upgrade (option `vgc_sm_pos_tables_repaired_v1`): `VGC_SM_Install::ensure_pos_tables()` (`CREATE TABLE IF NOT EXISTS` for the POS tables) + `VGC_SM_Locations::rebuild_stock_cache()` (DELETE + re-sum the whole cache from the ledger, so anything already pushed reappears). Push/pull UI is Orders-style inline (staged rows / inline pull editor) — **no `prompt()`** (see [[vgc-stock-manager-no-browser-prompts]]).
 
 ### Design system (0.16.0, implemented from a Claude Design project)
 Warm parchment + terracotta, "Workshop backoffice".
