@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.65.0** · Stock Bridge **0.4.0**
+> **Pinned to:** Stock Manager **1.66.0** · Stock Bridge **0.4.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -243,7 +243,8 @@ Auth: same-origin cookie + `X-WP-Nonce`. **Access levels (1.7.0)** — `VGC_SM_A
 | POST | `/locations/{id}/push`, `/locations/{id}/pull` | *(manager)* hard-transfer stock workshop↔location (`item_id`, `qty`) |
 | GET | `/items/{id}/locations` | where an item is stocked across locations |
 | GET/POST | `/sales` | till sales — list (filters: `location_id`,`from`,`to`; returns `rows`+`totals`) / checkout (`location_id`,`lines[]`,`discount_type`,`discount_value`) |
-| GET | `/sales/{id}` | one receipt (lines + net/VAT/total) |
+| GET | `/sales/{id}` | one receipt (lines + net/VAT/total + refund state) |
+| POST | `/sales/{id}/refund` | *(manager)* refund lines (`lines:[{line_id,qty}]`) or `void:true` — returns stock to the location |
 | GET | `/help` | the in-app wiki |
 | GET/POST | `/team`, `/team/{id}` | *(admin)* list users + levels / set a user's level (`viewer`\|`operator`\|`manager`\|`none`) |
 | GET | `/audit` | *(admin)* activity log, filtered (`search`,`user_id`,`action`,`from`,`to`,`page`) + paginated |
@@ -264,6 +265,8 @@ Auth: `X-VGC-Token` header (shared secret) over HTTPS.
 - `app.js` boot payload (`window.VGC_SM`): `restUrl`, `nonce`, `appUrl`, `swUrl`, `logoutUrl`, `canManage`, `currency`, `lang`, `strings`, `user`, `version`.
 
 **POS till — separate page.** `maybe_render()` branches on `?vgc_sm_pos=1` (needs `operator`) → `render_pos()` serves its own full-screen shell that loads `core.js` (helpers only, no `VGCSM.start()`) + `js/pos/pos.tpl.js` + `js/pos/pos.js`, then `window.VGCSM_POS.start()`. Opened from the **Open till** button on Sale locations (`posUrl` in the boot). A **Scan** button opens a self-contained camera overlay (BarcodeDetector, mirrors `production.js`'s scanner but continuous with a 1.5s same-code de-dup); each scan calls `GET /items/lookup?code=` then adds from the location's stock via `addToCart` (which caps at on-hand). Camera-absent/insecure-context falls back to manual barcode/SKU entry. Data model: `sale_locations` + `location_ledger` (truth) + `location_stock` (cache, PK location+item); `sales` + `sale_lines`. Push/pull = **hard transfer** (`record_movement(item,'to_location',∓qty)` + location ledger); a sale is a **location-only decrement** (no stock movement) that records a receipt. Company inventory = `stock_qty` + Σ `location_stock`. Discount math is gross-facing: per-line (`pct`|`val`) → line_gross; cart discount allocated across lines by gross share (last line takes the rounding remainder); net = gross/(1+vat/100). `VGC_SM_Locations` + `VGC_SM_Sales`; REST in `trait-pos.php`.
+
+**Refund / void (1.66.0, DB 0.23.0).** `VGC_SM_Sales::refund($sale_id, $lines, $note, $void)` returns units to the selling location via `VGC_SM_Locations::return_from_sale` (a `sale_return` location-ledger entry, mirror of `deduct_for_sale`; no stock movement). Per-line refund value is proportional to the stored post-discount line totals; **clearing a line takes the exact stored remainder**, so a full void returns precisely what was charged. New columns: `sale_lines.refunded_{qty,net,vat,gross}`, `sales.refunded_{net,vat,gross}` + `refunded_at`/`refunded_by`; `sales.status` moves `completed`→`partial_refund`→`voided`. `recent()` surfaces `status`, `refunded_gross`, `net_gross`. Manager-only, on the main-app receipt (`receipt-refund` card) — the till stays sell-only. Defensive `ensure_refund_columns()` (guarded by option `vgc_sm_sales_refund_columns`) adds the columns if dbDelta skipped them.
 
 ### Design system (0.16.0, implemented from a Claude Design project)
 Warm parchment + terracotta, "Workshop backoffice".
