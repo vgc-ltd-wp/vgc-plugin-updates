@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.70.0** · Stock Bridge **0.4.0**
+> **Pinned to:** Stock Manager **1.71.0** · Stock Bridge **0.4.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -270,7 +270,9 @@ Auth: `X-VGC-Token` header (shared secret) over HTTPS.
 
 **Printable receipt (1.67.0).** The receipt page has **Print 80mm slip** / **Print A4** buttons → `openReceiptPrint(mode, sale)` mounts the shared `.vgc-sm-printov` overlay (same mechanism as the order print sheet) with `V.tpl.locations.receiptSheet` (single-column `.vgc-sm-rsheet`, `.is-80` = compact thermal slip). Paper size is set per mode by injecting a `<style id="vgc-sm-pagesize">@page{size:80mm auto|A4}</style>` at print time (removed on close). Letterhead comes from `boot.print` (Settings). No server side — pure print/PDF.
 
-**Location-stock cache is ledger-derived (1.70.0 fix).** `location_stock` is now **recomputed from `location_ledger`** after every write via `VGC_SM_Locations::sync_stock_cache($loc,$item)` (SELECT SUM → upsert as a `%s` canonical-decimal string, not a `%f` delta), so it can't drift. Bug it fixed: pushed stock left the workshop but never appeared in the location because the cache table had been silently skipped by dbDelta / was out of sync. One-time repair on upgrade (option `vgc_sm_pos_tables_repaired_v1`): `VGC_SM_Install::ensure_pos_tables()` (`CREATE TABLE IF NOT EXISTS` for the POS tables) + `VGC_SM_Locations::rebuild_stock_cache()` (DELETE + re-sum the whole cache from the ledger, so anything already pushed reappears). Push/pull UI is Orders-style inline (staged rows / inline pull editor) — **no `prompt()`** (see [[vgc-stock-manager-no-browser-prompts]]).
+**"Nothing here yet" on every location — the real root cause (1.71.0).** `VGC_SM_Locations::inventory()` and `shape()` selected **`i.price_gross`**, but there is **no such column** on the items table — `price_gross` is derived (`price_net * (1 + vat_rate/100)`) everywhere in the app. MySQL threw *Unknown column* → `get_results` returned empty → location inventory, the till product grid, and location value totals were all blank, even though the item page's `item_breakdown()` (which selects no item price columns) showed the right per-location quantities. Fixed by selecting `price_net` + `vat_rate` and computing gross in PHP (`inventory`/`shape_stock_row`/`shape`, and `VGC_SM_Sales::checkout` which read `$item['price_gross']` off the raw `SELECT *` row — also undefined). **Lesson:** the items table stores `price_net`/`price_b2b`/`cost_net`/`vat_rate` only; never `SELECT i.price_gross`/`i.cost_gross`.
+
+**Location-stock cache is ledger-derived (1.70.0).** `location_stock` is **recomputed from `location_ledger`** after every write via `VGC_SM_Locations::sync_stock_cache($loc,$item)` (SELECT SUM → upsert as a `%s` canonical-decimal string), so it can't drift. One-time repair on upgrade (option `vgc_sm_pos_tables_repaired_v1`): `VGC_SM_Install::ensure_pos_tables()` (`CREATE TABLE IF NOT EXISTS`) + `VGC_SM_Locations::rebuild_stock_cache()`. Good hygiene, but note the cache was NOT the display bug — the phantom-column SELECT above was. Push/pull UI is Orders-style inline (staged rows / inline pull editor) — **no `prompt()`** (see [[vgc-stock-manager-no-browser-prompts]]).
 
 ### Design system (0.16.0, implemented from a Claude Design project)
 Warm parchment + terracotta, "Workshop backoffice".
