@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.79.0** · Stock Bridge **0.4.0**
+> **Pinned to:** Stock Manager **1.80.0** · Stock Bridge **0.4.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -289,6 +289,17 @@ Auth: `X-VGC-Token` header (shared secret) over HTTPS.
 **Which figure a recipe costs from is a setting, defaulting to today's behaviour** (`cost_basis`: `manual` | `average` | `recent`, added 1.77.0). `VGC_SM_Costing::effective_cost($item, $basis=null)` is the single door — `class-bom.php` calls it for every leaf instead of reading `cost_net` directly, so the whole cost tree follows the setting. Precedence: **`cost_manual` always wins** (a hand-typed cost is an explicit human decision), then the basis, then a fallback to `cost_net` when there's no purchase history. A zero average is a real zero, not "missing". Switching basis rewires every margin in the system, so `preview_basis()` returns the before/after for every affected item and the Settings card makes you look at it before applying. `report($days)` powers the Material prices screen (GET `/costs`, manager) and `preview_basis()` powers GET `/costs/preview` (admin). 24 unit cases cover the two maths functions plus `effective_cost` precedence.
 
 **`receipts()` has two sources** (1.78.0, DB 0.27.0): purchase lines, and **hand receipts priced on the item page** (`movements.unit_cost`, added by `ensure_movement_columns()`). Not every delivery gets a purchase document, and an unpriced receipt is invisible to costing. Movements raised BY a purchase are excluded on `ref_type <> 'purchase'` so nothing is double-counted, and the merged list is re-sorted newest-first because `average_for_on_hand()` depends on that order. `unit_cost` is only ever written by POST `/movements` for `type=receive`; an empty box records NULL, never 0. **Gotcha:** in pack mode the UI reads the price *per pack* (matching the invoice) and divides by `pack_size` before posting — the label must follow the mode from first render, not just on change.
+
+### Corrections — undoing entries made by mistake (1.80.0, DB 0.28.0)
+`class-corrections.php`. The ledger is append-only, so a mistake is CANCELLED, never erased: an equal-and-opposite entry, linked both ways by `reverses` (on the cancelling row) and `reversed_at` (stamped on the row it cancels). Both columns exist on `movements` AND `location_ledger`. This generalises the pre-existing `VGC_SM_Production::void_run()`, which had been written but never wired to a route or a button — the 1.80.0 work is partly connecting it.
+
+**One entry point.** All three undoable things write a movement on the item, so the item's movement history is the only UI: `scope_of()` dispatches on `ref_type` — `production_run` → the whole run via `void_run()` (never one leg), `location` → `pull()`/`push()` inverse (their guards apply, so undoing a push fails if the location already sold it), anything else → a plain contra entry. `legs_of()` expands a run to every leg so the preview shows the full consequence.
+
+**`can_undo()` is the guard and is unit-tested (15 cases).** Refuses anything with its own undo route (`purchase`, `sale`, `sale_return`, `note`, `order`, `shop`, `production_void`) with a message naming where to go instead; refuses double-undo (`reversed_at` set) and undoing a cancellation (`reverses` set). Precedence: reversal > already-cancelled > guarded ref.
+
+**Deliberate non-guard:** undoing a receipt whose stock is spent drives stock negative. That is ALLOWED and warned about, because it is exactly how "typed 100 instead of 10" is fixed — blocking it would make the mistake permanent.
+
+Mode is per-user (`vgc_sm_fix_mode` user meta), admin-gated in the boot payload (`fixMode`) AND on every route, so an operator cannot reveal the controls. Cancelled receipts drop out of `VGC_SM_Costing::receipts()` via `reversed_at IS NULL`.
 
 ### Clearing test data (1.79.0)
 `class-reset.php` splits every table into **transactional** (20, truncated) and **definitions** (kept). The line is "what happened" vs "what things are": movements/runs/purchases/orders/consignment/notes/sales/location ledgers/sync log/audit go; items, recipes, categories, partners, sale locations and their child rows stay. TRUNCATE not DELETE, so receipt and order numbering restarts at 1. Afterwards `items.stock_qty`/`store_qty` are zeroed and `avg_cost`/`last_cost`/`last_cost_at` NULLed — stock is the sum of a ledger that is now empty, and the derived costs came from purchase history that no longer exists. The reset is logged *after* truncation so it survives as entry #1 of the fresh log. GET `/reset/preview` returns the counts; POST `/reset` refuses without `confirm=RESET` (guards against a stale queued offline request or a double-tap). Both admin-only. **Adding a table means adding it to `transaction_tables()` or `kept_tables()` AND to `uninstall.php`** — a Python cross-check against the table helpers in the bootstrap catches drift in all three.
