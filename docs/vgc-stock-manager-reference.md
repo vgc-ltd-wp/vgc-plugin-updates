@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.77.1** · Stock Bridge **0.4.0**
+> **Pinned to:** Stock Manager **1.78.0** · Stock Bridge **0.4.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -287,6 +287,10 @@ Auth: `X-VGC-Token` header (shared secret) over HTTPS.
 `landed_unit_cost()` = `VGC_SM_Purchases::net_cost()` (strips VAT) **+ this line's share of `transport_cost` allocated by line value** when `transport_payer='us'`. `average_for_on_hand()` walks receipts **newest-first until they cover `stock_qty`** (FIFO-consistent: what's left is the newest stock), falling back to the whole history when stock is 0 so the figure carries forward instead of collapsing. Consignment (`mode='consignment'`) is excluded — not ours until bought; `qty_returned` comes off. `stats()` adds the trailing-window average (`WINDOW_DAYS` 90 — "what it costs to buy now", which diverges sharply from the holding average after a seasonal buy; price against the former, value stock at the latter). Both maths functions are **pure and unit-tested** (17 cases: VAT strip, freight-by-value, returns, seasonal, zero stock).
 
 **Which figure a recipe costs from is a setting, defaulting to today's behaviour** (`cost_basis`: `manual` | `average` | `recent`, added 1.77.0). `VGC_SM_Costing::effective_cost($item, $basis=null)` is the single door — `class-bom.php` calls it for every leaf instead of reading `cost_net` directly, so the whole cost tree follows the setting. Precedence: **`cost_manual` always wins** (a hand-typed cost is an explicit human decision), then the basis, then a fallback to `cost_net` when there's no purchase history. A zero average is a real zero, not "missing". Switching basis rewires every margin in the system, so `preview_basis()` returns the before/after for every affected item and the Settings card makes you look at it before applying. `report($days)` powers the Material prices screen (GET `/costs`, manager) and `preview_basis()` powers GET `/costs/preview` (admin). 24 unit cases cover the two maths functions plus `effective_cost` precedence.
+
+**`receipts()` has two sources** (1.78.0, DB 0.27.0): purchase lines, and **hand receipts priced on the item page** (`movements.unit_cost`, added by `ensure_movement_columns()`). Not every delivery gets a purchase document, and an unpriced receipt is invisible to costing. Movements raised BY a purchase are excluded on `ref_type <> 'purchase'` so nothing is double-counted, and the merged list is re-sorted newest-first because `average_for_on_hand()` depends on that order. `unit_cost` is only ever written by POST `/movements` for `type=receive`; an empty box records NULL, never 0. **Gotcha:** in pack mode the UI reads the price *per pack* (matching the invoice) and divides by `pack_size` before posting — the label must follow the mode from first render, not just on change.
+
+**When adding a setting, three places must agree**: the default + sanitiser in `class-sync-client.php`, AND the forward-list in `trait-shop.php::save_settings()`, AND the response in `get_settings()`. `cost_basis` shipped in 1.77.0 missing the last two, so the UI saved into a void — a browser harness that stubs the endpoint cannot catch this.
 
 ### Design system (0.16.0, implemented from a Claude Design project)
 Warm parchment + terracotta, "Workshop backoffice".
