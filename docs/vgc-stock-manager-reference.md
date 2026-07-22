@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.81.0** · Stock Bridge **0.4.0**
+> **Pinned to:** Stock Manager **1.82.0** · Stock Bridge **0.4.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -300,7 +300,7 @@ Security audit outcome — foundations were sound (prepared SQL, esc() disciplin
 - **Session expiry** (C1): `rawFetch`/`upload` detect `rest_cookie_invalid_nonce` → one-time full-screen overlay → reload. WP nonces live 12–24 h; this WILL happen daily on a till.
 - **Perf**: `report()` uses `receipts_for_all()` (2 queries total) + pure `stats_from_receipts()` — `stats($id)` wraps the same maths, so figures cannot diverge. Audit log prunes to 365 days via the `vgc_sm_daily` cron (cleared on deactivation).
 - Location `push()`/`pull()` now return `movement_id`/`ledger_id`; corrections link reversals to exact ids, never "newest row".
-- **Open decision**: viewer-level accounts can read costs, margins, statements, reports ($auth routes). Deliberate?
+- **Viewer scope (1.82.0, decided)**: a viewer sees stock quantities and locations, NOTHING with money. Enforced in three layers that must stay in step: (1) 14 GET routes bumped $auth→$write (partners+statement, notes, consignment/outstanding, orders, purchases, reports/*, production preview+plan); (2) `shape_item()` NULLs every money field (cost_*, avg/last_cost, margins, price_b2b) below operator — one gate covers lists, dashboard and single item; `cost_stats` and movement `unit_cost` likewise; (3) nav entries carry `op:1` and `navVisible()` filters all three render sites (sidebar, phone drawer, bottom tabs). Retail price_net stays visible (public anyway). When adding a screen with money on it: gate the route, strip the shape, flag the nav entry.
 
 ### Corrections — undoing entries made by mistake (1.80.0, DB 0.28.0)
 `class-corrections.php`. The ledger is append-only, so a mistake is CANCELLED, never erased: an equal-and-opposite entry, linked both ways by `reverses` (on the cancelling row) and `reversed_at` (stamped on the row it cancels). Both columns exist on `movements` AND `location_ledger`. This generalises the pre-existing `VGC_SM_Production::void_run()`, which had been written but never wired to a route or a button — the 1.80.0 work is partly connecting it.
