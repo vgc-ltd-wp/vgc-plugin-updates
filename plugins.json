@@ -31,8 +31,8 @@
   },
   "vgc-ai-nexus": {
     "name": "VGC AI Nexus",
-    "version": "2.14.0",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-2.14.0/vgc-ai-nexus-2.14.0.zip",
+    "version": "2.15.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-2.15.0/vgc-ai-nexus-2.15.0.zip",
     "requires": "6.0",
     "requires_php": "8.0",
     "tested": "6.8",
@@ -41,7 +41,7 @@
     "author": "VGC",
     "sections": {
       "description": "The AI management layer for WordPress (MCP tools for AI agents).",
-      "changelog": "<h4>2.14.0</h4><ul><li>list_content_seo accepts an ids[] filter for single-item SEO lookups (previously ignored).</li></ul><h4>2.13.9</h4><ul><li>list_posts now lists ANY post type (product, avada_portfolio, event...) and filters by any taxonomy (portfolio_category, product_cat...). Unknown types/taxonomies return helpful errors instead of silently falling back.</li></ul><h4>2.13.8</h4><ul><li>Compatibility: tool schemas are now valid for strict MCP clients (Claude Desktop 1.18286+) regardless of which MCP adapter serves them.</li></ul><h4>2.13.7</h4><ul><li>OPcache self-heal: automatically reset OPcache after plugin installs/updates so the MCP connector never regresses to stale code.</li></ul><h4>2.13.6</h4><ul><li>Connect page now stores, lists and revokes connections (previously created credentials were saved but never shown).</li></ul><h4>2.13.5</h4><ul><li>Fix Claude Desktop 1.17377+ tools/list rejection (properties emitted as {} not []).</li></ul><h4>2.13.4</h4><ul><li>Fix extension subpage toolbar spacing (no longer flush to card edges).</li></ul><h4>2.13.3</h4><ul><li>Fix Extensions card layout.</li></ul>"
+      "changelog": "<h4>2.15.0</h4><ul><li>Unsupported parameters are now reported back (ignored_parameters + warning) instead of being silently dropped - no more filters that appear to work but do not.</li><li>list_content_seo: filter by taxonomy + terms.</li><li>list_post_types: clarifies that REST exposure does not limit these tools.</li></ul><h4>2.14.0</h4><ul><li>list_content_seo accepts an ids[] filter for single-item SEO lookups (previously ignored).</li></ul><h4>2.13.9</h4><ul><li>list_posts now lists ANY post type (product, avada_portfolio, event...) and filters by any taxonomy (portfolio_category, product_cat...). Unknown types/taxonomies return helpful errors instead of silently falling back.</li></ul><h4>2.13.8</h4><ul><li>Compatibility: tool schemas are now valid for strict MCP clients (Claude Desktop 1.18286+) regardless of which MCP adapter serves them.</li></ul><h4>2.13.7</h4><ul><li>OPcache self-heal: automatically reset OPcache after plugin installs/updates so the MCP connector never regresses to stale code.</li></ul><h4>2.13.6</h4><ul><li>Connect page now stores, lists and revokes connections (previously created credentials were saved but never shown).</li></ul><h4>2.13.5</h4><ul><li>Fix Claude Desktop 1.17377+ tools/list rejection (properties emitted as {} not []).</li></ul><h4>2.13.4</h4><ul><li>Fix extension subpage toolbar spacing (no longer flush to card edges).</li></ul><h4>2.13.3</h4><ul><li>Fix Extensions card layout.</li></ul>"
     }
   },
   "vgc-ai-nexus-analytics": {
