@@ -31,8 +31,8 @@
   },
   "vgc-ai-nexus": {
     "name": "VGC AI Nexus",
-    "version": "2.13.9",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-2.13.9/vgc-ai-nexus-2.13.9.zip",
+    "version": "2.14.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-2.14.0/vgc-ai-nexus-2.14.0.zip",
     "requires": "6.0",
     "requires_php": "8.0",
     "tested": "6.8",
@@ -41,7 +41,7 @@
     "author": "VGC",
     "sections": {
       "description": "The AI management layer for WordPress (MCP tools for AI agents).",
-      "changelog": "<h4>2.13.9</h4><ul><li>list_posts now lists ANY post type (product, avada_portfolio, event...) and filters by any taxonomy (portfolio_category, product_cat...). Unknown types/taxonomies return helpful errors instead of silently falling back.</li></ul><h4>2.13.8</h4><ul><li>Compatibility: tool schemas are now valid for strict MCP clients (Claude Desktop 1.18286+) regardless of which MCP adapter serves them.</li></ul><h4>2.13.7</h4><ul><li>OPcache self-heal: automatically reset OPcache after plugin installs/updates so the MCP connector never regresses to stale code.</li></ul><h4>2.13.6</h4><ul><li>Connect page now stores, lists and revokes connections (previously created credentials were saved but never shown).</li></ul><h4>2.13.5</h4><ul><li>Fix Claude Desktop 1.17377+ tools/list rejection (properties emitted as {} not []).</li></ul><h4>2.13.4</h4><ul><li>Fix extension subpage toolbar spacing (no longer flush to card edges).</li></ul><h4>2.13.3</h4><ul><li>Fix Extensions card layout.</li></ul>"
+      "changelog": "<h4>2.14.0</h4><ul><li>list_content_seo accepts an ids[] filter for single-item SEO lookups (previously ignored).</li></ul><h4>2.13.9</h4><ul><li>list_posts now lists ANY post type (product, avada_portfolio, event...) and filters by any taxonomy (portfolio_category, product_cat...). Unknown types/taxonomies return helpful errors instead of silently falling back.</li></ul><h4>2.13.8</h4><ul><li>Compatibility: tool schemas are now valid for strict MCP clients (Claude Desktop 1.18286+) regardless of which MCP adapter serves them.</li></ul><h4>2.13.7</h4><ul><li>OPcache self-heal: automatically reset OPcache after plugin installs/updates so the MCP connector never regresses to stale code.</li></ul><h4>2.13.6</h4><ul><li>Connect page now stores, lists and revokes connections (previously created credentials were saved but never shown).</li></ul><h4>2.13.5</h4><ul><li>Fix Claude Desktop 1.17377+ tools/list rejection (properties emitted as {} not []).</li></ul><h4>2.13.4</h4><ul><li>Fix extension subpage toolbar spacing (no longer flush to card edges).</li></ul><h4>2.13.3</h4><ul><li>Fix Extensions card layout.</li></ul>"
     }
   },
   "vgc-ai-nexus-analytics": {
@@ -196,8 +196,8 @@
   },
   "vgc-ai-nexus-avada": {
     "name": "VGC AI Nexus for Avada",
-    "version": "1.9.3",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-avada-1.9.3/vgc-ai-nexus-avada-1.9.3.zip",
+    "version": "1.10.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-avada-1.10.0/vgc-ai-nexus-avada-1.10.0.zip",
     "requires": "6.0",
     "requires_php": "8.0",
     "tested": "6.8",
@@ -206,7 +206,7 @@
     "author": "VGC",
     "sections": {
       "description": "Manage the Avada theme from AI Nexus (read-only Global Options to start).",
-      "changelog": "<h4>1.9.3</h4><ul><li>Compatibility: tool schemas are now valid for strict MCP clients (Claude Desktop 1.18286+) regardless of which MCP adapter serves them.</li></ul><h4>1.9.2</h4><ul><li>Safety: group-class collision guard - a name clash with core or another extension no longer crashes the site.</li></ul><h4>1.9.1</h4><ul><li>Fix layout conditions read (wp_unslash + template_terms).</li></ul><h4>1.9.0</h4><ul><li>Avada Layouts &amp; Sections.</li></ul>"
+      "changelog": "<h4>1.10.0</h4><ul><li>Library now includes page templates; new create_from_template builds a page from a template server-side (no huge copy/paste); new list_custom_icons lists custom icon sets and their CSS prefixes.</li></ul><h4>1.9.3</h4><ul><li>Compatibility: tool schemas are now valid for strict MCP clients (Claude Desktop 1.18286+) regardless of which MCP adapter serves them.</li></ul><h4>1.9.2</h4><ul><li>Safety: group-class collision guard - a name clash with core or another extension no longer crashes the site.</li></ul><h4>1.9.1</h4><ul><li>Fix layout conditions read (wp_unslash + template_terms).</li></ul><h4>1.9.0</h4><ul><li>Avada Layouts &amp; Sections.</li></ul>"
     }
   },
   "vgc-ai-nexus-elementor": {
