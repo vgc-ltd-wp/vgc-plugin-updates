@@ -107,32 +107,32 @@
   },
   "vgc-mcp-claude-connector-oauth": {
     "name": "VGC MCP Claude Connector (OAuth)",
-    "version": "1.2.5",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-mcp-claude-connector-oauth-1.2.5/vgc-mcp-claude-connector-oauth-1.2.5.zip",
+    "version": "1.3.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-mcp-claude-connector-oauth-1.3.0/vgc-mcp-claude-connector-oauth-1.3.0.zip",
     "requires": "6.0",
     "requires_php": "8.0",
     "tested": "6.8",
-    "last_updated": "2026-06-30",
+    "last_updated": "2026-07-22",
     "homepage": "https://tools.vgc-ltd.com",
     "author": "VGC",
     "sections": {
       "description": "OAuth MCP connector exposing site abilities to Claude.",
-      "changelog": "<h4>1.2.5</h4><ul><li>Fix Claude Desktop 1.17377+ tools/list rejection (properties emitted as {} not []).</li></ul><h4>1.2.4</h4><ul><li>Self-hosted updater: native WordPress \"Update now\" button via the public manifest (no wp-config token).</li></ul>"
+      "changelog": "<h4>1.3.0</h4><ul><li>Fixes List media and List templates, which failed for any input.</li><li>When VGC AI Nexus is active, this plugin now stands down so you do not get duplicate tools - it can be deactivated.</li></ul><h4>1.2.5</h4><ul><li>Fix Claude Desktop 1.17377+ tools/list rejection (properties emitted as {} not []).</li></ul><h4>1.2.4</h4><ul><li>Self-hosted updater: native WordPress \"Update now\" button via the public manifest (no wp-config token).</li></ul>"
     }
   },
   "vgc-mcp-claude-desktop": {
     "name": "VGC MCP Claude Desktop Connector (Lite)",
-    "version": "1.2.5",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-mcp-claude-desktop-1.2.5/vgc-mcp-claude-desktop-1.2.5.zip",
+    "version": "1.3.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-mcp-claude-desktop-1.3.0/vgc-mcp-claude-desktop-1.3.0.zip",
     "requires": "6.0",
     "requires_php": "8.0",
     "tested": "6.8",
-    "last_updated": "2026-06-30",
+    "last_updated": "2026-07-22",
     "homepage": "https://tools.vgc-ltd.com",
     "author": "VGC",
     "sections": {
       "description": "Application-password MCP connector for Claude Desktop.",
-      "changelog": "<h4>1.2.5</h4><ul><li>Fix Claude Desktop 1.17377+ tools/list rejection (properties emitted as {} not []).</li></ul><h4>1.2.4</h4><ul><li>Self-hosted updater: native WordPress \"Update now\" button via the public manifest (no wp-config token).</li></ul>"
+      "changelog": "<h4>1.3.0</h4><ul><li>Fixes List media and List templates, which failed for any input.</li><li>When VGC AI Nexus is active, this plugin now stands down so you do not get duplicate tools - it can be deactivated.</li></ul><h4>1.2.5</h4><ul><li>Fix Claude Desktop 1.17377+ tools/list rejection (properties emitted as {} not []).</li></ul><h4>1.2.4</h4><ul><li>Self-hosted updater: native WordPress \"Update now\" button via the public manifest (no wp-config token).</li></ul>"
     }
   },
   "vgc-price-by-quantity": {
