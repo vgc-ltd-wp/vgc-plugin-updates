@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.80.0** · Stock Bridge **0.4.0**
+> **Pinned to:** Stock Manager **1.81.0** · Stock Bridge **0.4.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -290,6 +290,18 @@ Auth: `X-VGC-Token` header (shared secret) over HTTPS.
 
 **`receipts()` has two sources** (1.78.0, DB 0.27.0): purchase lines, and **hand receipts priced on the item page** (`movements.unit_cost`, added by `ensure_movement_columns()`). Not every delivery gets a purchase document, and an unpriced receipt is invisible to costing. Movements raised BY a purchase are excluded on `ref_type <> 'purchase'` so nothing is double-counted, and the merged list is re-sorted newest-first because `average_for_on_hand()` depends on that order. `unit_cost` is only ever written by POST `/movements` for `type=receive`; an empty box records NULL, never 0. **Gotcha:** in pack mode the UI reads the price *per pack* (matching the invoice) and divides by `pack_size` before posting — the label must follow the mode from first render, not just on change.
 
+### Hardening (1.81.0)
+Security audit outcome — foundations were sound (prepared SQL, esc() discipline, per-route permissions, whitelisted uploads, token never echoed); what shipped closes the gaps found:
+- **Headers**: `security_headers()` in class-frontend runs for every `head()` document (app, till, login) — CSP (`'unsafe-inline'` required: boot payload + template style attrs are inline by design), SAMEORIGIN framing, nosniff, same-origin referrer.
+- **Login throttle** is two-axis (per-IP AND per-username, 8 fails / 10 min) and covers wp-login.php/XML-RPC via `authenticate` (prio 30) + `wp_login_failed`/`wp_login` hooks. Counting happens ONLY in those hooks — handle_login must not also count, or every branded-login failure counts twice.
+- **Updater** verifies `sha256` from the manifest in `upgrader_pre_download` when present (hash_equals). **The release ritual must therefore put the zip's sha256 into plugins.json** — an entry without one installs unverified (back-compat). The updater copy is per-plugin; other VGC plugins still bundle the old one.
+- **CSV**: `csvCell()` neutralises leading `=+-@` on non-numeric values (Excel formula injection); real negatives stay numeric.
+- **Logout** purges Cache Storage before navigating (cached shell embeds the boot payload).
+- **Session expiry** (C1): `rawFetch`/`upload` detect `rest_cookie_invalid_nonce` → one-time full-screen overlay → reload. WP nonces live 12–24 h; this WILL happen daily on a till.
+- **Perf**: `report()` uses `receipts_for_all()` (2 queries total) + pure `stats_from_receipts()` — `stats($id)` wraps the same maths, so figures cannot diverge. Audit log prunes to 365 days via the `vgc_sm_daily` cron (cleared on deactivation).
+- Location `push()`/`pull()` now return `movement_id`/`ledger_id`; corrections link reversals to exact ids, never "newest row".
+- **Open decision**: viewer-level accounts can read costs, margins, statements, reports ($auth routes). Deliberate?
+
 ### Corrections — undoing entries made by mistake (1.80.0, DB 0.28.0)
 `class-corrections.php`. The ledger is append-only, so a mistake is CANCELLED, never erased: an equal-and-opposite entry, linked both ways by `reverses` (on the cancelling row) and `reversed_at` (stamped on the row it cancels). Both columns exist on `movements` AND `location_ledger`. This generalises the pre-existing `VGC_SM_Production::void_run()`, which had been written but never wired to a route or a button — the 1.80.0 work is partly connecting it.
 
@@ -324,7 +336,7 @@ To add a language: add a catalogue method in `class-i18n.php` and list it in `la
 3. **The user tests on staging** — do not run or lint the plugin locally. (`node --check app/app.js` and a CSS brace check are fine and worth doing.)
 4. **TEST MODE: publish every update immediately** (until the user says production mode). Publishing =
    - `gh release create vgc-<slug>-<version> _releases/<zip> --repo vgc-ltd-wp/vgc-plugin-updates`
-   - update `plugins.json` in that repo (`version`, `download_url`, prepend changelog)
+   - update `plugins.json` in that repo (`version`, `download_url`, **`sha256` of the zip** — the updater refuses a mismatched package, prepend changelog)
    - **update THIS file** — the "Pinned to" line, the feature-history table, and any section the change touches — and copy it to `docs/vgc-stock-manager-reference.md` in the same commit
    - commit, push, verify with `gh api .../contents/plugins.json` (the raw CDN lags ~5 min).
 5. **This reference is always pinned to the current version.** It is part of the release, not an afterthought: a release is not finished until the doc matches what shipped. A stale reference is worse than none, because the next session will trust it.
