@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.75.2** · Stock Bridge **0.4.0**
+> **Pinned to:** Stock Manager **1.76.0** · Stock Bridge **0.4.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -281,6 +281,12 @@ Auth: `X-VGC-Token` header (shared secret) over HTTPS.
 **Scan route + landing (1.74.0).** `maybe_render()` branches on `?vgc_sm_scan=<code>` **after** the auth gate → `VGC_SM_Repository::get_item_by_barcode()` (barcode, falling back to SKU — which is why a SKU payload resolves) → `wp_safe_redirect( url() . '#/item/{id}?scanned=1' )`; no match → `#/products?scan_unknown=<code>`, which the router turns into a warn toast. The login form's action carries `vgc_sm_scan` through, so scanning while signed out still lands on the item after login. The router passes `r.query` into `S.viewItem(id, query)`; `scanned` renders `scannedPanel()` (`item-scanned`) **above the hero** with **Receive stock** → the existing inline `movementForm(i,'receive')` and **Record production** → `#/produce?item={id}` (made items only). This is the whole point of the QR work: it needs **no in-page scanning API**, so it works on iOS where `BarcodeDetector` does not.
 
 **Mobile navigation (1.72.0).** The bottom tab bar only renders `NAV_MAIN` entries that carry a `tab:` label (6 of them), so every other destination used to be desktop-sidebar-only — unreachable on a phone. The topbar now has `#vgc-sm-menu` (`.vgc-sm-topbar__menu.vgc-sm-phoneonly`, hidden ≥900px) → `openNavDrawer()` in core.js, which reuses `openDrawer()` to list **all** groups (`NAV_MAIN` + `NAV_MANAGER` if manager + `NAV_ADMIN` if admin + `NAV_HELP`) with the active route highlighted, plus the signed-in user and sign-out in the drawer foot. Each entry carries `data-drawer-close="1"` so a tap navigates *and* dismisses. The click is bound at **module load** (not in `V.start()`) so the menu works as soon as the shell exists.
+
+**Material costing (1.76.0, DB 0.26.0).** `class-costing.php` derives what a material really costs from `purchase_lines` — the workshop buys the same thing at seasonal prices, so a typed `cost_net` goes stale. **Derived, never accumulated:** purchases are living documents (a price can be corrected months later), so a running average would drift silently; everything is recomputed from history on every `reconcile()` (`recalculate_for_purchase`), exactly as `location_stock` is recomputed from its ledger. `items.avg_cost` / `last_cost` / `last_cost_at` are a CACHE, not truth.
+
+`landed_unit_cost()` = `VGC_SM_Purchases::net_cost()` (strips VAT) **+ this line's share of `transport_cost` allocated by line value** when `transport_payer='us'`. `average_for_on_hand()` walks receipts **newest-first until they cover `stock_qty`** (FIFO-consistent: what's left is the newest stock), falling back to the whole history when stock is 0 so the figure carries forward instead of collapsing. Consignment (`mode='consignment'`) is excluded — not ours until bought; `qty_returned` comes off. `stats()` adds the trailing-window average (`WINDOW_DAYS` 90 — "what it costs to buy now", which diverges sharply from the holding average after a seasonal buy; price against the former, value stock at the latter). Both maths functions are **pure and unit-tested** (17 cases: VAT strip, freight-by-value, returns, seasonal, zero stock).
+
+**Phase 1 is compute-only** — `avg_cost` is exposed read-only on the item shape plus `cost_stats` on GET `/items/{id}`, but **nothing costs from it yet**. `cost_net` + `cost_manual` still drive every recipe and margin; the switchover is a deliberate later phase.
 
 ### Design system (0.16.0, implemented from a Claude Design project)
 Warm parchment + terracotta, "Workshop backoffice".
