@@ -242,8 +242,8 @@
   },
   "vgc-recipe-core": {
     "name": "VGC Recipe Core",
-    "version": "0.7.0",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-recipe-core-0.7.0/vgc-recipe-core-0.7.0.zip",
+    "version": "0.8.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-recipe-core-0.8.0/vgc-recipe-core-0.8.0.zip",
     "requires": "6.5",
     "requires_php": "7.4",
     "tested": "7.0",
@@ -252,13 +252,13 @@
     "author": "VGC",
     "sections": {
       "description": "Recipe engine for Меню без пристъпи (gout + cholesterol diet site): vgc_recipe post type, structured ingredient/step blocks, instant search and filters, weekly menu, browser-side shopping list, Schema.org Recipe output.",
-      "changelog": "<h4>0.7.0</h4><p>The vgc_meal taxonomy term now mirrors the vgc_code letter automatically on every save and meta update, with a one-time backfill across all recipes. New {{count}} token (in blocks with the vgc-recipe-count class) renders the live number of published recipes; the front-page hero uses it.</p><h4>0.6.0</h4><p>New meal category Аламинут (А): codes А1…, slugs a1…, taxonomy term alaminut, included in sorting, archive filter chips, category tiles and the AI usage guide.</p><h4>0.5.0</h4><p>Portion calculator now supports a weight-loss goal: target weight + duration in months derive the daily deficit (7700 kcal/kg), capped at the plan-safe 0.6 kg/week with a visible warning; maintenance detected when the target is not below current weight. New activity-level dropdown (sedentary / light / moderate / high) replaces the fixed light-activity assumption.</p><h4>0.4.0</h4><p>Personal portion calculator: sex, height, weight (optional age) via Mifflin-St Jeor at light activity with a moderate deficit, relative to the plan reference of 2100 kcal. Adds the Моята порция chip on recipe pages, a Моите порции toggle that rescales the whole shopping list, and a standalone vgc/portion-profile block.</p><h4>0.3.0</h4><p>Adds the recipes topic to the AI Nexus usage guide: exact recipe block format, meta keys, code and slug conventions, week-plan option shape and anti-patterns for AI callers.</p><h4>0.2.0</h4><p>First published release: recipe CPT + meal taxonomy, ingredient/step/note blocks with editor UI, recipe meta sidebar panel, client-side index (search, filters, sliders), weekly menu block, shopping list with quantity aggregation, Schema.org Recipe JSON-LD, self-updater.</p>"
+      "changelog": "<h4>0.8.0</h4><p>Data model v2: animal purines (vgc_pur_animal) shown as the primary number with the total as sub-line, used by the archive purine filter and sort and summed in week-plan day totals; soluble fibre (vgc_fib_sol) as a Фибри sub-value; servings base (vgc_servings) for the portion scaler and shopping list. All 88 recipes backfilled with ingredient-derived estimates.</p><h4>0.7.0</h4><p>The vgc_meal taxonomy term now mirrors the vgc_code letter automatically on every save and meta update, with a one-time backfill across all recipes. New {{count}} token (in blocks with the vgc-recipe-count class) renders the live number of published recipes; the front-page hero uses it.</p><h4>0.6.0</h4><p>New meal category Аламинут (А): codes А1…, slugs a1…, taxonomy term alaminut, included in sorting, archive filter chips, category tiles and the AI usage guide.</p><h4>0.5.0</h4><p>Portion calculator now supports a weight-loss goal: target weight + duration in months derive the daily deficit (7700 kcal/kg), capped at the plan-safe 0.6 kg/week with a visible warning; maintenance detected when the target is not below current weight. New activity-level dropdown (sedentary / light / moderate / high) replaces the fixed light-activity assumption.</p><h4>0.4.0</h4><p>Personal portion calculator: sex, height, weight (optional age) via Mifflin-St Jeor at light activity with a moderate deficit, relative to the plan reference of 2100 kcal. Adds the Моята порция chip on recipe pages, a Моите порции toggle that rescales the whole shopping list, and a standalone vgc/portion-profile block.</p><h4>0.3.0</h4><p>Adds the recipes topic to the AI Nexus usage guide: exact recipe block format, meta keys, code and slug conventions, week-plan option shape and anti-patterns for AI callers.</p><h4>0.2.0</h4><p>First published release: recipe CPT + meal taxonomy, ingredient/step/note blocks with editor UI, recipe meta sidebar panel, client-side index (search, filters, sliders), weekly menu block, shopping list with quantity aggregation, Schema.org Recipe JSON-LD, self-updater.</p>"
     }
   },
   "vgc-recipes-theme": {
     "name": "VGC Recipes Theme",
-    "version": "0.5.0",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-recipes-theme-0.5.0/vgc-recipes-theme-0.5.0.zip",
+    "version": "0.6.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-recipes-theme-0.6.0/vgc-recipes-theme-0.6.0.zip",
     "requires": "6.5",
     "requires_php": "7.4",
     "tested": "7.0",
@@ -267,7 +267,7 @@
     "author": "VGC",
     "sections": {
       "description": "Block theme for Меню без пристъпи implementing the kitchen visual direction from Claude Design (Bricolage Grotesque, category colour coding, 22px radii).",
-      "changelog": "<h4>0.5.0</h4><p>Teal category colour for Аламинут (vgc-cat-a).</p><h4>0.4.0</h4><p>Styles for the goal fields, activity dropdown and pace warning in the portion profile form.</p><h4>0.3.0</h4><p>Styles for the personal portion profile form.</p><h4>0.2.0</h4><p>First published release: theme.json tokens, full kitchen stylesheet, templates for front page / recipe archive / single recipe / pages, header and footer parts, theme self-updater.</p>"
+      "changelog": "<h4>0.6.0</h4><p>Macro-tile sub-value styling.</p><h4>0.5.0</h4><p>Teal category colour for Аламинут (vgc-cat-a).</p><h4>0.4.0</h4><p>Styles for the goal fields, activity dropdown and pace warning in the portion profile form.</p><h4>0.3.0</h4><p>Styles for the personal portion profile form.</p><h4>0.2.0</h4><p>First published release: theme.json tokens, full kitchen stylesheet, templates for front page / recipe archive / single recipe / pages, header and footer parts, theme self-updater.</p>"
     }
   }
 }
