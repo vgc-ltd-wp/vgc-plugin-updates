@@ -242,8 +242,8 @@
   },
   "vgc-recipe-core": {
     "name": "VGC Recipe Core",
-    "version": "0.2.0",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-recipe-core-0.2.0/vgc-recipe-core-0.2.0.zip",
+    "version": "0.3.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-recipe-core-0.3.0/vgc-recipe-core-0.3.0.zip",
     "requires": "6.5",
     "requires_php": "7.4",
     "tested": "7.0",
@@ -252,7 +252,7 @@
     "author": "VGC",
     "sections": {
       "description": "Recipe engine for Меню без пристъпи (gout + cholesterol diet site): vgc_recipe post type, structured ingredient/step blocks, instant search and filters, weekly menu, browser-side shopping list, Schema.org Recipe output.",
-      "changelog": "<h4>0.2.0</h4><p>First published release: recipe CPT + meal taxonomy, ingredient/step/note blocks with editor UI, recipe meta sidebar panel, client-side index (search, filters, sliders), weekly menu block, shopping list with quantity aggregation, Schema.org Recipe JSON-LD, self-updater.</p>"
+      "changelog": "<h4>0.3.0</h4><p>Adds the recipes topic to the AI Nexus usage guide: exact recipe block format, meta keys, code and slug conventions, week-plan option shape and anti-patterns for AI callers.</p><h4>0.2.0</h4><p>First published release: recipe CPT + meal taxonomy, ingredient/step/note blocks with editor UI, recipe meta sidebar panel, client-side index (search, filters, sliders), weekly menu block, shopping list with quantity aggregation, Schema.org Recipe JSON-LD, self-updater.</p>"
     }
   },
   "vgc-recipes-theme": {
