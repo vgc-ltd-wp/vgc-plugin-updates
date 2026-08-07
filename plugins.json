@@ -248,7 +248,7 @@
     "requires_php": "7.4",
     "tested": "7.0",
     "last_updated": "2026-08-07",
-    "homepage": "https://vasilg17.sg-host.com",
+    "homepage": "https://snackomer.com",
     "author": "VGC",
     "sections": {
       "description": "Recipe engine for Меню без пристъпи (gout + cholesterol diet site): vgc_recipe post type, structured ingredient/step blocks, instant search and filters, weekly menu, browser-side shopping list, Schema.org Recipe output.",
@@ -263,7 +263,7 @@
     "requires_php": "7.4",
     "tested": "7.0",
     "last_updated": "2026-08-07",
-    "homepage": "https://vasilg17.sg-host.com",
+    "homepage": "https://snackomer.com",
     "author": "VGC",
     "sections": {
       "description": "Block theme for Меню без пристъпи implementing the kitchen visual direction from Claude Design (Bricolage Grotesque, category colour coding, 22px radii).",
