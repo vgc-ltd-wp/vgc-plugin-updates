@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.113.2** · Stock Bridge **0.4.0**
+> **Pinned to:** Stock Manager **1.113.4** · Stock Bridge **0.4.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -421,6 +421,7 @@ To add a language: add a catalogue method in `class-i18n.php` and list it in `la
 4. **TEST MODE: publish every update immediately** (until the user says production mode). Publishing =
    - `gh release create vgc-<slug>-<version> _releases/<zip> --repo vgc-ltd-wp/vgc-plugin-updates`
    - update `plugins.json` in that repo (`version`, `download_url`, **`sha256` of the zip** — the updater refuses a mismatched package, prepend changelog)
+   - **verify it on STAGING before calling it done** — `ssh vgc-sm-staging` (SiteGround, `~/www/vasilg18.sg-host.com/public_html`, WP-CLI, **PHP 8.2 / MySQL 8.4** against the harnesses' 7.4). Install the release zip with `wp plugin install <url> --force`, clear `wp-content/debug.log`, exercise what changed, read the log. Standing instruction from the owner, 2026-08-24. It has already caught: purchases tables never created on a fresh install, `AS lines` reserved on MySQL 8, an early-i18n notice on every request, and a schema fix that was a no-op for want of a DB_VERSION bump — none of which any local harness could see.
    - **update THIS file** — the "Pinned to" line, the feature-history table, and any section the change touches — and copy it to `docs/vgc-stock-manager-reference.md` in the same commit
    - commit, push, verify with `gh api .../contents/plugins.json` (the raw CDN lags ~5 min).
 5. **This reference is always pinned to the current version.** It is part of the release, not an afterthought: a release is not finished until the doc matches what shipped. A stale reference is worse than none, because the next session will trust it.
