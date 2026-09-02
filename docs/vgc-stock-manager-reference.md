@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.123.0** · Stock Bridge **0.4.0**
+> **Pinned to:** Stock Manager **1.124.0** · Stock Bridge **0.4.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -226,6 +226,9 @@ Auth: same-origin cookie + `X-WP-Nonce`. **Access levels (1.7.0)** — `VGC_SM_A
 | POST | `/locations/{id}/event/close` | freeze an event’s figures; `on:false` reopens *(manager)* |
 | GET | `/locations/{id}/event/settlement` | the closing-count sheet: took / rung up / should be left *(manager)* |
 | POST | `/locations/{id}/event/settle` | act on the count — sell the leftover, bring the rest home, write off the gone *(manager)* |
+| GET/POST | `/locations/{id}/event/costs` | what the weekend cost beyond the goods *(manager)* |
+| **DELETE** | `/locations/{id}/event/costs/{cost_id}` | remove one *(manager)* |
+| GET | `/locations/{id}/event/pnl` | did it pay *(manager)* |
 | GET | `/production/preview` | requirements, shortages, materials/extras/total cost |
 | GET | `/production/plan` | recursive build plan |
 | POST | `/production/run` | `qty`, `allow_negative`, `scrap_qty`, `scrap_note` |
@@ -314,6 +317,13 @@ Security audit outcome — foundations were sound (prepared SQL, esc() disciplin
 - **Perf**: `report()` uses `receipts_for_all()` (2 queries total) + pure `stats_from_receipts()` — `stats($id)` wraps the same maths, so figures cannot diverge. Audit log prunes to 365 days via the `vgc_sm_daily` cron (cleared on deactivation).
 - Location `push()`/`pull()` now return `movement_id`/`ledger_id`; corrections link reversals to exact ids, never "newest row".
 - **Sale-location tiles (1.86.0)**: `locKind(kind)` -> {label,tone} and `locStatus({active,units})` -> {label,cls} are the two derived-identity helpers in locations.tpl.js; `locTile()` renders the grid card. Kind accent = coloured left border via `--vgc-loc-accent` per `.vgc-sm-loctile--{counter|popup|market|other}`. Status is DERIVED, not stored: active+stock=live, active+empty=empty, inactive=off (no open/closed field exists - do not invent one). formCard gained a `kind` <select> (server already accepted `kind` on create/update since 1.75.0 - this was a UI-only gap); save body sends `kind`. Open till promoted to primary on the list and detail. devids unchanged (`locations-list`, `location-header`, `location-actions`).
+- **Events, phase 3: what it cost, and whether it paid (1.124.0, DB 0.41.0)** — the last of the four asks. New table `vgc_sm_event_costs` and `Events::pnl()`.
+  **Event costs are PERIOD costs and the tests exist to keep them that way.** Hotel, diesel, pitch fee, market tax — stored net with the VAT beside it, belonging to one event. **They must never reach `avg_cost`, `unit_cost`, an average or a recipe.** Spreading a hotel bill over the candles is a tempting idea that would silently change the margin on every product sold anywhere, for ever; it is the single most dangerous thing this feature could do, and a guard both locally and on staging asserts that adding a cost leaves every item's cost untouched.
+  **The P&L is assembly, not arithmetic of its own.** Revenue and COGS come from `Sales::recent()` scoped to this location, and revenue is taken as **profit + cost** rather than re-derived from `net` minus refunds — the report's totals carry refunds GROSS while the net side lives on the rows, so subtracting the wrong one would overstate every refunded weekend. Both figures are already net of refunds, so their sum is exactly what the sales screen shows for the same location and the two cannot disagree. A staging check asserts that equality directly.
+  **Scoped by LOCATION, never by the event's dates.** The settlement sale is written when the van is unpacked, which is AFTER `ends_on`; a date window would leave a whole weekend's unrecorded takings out of its own P&L. An event location exists for one event, so every sale on it belongs to it whenever it was recorded. Both a mutation and a staging case (a sale rung up after the event ended) pin this.
+  Shrinkage is read off the ledger's own `shrink` entries — the same fact the closing count wrote, not a second tally — and valued at the item's CURRENT cost, because nothing snapshots a cost at write-off time. An estimate, and the card says so. Margins are **null, not 0**, when nothing sold: “0%” reads as breaking even. Manager throughout, matching the existing `$sees_profit` gate.
+  **A near-miss worth the guard it earned:** a new `costCard()` silently replaced the sale-cost editor's function of the same name. Every template file is one IIFE, so a duplicate declaration does not error — the second wins and the only symptom is a crash three screens away. `usecheck.js` now scans every module for two top-level functions sharing a name, and it was verified by renaming one to collide. **Lesson: in a single-IIFE module, a duplicate name is a silent overwrite, and nothing else in the toolchain will say so.**
+  77 new checks, twenty-four reinstated faults verified red, 38 more on staging against the real sales report.
 - **Events, phase 2: the closing count (1.123.0, no schema change)** — the other half of “all sales saved in a backlog that can be resolved after the event has passed”. Unpack the van, say what came home, and the app works out the rest.
   **Two numbers typed, one derived.** Per item: `counted` and `missing`; then `sold here = here − counted − missing`. Ten went, four were rung up, two came home, one is gone → **three were sold and nobody wrote it down**. Compared against `here` (what the books say is LEFT), never against `took` — a mutation swapping those turns the whole sheet into nonsense and is one of the twenty reds. This is what makes a festival where nobody touched the till still produce its takings, which the P&L in phase 3 depends on entirely.
   **The leftover becomes an ORDINARY sale** through `Sales::checkout()`, so it reaches revenue, VAT and the per-line cost snapshot like any other. A special kind of takings would be a second thing every report had to know about, and the one that got forgotten.
