@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.150.0** · Stock Bridge **0.5.1**
+> **Pinned to:** Stock Manager **1.151.0** · Stock Bridge **0.6.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -319,6 +319,20 @@ Security audit outcome — foundations were sound (prepared SQL, esc() disciplin
 - **Perf**: `report()` uses `receipts_for_all()` (2 queries total) + pure `stats_from_receipts()` — `stats($id)` wraps the same maths, so figures cannot diverge. Audit log prunes to 365 days via the `vgc_sm_daily` cron (cleared on deactivation).
 - Location `push()`/`pull()` now return `movement_id`/`ledger_id`; corrections link reversals to exact ids, never "newest row".
 - **Sale-location tiles (1.86.0)**: `locKind(kind)` -> {label,tone} and `locStatus({active,units})` -> {label,cls} are the two derived-identity helpers in locations.tpl.js; `locTile()` renders the grid card. Kind accent = coloured left border via `--vgc-loc-accent` per `.vgc-sm-loctile--{counter|popup|market|other}`. Status is DERIVED, not stored: active+stock=live, active+empty=empty, inactive=off (no open/closed field exists - do not invent one). formCard gained a `kind` <select> (server already accepted `kind` on create/update since 1.75.0 - this was a UI-only gap); save body sends `kind`. Open till promoted to primary on the list and detail. devids unchanged (`locations-list`, `location-header`, `location-actions`).
+- **Shipping validated; a negative line fixed; card fees recorded (1.151.0, DB 0.52.0 — with Bridge 0.6.0)** — owner: *"some shipping costs are not appearing correct — validate it"* and *"for orders paid with cards there is a cost of the transaction, can you log that as well."*
+
+  **Shipping was validated and is correct.** The 1.150.0 probe had run against a shop with NO TAX RATES, so every line's tax was zero and the VAT path was never exercised — a hole in the verification, not in the code. A real 20% rate (shipping taxable) and every shape a shop produces: flat, free, two carriers on one order, amounts that do not divide by the quantity, large quantities, a taxed fee, an untaxed fee, no shipping at all, **prices entered inclusive of tax**, and **tax rounded at the subtotal**. Gross, net and the sale's VAT match WooCommerce to the stotinka in all of them.
+
+  **What was wrong next door: a negative line was clamped to zero.** `checkout()` did `max( 0, $unit_price )` — right for a till, where an operator typing −25 has made a mistake, and wrong for an imported line, because **a shop records a discount as a fee of minus four lev** and most discount and loyalty plugins do exactly that. The discount vanished and the sale read HIGHER than the customer paid: 66.00 against 61.20. Negatives are now allowed on external lines only, and an external line's unit is kept to 6 decimals so a line total divided by a quantity comes back exact. External lines also stopped counting towards `item_count` — postage is not a thing anybody carries home.
+
+  **Card fees.** Bridge 0.6.0 sends `payment_method`, `payment_method_title` and `payment_fee` — the last read from the gateway's own meta (`_stripe_fee`, `_paypal_transaction_fee`, `_ppcp_paypal_fees` and friends), **null when nothing is recorded, never zero**: "nobody said" and "it was free" are different facts. The manager uses that exact figure when it exists and falls back to a **rule per payment method** (percent + fixed, on the GROSS — the processor took its cut of the whole payment and has no idea which part was VAT). No rule and no report means nothing is booked; an estimate that looks like a fact is worse than a gap.
+
+  Each fee is an **expense owned by the sale**: `expenses.sale_id`, UNIQUE, upserted, read-only in the Business-costs screen, removed when the sale is voided or deleted. Filed in a **Card fees** category with `in_product_cost = 0` — taking a card payment is a cost of selling, and folding it into a product's cost would restate every recipe.
+
+  **The finding that shaped the design:** a gateway commonly writes its fee when the payout settles, days later — and **a meta-only save does not bump an order's `post_modified`** (proved against WooCommerce 11.1). So the order looks untouched and a `modified_after` pull will never see it again; the fee would simply never be recorded. `chase_fees()` therefore asks the shop **by id** about recent shop sales that still have no fee — `GET /orders?include=…`, last 7 days, 25 at a time, stopping by itself. Bounded twice, because it is a poll.
+
+  Verified: 95 checks in `shoporders.php`, 64 in `bridgeorders.php`, an **18-mutant sweep all caught**, 85/85 harnesses, and **97 checks on staging** across three probes against real WooCommerce — shipping in every configuration, the whole order flow, and the fees end to end including a fee written after the fact.
+
 - **The shop's orders become sales (1.150.0, DB 0.51.0 — with Bridge 0.5.1)** — owner: *"I want to be able to pull the orders as well."*
 
   **The decision the whole thing rests on: an online order is a SALE like any other**, at a location of kind `online` called Online shop. Not a parallel set of numbers with its own screens and its own totals. That is what makes turnover, profit, margin, the chart, the CSV, refunds and the cost of goods all work without one report being touched.
