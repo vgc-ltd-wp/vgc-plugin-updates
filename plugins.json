@@ -17,18 +17,19 @@
   },
   "vgc-stock-bridge": {
     "name": "VGC Stock Bridge",
-    "version": "0.4.0",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-stock-bridge-0.4.0/vgc-stock-bridge-0.4.0.zip",
+    "version": "0.5.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-stock-bridge-0.5.0/vgc-stock-bridge-0.5.0.zip",
     "requires": "6.0",
     "requires_php": "7.4",
     "tested": "6.8",
-    "last_updated": "2026-07-15",
+    "last_updated": "2026-09-21",
     "homepage": "https://tools.vgc-ltd.com",
     "author": "VGC",
     "sections": {
       "description": "Companion plugin for VGC Stock Manager. Exposes a tiny, token-authenticated REST surface for reading and adjusting WooCommerce product stock quantities only (never orders or customers).",
-      "changelog": "0.4.0 /products gains category/type filters and a virtual flag; new /product-categories endpoint. 0.3.0 /products returns full-size image URL. 0.2.0 GET /products so the backoffice can pull shop products in as items. 0.1.0 Initial release: token auth, ping, read stock, adjust (delta), set (absolute)."
-    }
+      "changelog": "<h4>0.5.0</h4>\n<p><strong>The shop can be asked what it has sold.</strong> Two new read-only endpoints for the backoffice: one that lists orders &mdash; number, status, dates, money and lines, with each line marked as a product, postage or a fee &mdash; and one that lists the order statuses this shop actually uses, including any you have added yourself.</p>\n<p><strong>Read only, and anonymous.</strong> No name, address, email, phone or customer id ever leaves the shop, so no second copy of your customer list is created anywhere else. Nothing here can cancel, refund, complete or edit an order; the bridge still only reads.</p>\n<p>Nothing changes on the shop until the backoffice is set up to pull. Installing this on its own is safe and has no visible effect.</p>\n0.4.0 /products gains category/type filters and a virtual flag; new /product-categories endpoint. 0.3.0 /products returns full-size image URL. 0.2.0 GET /products so the backoffice can pull shop products in as items. 0.1.0 Initial release: token auth, ping, read stock, adjust (delta), set (absolute)."
+    },
+    "sha256": "e23ee8aa27b1fb288648b3e62cf997cb69cc5edb01bdad3d824cb25e186c118f"
   },
   "vgc-ai-nexus": {
     "name": "VGC AI Nexus",
