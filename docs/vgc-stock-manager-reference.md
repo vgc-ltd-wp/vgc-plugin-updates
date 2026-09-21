@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.152.0** · Stock Bridge **0.6.1**
+> **Pinned to:** Stock Manager **1.153.0** · Stock Bridge **0.6.1**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -74,7 +74,13 @@ vgc-stock-manager-reference.md      ← THIS FILE (not shipped)
 
 ## 3. Data model
 
-### Tables (prefix `wp_vgc_sm_`)
+### Companies (1.153.0): one table set and one option set per company
+
+The app can keep the books of more than one company. **Company 1 is the install as it always was** — every table below keeps its `wp_vgc_sm_` name and every option its name; nothing migrates. **Company N>1** gets `wp_vgc_sm_c{N}_<suffix>` tables and `vgc_sm_c{N}_<key>` options. The fact of which table a row is in IS which company it belongs to; no row carries a company id. **Shared, never prefixed:** `partners`, `partner_locations`, `partner_contacts` (and, from 1.154.0, `partner_companies`, the link table saying which company sees which partner). `partner_prices` is per company. The registry of companies is one shared option, `vgc_sm_companies` (absent on a single-company install — company 1 is implicit).
+
+`VGC_SM_Company` (`includes/class-company.php`, loaded before the helpers) resolves the current company once per request and every one of the 42 `vgc_sm_*_table()` helpers and every per-company option key (`vgc_sm_option_key()`) reads it. `run_as( $id, fn )` switches for the duration of a callback and always comes back; `each( fn )` runs once per active company (the two crons). Entering another company drops every request memo (`Costing::flush()`, `Repository::forget_maps()`, `Expenses::forget()`, `REST_API::forget_caches()`). The `plugins_loaded` migration loop runs every flag-guarded upgrade per company (`vgc_sm_flag()` / `vgc_sm_flag_set()`), so a company created later is upgraded by the same code that upgraded company 1. Access is a level per company: `vgc_sm_level` is company 1's (cap and no meta = operator, the founding rule), `vgc_sm_level_c{N}` another's (nothing by default). The uninstaller drops the other sets by name pattern. In 1.153.0 only company 1 exists; creating, switching and sharing partners ship in 1.154.0, trade between companies in 1.155.0.
+
+### Tables (prefix `wp_vgc_sm_`; `wp_vgc_sm_c{N}_` for company N>1 — see Companies)
 
 | Table | Purpose |
 |---|---|
@@ -110,10 +116,11 @@ vgc-stock-manager-reference.md      ← THIS FILE (not shipped)
 
 | Option | Contents |
 |---|---|
-| `vgc_sm_db_version` | Schema version guard. |
+| `vgc_sm_db_version` | Schema version guard (per company: `vgc_sm_c{N}_db_version`). |
+| `vgc_sm_companies` | The registry of companies (1.153.0), shared: `[{id, name, active, created_at}]`. Absent on a single-company install. |
 | `vgc_sm_partners_split` | Set once the 1.3.0 flat→child partner migration has run. |
 | `vgc_sm_notes_vat_backfill` | Set once the 1.9.0 backfill (pre-VAT notes → `total_gross = total_net`, 0% VAT) has run. |
-| `vgc_sm_settings` | `bridge_url`, `bridge_token`, `auto_push`, `currency` (default `€`), `language` (default `en`). |
+| `vgc_sm_settings` | `bridge_url`, `bridge_token`, `auto_push`, `currency` (default `€`), `language` (default `en`). Per company (`vgc_sm_c{N}_settings`), as are `vgc_sm_units`, `vgc_sm_count_draft_*` and every `vgc_sm_*_v1` migration flag. Shared: `vgc_sm_companies`, `vgc_sm_i18n_overrides`, `vgc_sm_partners_split`, `vgc_sm_partner_logo_v1`. |
 | `vgc_sm_units` | Custom (non-builtin) unit codes. |
 | `vgc_sm_i18n_overrides` | `{ lang: { source_string: translation } }` — user-edited wording. |
 
