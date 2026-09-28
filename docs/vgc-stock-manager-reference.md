@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.179.0** · Stock Bridge **0.7.0**
+> **Pinned to:** Stock Manager **1.180.0** · Stock Bridge **0.7.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -886,6 +886,13 @@ To add a language: add a catalogue method in `class-i18n.php` and list it in `la
 ---
 
 | **1.153.0** | **The company seams.** `VGC_SM_Company` (a table set + an option set per company; company 1's names unchanged), every helper and per-company option key through it, `run_as()`/`each()`, the `plugins_loaded` migration loop per company (`vgc_sm_flag()`), the crons fanned out, deferred init work capturing its company, the two function-local memos made class statics, access meta per company (`vgc_sm_level_c{N}`), the uninstaller's sweep. No user-visible change; the staging snapshot of every table, option and meta key was byte-identical before and after. |
+| **1.180.0** | **Makers' goods card folded by default.** `heldCard(held, {open})` on the location page:
+- Its title is a button (`data-heldfold`, `aria-expanded`, `aria-controls=loc-held-body`) with a count beside it: N here · M at the workshop.
+- The body is `#loc-held-body` with `hidden` until opened.
+- `.vgc-sm-fold*` styles match the section label; the head is a full-width target, at least 32px.
+- `heldOpen[id]` in locations.js is reset when the page is ARRIVED at (`V.painted !== location.hash` at the start of `viewLocation`). It is kept through a redraw of the same page, such as after `held/move`.
+- Harness `held180ui` (12); `small172look` +2 (folded head, and opened layout at desk, narrow and phone). 7/7 mutants. Staging probe: files installed, `/held` answers (6).
+- Numbering: error-report stage 2 is now 1.181.0; Statistics follow-ups are 1.182.0 / 1.183.0. |
 | **1.179.0** | **Online shop SKU findable, and unique.** The owner asked for a field for the shop's SKU; `woo_sku` already existed (item form, used by `VGC_SM_Sync::woo_sku()` for pushes/stock reads and first in `Shop_Orders::match()`) but sat at the foot of Stock & sourcing.
 - **Form:** `itemform-shopsku` in Identity right after the SKU, labelled 'Online shop SKU', with the SKU as placeholder (kept in step as the SKU is typed) and a hint.
 - **Display:** product page `item-shopsku` under the SKU when it differs; the list shows it under the SKU (`shopSkuNote`). `list_items` search also matches `woo_sku`.
