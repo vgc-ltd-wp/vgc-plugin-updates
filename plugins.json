@@ -289,9 +289,9 @@
   },
   "vgc-speedy": {
     "name": "VGC Speedy for WooCommerce",
-    "version": "1.0.0",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-speedy-1.0.0/vgc-speedy-1.0.0.zip",
-    "sha256": "e39ff05e1136fc279d6380bf182f90b9a9d0dee3296095623176b2b11c864af0",
+    "version": "1.1.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-speedy-1.1.0/vgc-speedy-1.1.0.zip",
+    "sha256": "02c6247a89dca8b8fbdde4724739d747f91e2c4dc0461db3977db1acb77e8189",
     "requires": "6.0",
     "requires_php": "7.4",
     "tested": "6.8",
@@ -299,8 +299,8 @@
     "homepage": "https://tools.vgc-ltd.com",
     "author": "VGC",
     "sections": {
-      "description": "Speedy courier tools for WooCommerce: office picker at checkout, waybills for orders shipped with any shipping method, Speedy tracking numbers on orders, and free/paid Speedy rate rules. Works alongside the WooCommerce Speedy Shipping Method plugin, which provides the Speedy account connection.",
-      "changelog": "<h4>1.0.0</h4><ul><li>First release: office picker, waybills for non-Speedy shipping methods, tracking numbers (box, column, vgc_speedy_tracking()), free-hides-paid rule, settings page. Moved out of VGC SveshtiGoreshti Tools.</li></ul>"
+      "description": "Speedy courier tools for WooCommerce: office picker at checkout with every Speedy office and locker (direct Speedy API connection), waybills for orders shipped with any shipping method, Speedy tracking numbers on orders, and free/paid Speedy rate rules.",
+      "changelog": "<h4>1.1.0</h4><ul><li>Direct Speedy API connection: API username and password on the settings page, with Test connection.</li><li>The office picker lists every city that has a Speedy office (and locker, when lockers are on), with all offices and their street addresses; downloaded once a day, the checkout reads only the saved list.</li><li>The city is pre-selected from any Bulgarian postcode, else from the city name.</li><li>Orders also store the office id and the office's street address. Without API credentials everything works as in 1.0.0.</li></ul><h4>1.0.0</h4><ul><li>First release: office picker, waybills for non-Speedy shipping methods, tracking numbers (box, column, vgc_speedy_tracking()), free-hides-paid rule, settings page. Moved out of VGC SveshtiGoreshti Tools.</li></ul>"
     }
   }
 }
