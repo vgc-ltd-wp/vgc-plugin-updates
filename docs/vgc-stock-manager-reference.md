@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.178.0** · Stock Bridge **0.7.0**
+> **Pinned to:** Stock Manager **1.179.0** · Stock Bridge **0.7.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -886,6 +886,13 @@ To add a language: add a catalogue method in `class-i18n.php` and list it in `la
 ---
 
 | **1.153.0** | **The company seams.** `VGC_SM_Company` (a table set + an option set per company; company 1's names unchanged), every helper and per-company option key through it, `run_as()`/`each()`, the `plugins_loaded` migration loop per company (`vgc_sm_flag()`), the crons fanned out, deferred init work capturing its company, the two function-local memos made class statics, access meta per company (`vgc_sm_level_c{N}`), the uninstaller's sweep. No user-visible change; the staging snapshot of every table, option and meta key was byte-identical before and after. |
+| **1.179.0** | **Online shop SKU findable, and unique.** The owner asked for a field for the shop's SKU; `woo_sku` already existed (item form, used by `VGC_SM_Sync::woo_sku()` for pushes/stock reads and first in `Shop_Orders::match()`) but sat at the foot of Stock & sourcing.
+- **Form:** `itemform-shopsku` in Identity right after the SKU, labelled 'Online shop SKU', with the SKU as placeholder (kept in step as the SKU is typed) and a hint.
+- **Display:** product page `item-shopsku` under the SKU when it differs; the list shows it under the SKU (`shopSkuNote`). `list_items` search also matches `woo_sku`.
+- **Rule:** `Repository::shop_code_of()` (woo_sku ?: sku) and `shop_code_owner($code, $except)` (another item with woo_sku = code, or sku = code and no woo_sku of its own). `create_item` refuses a taken code; `update_item` refuses only when the item's code CHANGES (old clashes never block other edits) — 409 `vgc_sm_dupe_shop_sku` naming the other product. Self-exclusion matters because MySQL compares case-blind.
+- **Help:** row moved beside SKU.
+- **Tests:** harnesses `shopcode179` (23, real repository, NOCASE columns like MySQL), `item179ui` (16), `item174look` +1, `small172look` +1; `counts.php`/`customhide.php` fixtures gained `woo_sku`. 14/14 mutants. Staging probe through the real routes, create-then-clean-up (10).
+- **Numbering:** error-report stage 2 is now 1.180.0, Statistics follow-ups 1.181.0 / 1.182.0. |
 | **1.178.0** | **Cost of goods split by the recipes.** New `VGC_SM_Cost_Split`:
 - `labour_per_unit($item_id, &$memo)` sums `bom_extras` of kind 'labour' (per item, or per run ÷ yield, as `recipe_roll`) plus each made component's labour × `demand_per_item`, recursively. A subcontracted service (`supplier_of`>0) is 0 and not walked; no recipe → 0. Loop guard MAX_DEPTH 32; the memo is passed in, never static.
 - `labour_of(lines)`: our units only (sold − held), `min(own × per, line cost)`, a zero-cost line none.
