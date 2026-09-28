@@ -273,9 +273,9 @@
   },
   "vgc-svgr-tools": {
     "name": "VGC SveshtiGoreshti Tools",
-    "version": "2.1.0",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-svgr-tools-2.1.0/vgc-svgr-tools-2.1.0.zip",
-    "sha256": "a1cd8fe98a2240516f6ac511790b0b19c2ef84cc4e95f809fe14acf640990a12",
+    "version": "2.1.1",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-svgr-tools-2.1.1/vgc-svgr-tools-2.1.1.zip",
+    "sha256": "d95d7c5212c6d2b277766f79338cbf65155aee2159c5207c59e78250d545f0d3",
     "requires": "6.0",
     "requires_php": "7.4",
     "tested": "6.8",
@@ -284,7 +284,7 @@
     "author": "VGC",
     "sections": {
       "description": "Store features for SveshtiGoreshti: checkout tweaks, BoxNow and pickup shipping rules, custom order statuses with the Shipped email and tracking, product page extras, shortcodes, the Product Type taxonomy and the Meta pixels. Speedy features are in VGC Speedy for WooCommerce.",
-      "changelog": "<h4>2.1.0</h4><ul><li>Speedy features (office picker, waybills, tracking number box and column, free-hides-paid rule) moved to the new VGC Speedy for WooCommerce plugin. Their settings are handed over automatically; install VGC Speedy to keep them.</li><li>Shipped email: the Speedy tracking link comes from VGC Speedy, then BoxNow.</li><li>New BoxNow box on orders with a BoxNow parcel.</li></ul><h4>2.0.1</h4><ul><li>Checkout: email and phone stay side by side right after the name (WooCommerce's address script had moved the phone to the end at full width).</li><li>Checkout: the country row is hidden when only one country is possible; the country is still sent with the order.</li></ul><h4>2.0.0</h4><ul><li>Rebuilt from SveshtiGoreshti Custom Tools 1.2 as one structured plugin with a settings page (WooCommerce \u2192 SveshtiGoreshti). Unused iSocks code, image upload tools and upsell popup removed.</li><li>Shipping rate IDs, delivery messages, checkout notice and pixel IDs are settings; features can be switched on and off.</li><li>Works with HPOS on or off.</li><li>Speedy: permission and nonce checks on waybill actions, office required whenever an office rate is chosen, PHP 8 fixes.</li><li>Shipped email tracking from the entered Speedy number or the BoxNow parcel; plain-text version added.</li><li>Meta pixels: currency from WooCommerce.</li></ul>"
+      "changelog": "<h4>2.1.1</h4><ul><li>+/- quantity buttons are hidden when the quantity cannot change: only 1 in stock, sold one at a time, a fixed or read-only quantity, or a maximum of 1 (also when a variation with one in stock is picked).</li></ul><h4>2.1.0</h4><ul><li>Speedy features (office picker, waybills, tracking number box and column, free-hides-paid rule) moved to the new VGC Speedy for WooCommerce plugin. Their settings are handed over automatically; install VGC Speedy to keep them.</li><li>Shipped email: the Speedy tracking link comes from VGC Speedy, then BoxNow.</li><li>New BoxNow box on orders with a BoxNow parcel.</li></ul><h4>2.0.1</h4><ul><li>Checkout: email and phone stay side by side right after the name (WooCommerce's address script had moved the phone to the end at full width).</li><li>Checkout: the country row is hidden when only one country is possible; the country is still sent with the order.</li></ul><h4>2.0.0</h4><ul><li>Rebuilt from SveshtiGoreshti Custom Tools 1.2 as one structured plugin with a settings page (WooCommerce \u2192 SveshtiGoreshti). Unused iSocks code, image upload tools and upsell popup removed.</li><li>Shipping rate IDs, delivery messages, checkout notice and pixel IDs are settings; features can be switched on and off.</li><li>Works with HPOS on or off.</li><li>Speedy: permission and nonce checks on waybill actions, office required whenever an office rate is chosen, PHP 8 fixes.</li><li>Shipped email tracking from the entered Speedy number or the BoxNow parcel; plain-text version added.</li><li>Meta pixels: currency from WooCommerce.</li></ul>"
     }
   },
   "vgc-speedy": {
