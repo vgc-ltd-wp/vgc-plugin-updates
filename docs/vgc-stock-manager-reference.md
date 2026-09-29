@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.186.0** · Stock Bridge **0.7.0**
+> **Pinned to:** Stock Manager **1.187.0** · Stock Bridge **0.7.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -886,6 +886,11 @@ To add a language: add a catalogue method in `class-i18n.php` and list it in `la
 ---
 
 | **1.153.0** | **The company seams.** `VGC_SM_Company` (a table set + an option set per company; company 1's names unchanged), every helper and per-company option key through it, `run_as()`/`each()`, the `plugins_loaded` migration loop per company (`vgc_sm_flag()`), the crons fanned out, deferred init work capturing its company, the two function-local memos made class statics, access meta per company (`vgc_sm_level_c{N}`), the uninstaller's sweep. No user-visible change; the staging snapshot of every table, option and meta key was byte-identical before and after. |
+| **1.187.0** | **Changing how many are planned.** Owner: "if I add 6 and decide to take 4 I need to delete this entry and add it again." No schema change.
+- **Server:** `VGC_SM_Backlog::replan($loc, $item, $qty)` (POST `/locations/{id}/backlog/plan/qty` {item_id, qty}, `$write` like plan) sets the item's PLANNED total (open rows with `sale_id IS NULL`); owed rows are never touched. Fewer comes off the newest plan first (a row used up is `cancelled` with resolved_at, a row cut is decremented in place); more is added to the newest open plan. Same total ⇒ no-op; `< 0.0001` ⇒ `vgc_sm_plan_qty` (Remove is the way off); no plan ⇒ `vgc_sm_plan_none`. No ledger, no movement. Audit `backlog.replan` (was → now).
+- **Screen:** `backlogRow` carries `data-backlogrow`; a planned line has a neutral pencil (`data-replan`, `data-planned` = `V.numVal(planned)`, `.vgc-sm-x--edit`) beside Remove, which swaps for `replanEditor` (the planned number prefilled and focused, unit, save ✓ / cancel ✕, and ‘plus N sold, not logged’ on a part-owed line). Enter saves, Escape cancels, a comma is read as a decimal point, nought is refused client-side. The page redraws in place (1.185.0).
+- **Tests:** new `replan187` (19, SQLite on the real Backlog and Sales), `replan187ui` (15), `replan187look` (16, Chrome desk/narrow/phone); primaryui stand-ins gained `numVal`. 10/10 mutants. 147/147 harnesses, 6741 checks. Staging probe 11/11 through the route.
+- Numbering: error-report stage 2 is now 1.188.0; Statistics follow-ups are 1.189.0 / 1.190.0. |
 | **1.186.0** | **The Sales screen's list panels fold, remembered in this browser.** Owner: "make all large list based pannels collapsable ... local storage rememebers the last state". Client only.
 - **Core kit (reusable):** `V.foldOpen(key, def)` (stored state, else open unless `def === false`), `V.setFold(key, open)` — one JSON object in localStorage `vgc_sm_fold`, read in try/catch (unreadable ⇒ all open); `V.foldHead(key, title, sum, open, {html, titleClass})` — the full-width head button (`data-fold`, `aria-controls=fold-<key>`) with a chevron and a summary; `V.bindFolds(root)` — toggles `.vgc-sm-fold`/`is-open`, the body's `hidden`, `aria-expanded`, and stores it. Same look as the 1.180.0 makers'-goods card.
 - **Sales screen:** the no-price warning (`sales-gaps`, its bold red line is the head), Sold by category (`sales-categories`, ‘N categories’) and Receipts (`sales-receipts` on `sales-list`, ‘N receipts’ from totals; Select and CSV inside the body). Filter, totals and chart are not lists and do not fold. `viewSales` calls `V.bindFolds(APP)` after `screen()`; the receipts search redraws only `#sa-rows`, inside the body.
