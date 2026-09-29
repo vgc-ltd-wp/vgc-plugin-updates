@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.185.0** · Stock Bridge **0.7.0**
+> **Pinned to:** Stock Manager **1.186.0** · Stock Bridge **0.7.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -886,6 +886,11 @@ To add a language: add a catalogue method in `class-i18n.php` and list it in `la
 ---
 
 | **1.153.0** | **The company seams.** `VGC_SM_Company` (a table set + an option set per company; company 1's names unchanged), every helper and per-company option key through it, `run_as()`/`each()`, the `plugins_loaded` migration loop per company (`vgc_sm_flag()`), the crons fanned out, deferred init work capturing its company, the two function-local memos made class statics, access meta per company (`vgc_sm_level_c{N}`), the uninstaller's sweep. No user-visible change; the staging snapshot of every table, option and meta key was byte-identical before and after. |
+| **1.186.0** | **The Sales screen's list panels fold, remembered in this browser.** Owner: "make all large list based pannels collapsable ... local storage rememebers the last state". Client only.
+- **Core kit (reusable):** `V.foldOpen(key, def)` (stored state, else open unless `def === false`), `V.setFold(key, open)` — one JSON object in localStorage `vgc_sm_fold`, read in try/catch (unreadable ⇒ all open); `V.foldHead(key, title, sum, open, {html, titleClass})` — the full-width head button (`data-fold`, `aria-controls=fold-<key>`) with a chevron and a summary; `V.bindFolds(root)` — toggles `.vgc-sm-fold`/`is-open`, the body's `hidden`, `aria-expanded`, and stores it. Same look as the 1.180.0 makers'-goods card.
+- **Sales screen:** the no-price warning (`sales-gaps`, its bold red line is the head), Sold by category (`sales-categories`, ‘N categories’) and Receipts (`sales-receipts` on `sales-list`, ‘N receipts’ from totals; Select and CSV inside the body). Filter, totals and chart are not lists and do not fold. `viewSales` calls `V.bindFolds(APP)` after `screen()`; the receipts search redraws only `#sa-rows`, inside the body.
+- **Tests:** new `sales186ui` (17: default open, fold, stored keys, Apply, search, reload, unreadable storage) and `sales186look` (25, Chrome desk/narrow/phone: head targets, the warning's red, folded height, a real page reload). `costcard.html` stand-ins gained the fold helpers. 10/10 mutants. 144/144 harnesses, 6691 checks. Staging: installed files carry it.
+- Numbering: error-report stage 2 is now 1.187.0; Statistics follow-ups are 1.188.0 / 1.189.0. |
 | **1.185.0** | **The location page drawn again without moving.** Owner: "everytime i use the settle button the view reloads and snaps me to the top." Client only.
 - **Cause:** `viewLocation()` painted the loading card first, then `screen()` put back `V.keepY`, but the shelf (`renderInv`) is filled after `screen()`, so on a long page the browser clamped the scroll short. Reproduced in Chrome: the settled line moved 700–1,800 px and the loading card flashed every time.
 - **Fix (locations.js):** `viewLocation` paints `loading()` only on arrival (`V.painted !==` the address); a redraw of the same page keeps it until the new one is ready. After the render a microtask (before the browser paints) scrolls so a held element is exactly where it was on the screen (`holdView(id, sel)` → `holdAt[id]` {sel, top}), or back to `V.keepY` when nothing is held. Held: the line after its own Settle and after an undo from Correct (`[data-settlerow="X"]`), the end of the count after Settle all (`[data-settlefoot]`, on both the actions and the ‘every line is settled’ note). `holdAt` is dropped on arrival.
