@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.181.0** · Stock Bridge **0.7.0**
+> **Pinned to:** Stock Manager **1.182.0** · Stock Bridge **0.7.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -886,6 +886,11 @@ To add a language: add a catalogue method in `class-i18n.php` and list it in `la
 ---
 
 | **1.153.0** | **The company seams.** `VGC_SM_Company` (a table set + an option set per company; company 1's names unchanged), every helper and per-company option key through it, `run_as()`/`each()`, the `plugins_loaded` migration loop per company (`vgc_sm_flag()`), the crons fanned out, deferred init work capturing its company, the two function-local memos made class statics, access meta per company (`vgc_sm_level_c{N}`), the uninstaller's sweep. No user-visible change; the staging snapshot of every table, option and meta key was byte-identical before and after. |
+| **1.182.0** | **The closing count, a line at a time.** No schema change.
+- **Server:** `VGC_SM_Events::settlement()` rows carry `settled` = here ≤ 0 and no presentation piece left (counted and settled, or sold out at the till). `settle()` of any subset is how a line settles on its own (it always accepted one); after commit it now calls `drop_from_draft($loc, item_ids)` instead of `clear_draft()`: only the settled lines leave the parked count, and the option is deleted once no row is left.
+- **Screen:** `settleRow` has a 9th column `.vgc-sm-settle__act` with **Settle** (`data-settleone`), sticky right with the row's opaque tint; a settled row (`T.settleDone(r)`) is `tr.is-settled` (ok-bg), its boxes replaced by — and *Line settled* (`data-settled`). `settleCounts()` skips settled rows, so **Settle all** (`#ev-settle`, renamed from Settle the count) and Save progress send open lines only; with none open the card says *Every line is settled.* (`data-settleall-done`). A line's Settle runs the same refusals (over-count, unanswered piece, no price), posts that line alone, then stores the other lines' on-screen figures in `settleKeep[locId]` ({counts, dirty}) and redraws; `viewLocation` merges them over the parked count (detailPage `settleCounts` → settleCard `counts`), keeps *Not saved* if they were dirty, and drops `settleKeep` on arrival. The piece's answers are capped to the sheet's visible width via `container-type: inline-size` on the settle table's wrapper and `100cqw`.
+- **Tests:** new `settle182` (17, SQLite on the real Events), `settle182ui` (23); `loc181look` +3 in Chrome (a line's Settle in view while the sheet scrolls sideways, the settled tint, Settle all). primaryui/loc181ui updated. 19/19 mutants. 139/139 harnesses, 6566 checks. Staging probe 12/12 through the REST routes.
+- Numbering: error-report stage 2 is now 1.183.0; Statistics follow-ups are 1.184.0 / 1.185.0. |
 | **1.181.0** | **The presentation piece.** One more unit sent to a sale location for the table, sold last and only when told, answered for on its return. DB 0.61.0 → 0.62.0.
 - **Data:** `location_ledger.showpiece_qty` and `sale_lines.showpiece_qty`, DECIMAL(18,4) NOT NULL DEFAULT 0, signed like `qty`: how much of that row or line was the piece. dbDelta adds them; `VGC_SM_Install::ensure_showpiece_columns()` (flag `showpiece_v1`) is the safety net. Written only when non-zero.
 - **Pool:** `VGC_SM_Locations::showpieces($loc)` (item_id ⇒ units) and `showpiece_at($loc, $item)` = SUM(showpiece_qty), floored at 0. Part of on_hand; `inventory()` rows carry `showpiece`, the till catalogue `at_showpiece`, the location shape `can_showpiece` (= !sells_from_workshop).
