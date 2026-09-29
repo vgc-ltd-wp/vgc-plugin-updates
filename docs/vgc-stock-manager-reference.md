@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.180.0** · Stock Bridge **0.7.0**
+> **Pinned to:** Stock Manager **1.181.0** · Stock Bridge **0.7.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -886,6 +886,16 @@ To add a language: add a catalogue method in `class-i18n.php` and list it in `la
 ---
 
 | **1.153.0** | **The company seams.** `VGC_SM_Company` (a table set + an option set per company; company 1's names unchanged), every helper and per-company option key through it, `run_as()`/`each()`, the `plugins_loaded` migration loop per company (`vgc_sm_flag()`), the crons fanned out, deferred init work capturing its company, the two function-local memos made class statics, access meta per company (`vgc_sm_level_c{N}`), the uninstaller's sweep. No user-visible change; the staging snapshot of every table, option and meta key was byte-identical before and after. |
+| **1.181.0** | **The presentation piece.** One more unit sent to a sale location for the table, sold last and only when told, answered for on its return. DB 0.61.0 → 0.62.0.
+- **Data:** `location_ledger.showpiece_qty` and `sale_lines.showpiece_qty`, DECIMAL(18,4) NOT NULL DEFAULT 0, signed like `qty`: how much of that row or line was the piece. dbDelta adds them; `VGC_SM_Install::ensure_showpiece_columns()` (flag `showpiece_v1`) is the safety net. Written only when non-zero.
+- **Pool:** `VGC_SM_Locations::showpieces($loc)` (item_id ⇒ units) and `showpiece_at($loc, $item)` = SUM(showpiece_qty), floored at 0. Part of on_hand; `inventory()` rows carry `showpiece`, the till catalogue `at_showpiece`, the location shape `can_showpiece` (= !sells_from_workshop).
+- **Push:** `push(..., $allow_short, $showpiece)` adds one unit as one transfer_in row (qty + 1, showpiece_qty 1). Refused at the counter/online shop (`vgc_sm_showpiece_here`) and when one is already there (`vgc_sm_showpiece_there`). Counts against the workshop. `push_many` lines take `showpiece`. REST `/locations/{id}/push` takes `showpiece`.
+- **Checkout:** order is ours (on_hand − piece) → a maker's held → the piece only if the line says `showpiece: true`, else `vgc_sm_showpiece` (data item_id, showpiece, regular, held). A declared backlog leaves the piece alone (`uncovered_here(..., $keep)`). `showpiece_only` lines (opts `showpiece_only`, never from REST) take the piece itself. The deduct row carries −piece; the line's `showpiece_qty`. Refund returns the piece first, as the piece only if the table has room (max 1).
+- **Home:** `pull(..., $showpiece)` refuses ordinary units beyond on_hand − piece. `settle_showpiece($loc, $item, $qty, home|sold|missing)` — REST pull with `showpiece`: home = flagged pull; sold = a sale of the piece at its price (note "recorded on its return"); missing = flagged shrink at cost. Events: settlement rows `showpiece` / `showpiece_sold`; draft stores the answer; settle refuses `vgc_sm_settle_showpiece` until answered, counts ordinary units against here − piece.
+- **Elsewhere:** Corrections undo carries the piece (read off the transfer's ledger row). A location count below the piece takes it (`sp_part`).
+- **UI:** push staged `data-stsp` tick; shelf `spQty` n+1; Pull back `data-pullsp` (own row at a desk, `.vgc-sm-pullrow`; own line on a phone, `.vgc-sm-invrow`); closing count `settleSpRow` (`data-sprow`, `data-spans`, sticky on a phone); till tile `spTag`, cart `showpieceRow` (`data-sp`), `spPart()`/`anyUnticked()`, Charge label `blockedBy`; receipt tag `data-linesp`.
+- **Tests:** new `showpiece181` (89, SQLite on the real Locations/Sales/Events), `loc181ui` (41), `tillsp181` (29, Chrome), `loc181look` (37, Chrome); `counts` +8 (undo, count). primary/primaryui/heldtill/consignsale/extrasdata/shoppull176 updated for the column. 40/40 mutants. 137/137 harnesses, 6516 checks. Staging probe 21/21 (create, flow, clean up).
+- Numbering: error-report stage 2 is now 1.182.0; Statistics follow-ups are 1.183.0 / 1.184.0. |
 | **1.180.0** | **Makers' goods card folded by default.** `heldCard(held, {open})` on the location page:
 - Its title is a button (`data-heldfold`, `aria-expanded`, `aria-controls=loc-held-body`) with a count beside it: N here · M at the workshop.
 - The body is `#loc-held-body` with `hidden` until opened.
