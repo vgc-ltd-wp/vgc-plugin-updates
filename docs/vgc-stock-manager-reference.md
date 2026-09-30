@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.189.0** · Stock Bridge **0.7.0**
+> **Pinned to:** Stock Manager **1.190.0** · Stock Bridge **0.7.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -886,6 +886,10 @@ To add a language: add a catalogue method in `class-i18n.php` and list it in `la
 ---
 
 | **1.153.0** | **The company seams.** `VGC_SM_Company` (a table set + an option set per company; company 1's names unchanged), every helper and per-company option key through it, `run_as()`/`each()`, the `plugins_loaded` migration loop per company (`vgc_sm_flag()`), the crons fanned out, deferred init work capturing its company, the two function-local memos made class statics, access meta per company (`vgc_sm_level_c{N}`), the uninstaller's sweep. No user-visible change; the staging snapshot of every table, option and meta key was byte-identical before and after. |
+| **1.190.0** | **A category tab counts its products.** Owner, after 1.189.0: "change the counter to show the line count (number of product) not the total count of the products". Screen only.
+- `catBar`'s pill is the group's row count (`g.n`; All = every row); `catGroups()` no longer takes a figure and the three callers lost theirs. The units stay in `[data-catsum]` (shelf: products · units · value; count: lines · Took · Rung up · Should be left; load: products · units, +1 piece counted, refreshed as a quantity is typed).
+- **Tests:** cattabs189ui expects product counts on the tabs and the units in the line (53). 5/5 targeted mutants. 152 harnesses, 6962 checks. Staging probe 7/7.
+- Numbering: error-report stage 2 is now 1.191.0; Statistics follow-ups are 1.192.0 / 1.193.0. |
 | **1.189.0** | **Category tabs on a sale location's page.** Owner: "In the Inventory here, The closing count and Load for the event blocks add filtering by product category. I want easily to find how much I have taken from any category." Asked: Load's tabs filter the list being loaded; on a category's tab Settle all settles that category only. No schema change.
 - **Server:** `VGC_SM_Events::settlement()` rows gain `category_id` / `category` (LEFT JOIN categories, grouped). Nothing else: a category's Settle all is `settle()` with that category's lines in `counts`, and `drop_from_draft()` keeps the rest parked.
 - **Screen:** `catBar` (tpl/locations.tpl.js): All + a tab per category (`data-cattab="inv|settle|load"`, `data-cat` = id, `0` = none or deleted, last; the rest by name), each with its units; `[data-catsum]` says what the tab holds (shelf: products · units · value; count: lines · Took · Rung up · Should be left; load: products · units). Only with 2+ categories. `catTab[loc:block]` keeps the tab while the app is open, through redraws, per location; `catActive()` falls back to All. The shelf (and its CSV, now with a category column) and the staged list redraw filtered; the staged figures refresh as a quantity or the +1 is typed (bar only); adding from another category goes back to All. The closing count hides rows in place (`data-scat`), Settle all reads *Settle all in X* and sends only that category's open lines (validation scoped too, the rest carried in `settleKeep`), `[data-settlecatdone]` when none is open. `catTabInView()` scrolls the strip to the picked tab after a redraw. New class `.vgc-sm-cattabbar` (`.vgc-sm-catbar` is the Sales screen's). BG for the new words and the count's title/columns (Took, Rung up, Should be left, Sold here), which had none.
