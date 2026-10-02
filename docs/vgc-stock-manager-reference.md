@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.198.0** · Stock Bridge **0.7.0**
+> **Pinned to:** Stock Manager **1.199.0** · Stock Bridge **0.7.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -886,6 +886,10 @@ To add a language: add a catalogue method in `class-i18n.php` and list it in `la
 ---
 
 | **1.153.0** | **The company seams.** `VGC_SM_Company` (a table set + an option set per company; company 1's names unchanged), every helper and per-company option key through it, `run_as()`/`each()`, the `plugins_loaded` migration loop per company (`vgc_sm_flag()`), the crons fanned out, deferred init work capturing its company, the two function-local memos made class statics, access meta per company (`vgc_sm_level_c{N}`), the uninstaller's sweep. No user-visible change; the staging snapshot of every table, option and meta key was byte-identical before and after. |
+| **1.199.0** | **A phone's sale sheet: extras as small icons, the lines get the room.** Owner (iPhone screenshot, VAT-registered event): "Still too big, I can barely see 1 item in the cart" — measured at 390×664: the foot was 393px of a 584px sheet, the lines 124px for 305px of two lines. CSS only, DB 0.67.0.
+- **Extras (under `.vgc-sm-possheet`):** no card, no label (`__label` hidden), 3-column grid gap 6px; `.vgc-sm-posxpic` 32px (2px brand border when `.is-on`), name one 10px line with ellipsis, charged price 9.5px; the count (`__q b` / `.vgc-sm-posextra b`) absolute at the picture's top right (`left: calc(50% + 9px)`), the gift's − 28px absolute left of the picture (`right: calc(50% + 20px)`), + hidden; `__q` only when `.is-on`. Tile 48px tall (was 87).
+- **The sheet (`#pos-cartsheet`):** panel max-height `calc(100% - 56px - safe-top)` (was 88%); head padding 8px; foot padding 10px; discount row padding 5px, its controls 34px; totals rows 1px / 12.5px; Charge 50px, margin 8px; lines padding 9px, top margin 6px, controls gap 6px 8px. Foot 265px, lines 273px = both lines whole.
+- **Tests:** `tillextras` updated (tiles ≤ 60px, no label, count on the picture's corner, − beside it) + the owner's phone (390×664, `?vat=1` switches the page's vatReg, two lines: lines scrollHeight ≤ clientHeight, Net/VAT and Charge on screen) — fails on 1.198.0 (121 for 305). 11/11 killed mutants. 179 harnesses, 7961 checks. Staging: installed, the served app.css carries the new rules. |
 | **1.198.0** | **The till's extras as picture tiles on a phone.** Owner: the gifts on mobile were too big — smaller, 3 in a line, their images, very small text under. DB 0.67.0 (no schema change).
 - **Server:** `VGC_SM_Locations::extras()` selects `i.image_id` and returns `image_thumb` (thumbnail URL or '') — so the till's inventory response and the extras routes carry it.
 - **Till:** `totals().extras[]` carry `image`; pos.tpl.js `extraPic(x)` = `.vgc-sm-posxpic` (img, or icon 'gift' for a free one / 'image' for a charged one; new `gift` icon in core.js ICON_PATHS) inside both the gift's name button and the charged button. CSS: `.vgc-sm-posxpic` hidden by default (desk unchanged); under `.vgc-sm-possheet` (the phone's sale sheet) the strip is a 3-column grid, tiles column-wise (44px picture, 10.5px name clamped to 2 lines, charged price 10px), the plus icon and the gift's + hidden (the tile adds one), the gift's − (28px) and count on the tile's corners half outside (top/left/right −6px) only when `.is-on`; a charged extra's count badge absolute top-right.
