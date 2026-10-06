@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.214.0** · Stock Bridge **0.7.0**
+> **Pinned to:** Stock Manager **1.215.0** · Stock Bridge **0.7.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -886,6 +886,14 @@ To add a language: add a catalogue method in `class-i18n.php` and list it in `la
 ---
 
 | **1.153.0** | **The company seams.** `VGC_SM_Company` (a table set + an option set per company; company 1's names unchanged), every helper and per-company option key through it, `run_as()`/`each()`, the `plugins_loaded` migration loop per company (`vgc_sm_flag()`), the crons fanned out, deferred init work capturing its company, the two function-local memos made class statics, access meta per company (`vgc_sm_level_c{N}`), the uninstaller's sweep. No user-visible change; the staging snapshot of every table, option and meta key was byte-identical before and after. |
+| **1.215.0** | **The review's group 4: hardening.** Owner: "Do all in the proposed order".
+- **S1:** `wp_login_failed` taken with 2 args and a `vgc_sm_throttled` refusal not counted; the counter is `{n, until}` with `until` fixed at the first failure + 10 min (TTL = until − now, never extended); an old bare-number counter keeps counting (`fail_count`); `xmlrpc_enabled` false + no `xmlrpc_methods`.
+- **S2:** `output_till_manifest` → `output_neutral_till_manifest` ("Till", the app's icons, same id/start) unless `may_see_tills()` (signed in + `can_use`), for any number; `output_till_icon` redirects to the app icon for a stranger or a missing location; `enter_known_company()` 404s an unknown company for manifest and icon; manifest link `crossorigin="use-credentials"`; till answers `Cache-Control: private` + `Vary: Cookie`.
+- **S3:** `core_rest_signed_in` on `rest_authentication_errors` at 110 (after the cookie check): 401 for a stranger on WordPress's own `/wp/v2`, `/wp-site-health/v1`, `/wp-block-editor/v1` and the route index (`vgc_sm_closed_rest_prefixes`); every plugin's routes are left to their own gates. The first cut allowed only `/vgc-stock/v1` and refused staging's shop bridge (same site, token not a user) with "Please sign in." — caught by the staging ping before release.
+- **S5:** `VGC_SM_REST_API::strip_money($rows, $fields)` (below operator) on `get_recipe` (unit_cost, extras amount), `shop_levels` (unit_cost, value_net), `list_locations` (cost_value), `location_inventory` (rows/sold_out cost_net, head cost_value); boot `labourRate` 0 below operator.
+- **S8:** `post_error` 30 per user per 10 min (transient) then `kept:false`; version clamped to `^\d+.\d+.\d+$` ≤ server; `record()` caps new js kinds at `NEW_PER_USER_DAY` (100)/user/day. **S11:** 500 `detail`/`trace` only for admin (`class_exists`-guarded); `type`/`where` for all (the browser keys on them). **S9:** `wp_safe_remote_request` unless `VGC_SM_BRIDGE_ALLOW_LOCAL`. **S10:** order/purchase payment DELETE at `$mgr`, the × only with `canManage`; decline at operator documented. **S13:** `sessionExpired()` → `purgeCaches()`. **S14:** `IMPORT_MAX` 2000 (413), shop images via `wp_safe_remote_get` stream with `limit_response_size` `IMAGE_MAX` (10 MB), the forced update check needs `update_plugins` (constants on the class: no trait constants before PHP 8.2).
+- **Open:** S6 (an operator's order to another company's partner writing into its books) waits for the owner; S7/S12 with §7.
+- **Tests:** new `frontend215` (36), `server215` (25), `session215ui` (4); `pwa_php_test` signed in, `errorsdata` admin + non-admin, `order194ui` / `purchasediscui` operator payments. 44/44 killed mutants. 230 harnesses, 9566 checks. |
 | **1.214.0** | **The review's group 3: small UI fixes.** Owner: "Do all in the proposed order".
 - **U1:** the tab-strip rule scoped to `.vgc-sm-tabs .vgc-sm-tab` (it shared `.vgc-sm-tab` with the bottom nav at equal weight, later: the nav tabs took its padding/14px/no-shrink and Menu sat off every phone). Strips unchanged (they keep the nav rule's base, as before).
 - **U2:** `[data-devid=categories-expense|partner] .vgc-sm-row` wrap ≤ 560px, the name `flex: 1 1 100%`; the tick's label is `.vgc-sm-catcounted` (nowrap on a desk, wrapping on a phone) instead of an inline style.
