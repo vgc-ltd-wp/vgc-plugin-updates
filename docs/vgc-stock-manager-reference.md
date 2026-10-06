@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.213.0** · Stock Bridge **0.7.0**
+> **Pinned to:** Stock Manager **1.214.0** · Stock Bridge **0.7.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -886,6 +886,14 @@ To add a language: add a catalogue method in `class-i18n.php` and list it in `la
 ---
 
 | **1.153.0** | **The company seams.** `VGC_SM_Company` (a table set + an option set per company; company 1's names unchanged), every helper and per-company option key through it, `run_as()`/`each()`, the `plugins_loaded` migration loop per company (`vgc_sm_flag()`), the crons fanned out, deferred init work capturing its company, the two function-local memos made class statics, access meta per company (`vgc_sm_level_c{N}`), the uninstaller's sweep. No user-visible change; the staging snapshot of every table, option and meta key was byte-identical before and after. |
+| **1.214.0** | **The review's group 3: small UI fixes.** Owner: "Do all in the proposed order".
+- **U1:** the tab-strip rule scoped to `.vgc-sm-tabs .vgc-sm-tab` (it shared `.vgc-sm-tab` with the bottom nav at equal weight, later: the nav tabs took its padding/14px/no-shrink and Menu sat off every phone). Strips unchanged (they keep the nav rule's base, as before).
+- **U2:** `[data-devid=categories-expense|partner] .vgc-sm-row` wrap ≤ 560px, the name `flex: 1 1 100%`; the tick's label is `.vgc-sm-catcounted` (nowrap on a desk, wrapping on a phone) instead of an inline style.
+- **U4:** the `(pointer: coarse)` 16px block now names `.vgc-sm-period__dates input[type=date]` (its `font: inherit` at 0,2,1 beat the block's 0,1,1: 12px).
+- **B10:** till `loadInventory().catch` — nothing on screen → `state.loadFailed` + `T.itemsFailed()` (`pos-loadfailed`, Try again `#pos-reload` → `T.itemsLoading()` + reload); a wall on screen stays; always `failToast`. A location switch clears `inv/byId/extras` first.
+- **B15:** production.js `scanTimer` at module level, cleared by `stopScanner()` (the router calls it on every route); a look in flight when stopped is ignored (`scanTimer !== mine`); a camera allowed after the screen is gone is stopped at once. **B16:** the restore toast skips a queued write.
+- **Not defects:** S4 (`c.why` feeds `what`, built as `esc(what)` — verified by rendering markup through the real template) and U8 (the deliberate signed five of 1.169.0, enforced by `decimalinput.js`). Both marked in the review doc.
+- **Tests:** new `ui214ui` (jsdom: scan loop, restore offline, re-sync markup, 16) and `ui214look` (Chrome BG desk/390/320: nav, strips, dates, category rows, till failure + switch, 37). 19/19 killed mutants. 227 harnesses, 9493 checks. |
 | **1.213.0** | **Money that lands once and whole (the review's 1.1–1.3).** Owner: "Do all in the proposed order" — groups 1+2 of `vgc-stock-manager-review-findings.md`.
 - **Till repeat tap (1.1):** `sales.client_ref VARCHAR(40) NULL` + `UNIQUE KEY client_ref` (fresh install; `ensure_client_ref_columns()` now covers sales, flag `sale_client_ref_v1`, DB 0.73.0). `Sales::checkout($opts['client_ref'])` answers a seen id with that receipt + `replayed: true` BEFORE any check (the shelf has since given the units up); stored NULL when empty; a UNIQUE refusal rolls back and hands back the winner (non-nested). `POST /sales` passes `client_ref`. Till: `saleRef(body)` = one `V.writeId()` per basket signature `[location_id, discount_type, discount_value, lines]`, cleared on success and when the cart is emptied (`forgetEmptyBasket` in renderCart/refreshSale); a replayed answer toasts *This sale was already recorded — here is its receipt*. `V.writeId` exported; `IDEMPOTENT` lists `/sales`.
 - **Refund (1.2):** `Sales::refund()` is one transaction (ROLLBACK on an `unbook_held` error — called nested —, a false `return_from_sale`, a refused online walk home `$home`, nothing to refund); the shop clamp after COMMIT; amounts at 4 dp (cleared remainder, line/header `refunded_*`, `record_refund`). A line with no item (label/postage) writes no shelf row (`item_id > 0` guard; it used to write item 0 and walk it home to an error).
