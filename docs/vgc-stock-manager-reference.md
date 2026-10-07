@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.219.0** · Stock Bridge **0.7.0**
+> **Pinned to:** Stock Manager **1.220.0** · Stock Bridge **0.7.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -886,6 +886,11 @@ To add a language: add a catalogue method in `class-i18n.php` and list it in `la
 ---
 
 | **1.153.0** | **The company seams.** `VGC_SM_Company` (a table set + an option set per company; company 1's names unchanged), every helper and per-company option key through it, `run_as()`/`each()`, the `plugins_loaded` migration loop per company (`vgc_sm_flag()`), the crons fanned out, deferred init work capturing its company, the two function-local memos made class statics, access meta per company (`vgc_sm_level_c{N}`), the uninstaller's sweep. No user-visible change; the staging snapshot of every table, option and meta key was byte-identical before and after. |
+| **1.220.0** | **The review's group 6, part 3: §5, Bulgarian.** Owner: "Do all in the proposed order".
+- **The catalogue:** 417 entries in one block of `class-i18n.php` ("Every string that had no Bulgarian (1.220.0) — the till first"): the 390 the review counted plus 23 its count missed (choices inside `t(x ? 'A' : 'B')`, `label:` values, maps read through `t(MAP[key])`). Terms as before: Каса, Плащане (Charge), Текуща продажба, Продай за отчитане по-късно (backlog), партида, себестойност.
+- **Code:** `barChart()` says `t('Best day' | 'Best week' | 'Best month')` (one phrase, agreeing); an expired delivery `t('expired %s day(s) ago')`; the Produce plan card runs `V.translateTree(box)` after it is drawn (its words were catalogued but drawn raw) and its toggle label goes through `t()`; the Categories page's title and footnote through `t()`.
+- **Seeds:** `VGC_SM_Partner_Categories::translate_seed()` (shared, option `vgc_sm_partner_cats_bg_v1`) and `VGC_SM_Install::translate_expense_seed()` (per company, flag `expense_cats_bg_v1`, after Equipment is seeded): on a Bulgarian install each exact English seed name becomes its Bulgarian where that name is free; both run only once the language is Bulgarian (an English install that switches later still gets them). `seed_equipment_category()` also recognises "Оборудване". Left as data: an item's typed unit, the product category "Custom" (found by that name).
+- **Tests:** new `i18n220` (every literal the 32 scripts hand the catalogue has its Bulgarian, none empty; the phrases and the plan card), `bg220look` (no catalogue English on the till and 26 screens in Chrome), `seedbg220` (the renames on SQLite + how the main file runs them); `companyseam` 51 flags. 14/14 killed mutants. 239 harnesses, 9769 checks. |
 | **1.219.0** | **The review's group 6, part 2: U5, U6, U7, U9, U10, U11, U12.** Owner: "Do all in the proposed order".
 - **U5 dark mode:** the till's `#fff` backgrounds (search, chips, tiles, cart, a short line's box, steppers, price box, discount segments, extras, dock, empty dock), `.vgc-sm-basis` and `.vgc-sm-spopt` take `--vgc-card`; the till's price and discount inputs set background and ink; `:root { color-scheme: light dark }` so a browser control with no style follows the theme. White on purpose: labels and print sheets (paper), logos, the QR code, the none swatch.
 - **U6 captions:** light `--vgc-ink-3` #9C958A → #7A7366 (3.0 → 4.7:1 on a card; dark keeps #9C958A, which passes); `.vgc-sm-tile__l` 11.5 px; `.vgc-sm-cost__l`, `.vgc-sm-loctile__kind`, `.vgc-sm-pill`, `.vgc-sm-of__l`, a cost part's share, the partner row's turnover word, the chart's figures and dates 11 px. The bottom bar's labels stay 10 px (U1); the line editors' column heads (desk only, ellipsis columns) keep their size.
