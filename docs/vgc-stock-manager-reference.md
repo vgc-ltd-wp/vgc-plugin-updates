@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.220.0** · Stock Bridge **0.7.0**
+> **Pinned to:** Stock Manager **1.221.0** · Stock Bridge **0.7.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -886,6 +886,10 @@ To add a language: add a catalogue method in `class-i18n.php` and list it in `la
 ---
 
 | **1.153.0** | **The company seams.** `VGC_SM_Company` (a table set + an option set per company; company 1's names unchanged), every helper and per-company option key through it, `run_as()`/`each()`, the `plugins_loaded` migration loop per company (`vgc_sm_flag()`), the crons fanned out, deferred init work capturing its company, the two function-local memos made class statics, access meta per company (`vgc_sm_level_c{N}`), the uninstaller's sweep. No user-visible change; the staging snapshot of every table, option and meta key was byte-identical before and after. |
+| **1.221.0** | **The review's group 7, part 1: B2 and B7.** Owner: "Do all in the proposed order".
+- **B2:** `VGC_SM_Locations::lock_on_hand($loc, $item)` = `SELECT qty … FOR UPDATE` (an ordinary read outside a transaction). In `Sales::checkout()`, away from the primary counter: without the tick, right before `deduct_for_sale()` the shelf is read with it (less a presentation piece the line does not sell) and a line it no longer covers rolls back with 409 `vgc_sm_sold_meanwhile` (`can_backlog`, `item_id`, the units left); with the tick, `uncovered_here(…, $keep, true)` works the shortfall out from the locked read. pos.js: on a refusal carrying `can_backlog` it runs `loadInventory()` (which now returns its promise) and then `refreshSale()`, so the line shows short with the backlog tick and the basket stays.
+- **B7:** `delete_sale()` gathers the (location, item) cells of its ledger rows before deleting them and calls `VGC_SM_Locations::resync_cells($cells)` (it returns `cells`; `delete_sales()` resyncs once at the end) instead of `rebuild_stock_cache()`; the repair `rebuild_stock_cache()` now upserts every non-empty sum (`ON DUPLICATE KEY UPDATE`) and then deletes, one by one, the cells the ledger no longer holds — the table is never emptied, a negative cell kept.
+- **Tests:** `till213` section 11 (the race staged at the receipt's insert: refused and rolled back, the lock asked; ticked, sold with its shortfall listed; the presentation piece kept; a deleted sale's cells only; the repair never empties, a zero cell gone, a negative kept), `tillref213` race page in Chrome; `sqlitewpdb.php` accepts `FOR UPDATE` and records it in `$wpdb->locked`. 13/13 killed mutants. 239 harnesses, 9783 checks. |
 | **1.220.0** | **The review's group 6, part 3: §5, Bulgarian.** Owner: "Do all in the proposed order".
 - **The catalogue:** 417 entries in one block of `class-i18n.php` ("Every string that had no Bulgarian (1.220.0) — the till first"): the 390 the review counted plus 23 its count missed (choices inside `t(x ? 'A' : 'B')`, `label:` values, maps read through `t(MAP[key])`). Terms as before: Каса, Плащане (Charge), Текуща продажба, Продай за отчитане по-късно (backlog), партида, себестойност.
 - **Code:** `barChart()` says `t('Best day' | 'Best week' | 'Best month')` (one phrase, agreeing); an expired delivery `t('expired %s day(s) ago')`; the Produce plan card runs `V.translateTree(box)` after it is drawn (its words were catalogued but drawn raw) and its toggle label goes through `t()`; the Categories page's title and footnote through `t()`.
