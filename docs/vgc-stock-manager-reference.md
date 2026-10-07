@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.215.0** · Stock Bridge **0.7.0**
+> **Pinned to:** Stock Manager **1.216.0** · Stock Bridge **0.7.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -886,6 +886,12 @@ To add a language: add a catalogue method in `class-i18n.php` and list it in `la
 ---
 
 | **1.153.0** | **The company seams.** `VGC_SM_Company` (a table set + an option set per company; company 1's names unchanged), every helper and per-company option key through it, `run_as()`/`each()`, the `plugins_loaded` migration loop per company (`vgc_sm_flag()`), the crons fanned out, deferred init work capturing its company, the two function-local memos made class statics, access meta per company (`vgc_sm_level_c{N}`), the uninstaller's sweep. No user-visible change; the staging snapshot of every table, option and meta key was byte-identical before and after. |
+| **1.216.0** | **The review's group 5, part 1: data integrity.** Owner: "Do all in the proposed order".
+- **B3:** `orders.save_version` / `purchases.save_version` INT (fresh install; `ensure_save_version_columns()` behind `save_version_v1`; DB 0.74.0). `VGC_SM_Orders::claim_version($table,$id,$data)`: only when the screen sent `save_version`, one `UPDATE … SET save_version = save_version + 1 WHERE id = %d AND save_version = %d`; 0 rows → 409 `vgc_sm_stale` before anything is written. Orders::save and Purchases::save (asked only with a version) call it; the route passes it; both shapes return it; orders.js / purchases.js send `o.save_version` (purchases carries the new one forward). Saves without a version (transfer, company mirror, old screens) as before. The transaction around save→lines→reconcile is deferred: the transfer and the mirror call save() inside their own transactions (needs `nested` down the chain).
+- **B4:** `Notes::issue()` refuses with `WP_Error('vgc_sm_note_invalid', …, {status 409, problems})` (was a `WP_REST_Response` that `book_held`/`unbook_held` read as success); the route lets `error_response()` shape it.
+- **B5:** `VGC_SM_Repository::item_references($id)` (one query: order/purchase/sale/note lines, consignment, location ledger, sale report lines, backlog, substitutes in other recipes, template lines) → `remove_item` 409 `vgc_sm_has_references` naming them; `delete_item` drops its recipe's substitutes (`delete_alts_for_bom` first) and its location services/extras and partner prices.
+- **B13:** `VGC_SM_Shop_Orders::day_start_ts($ymd)` (`wp_timezone()` midnight) for the first pull and the re-sync. **B14:** `delete_category` refuses a business-cost category with expenses (409 `vgc_sm_cat_in_use`); `remove_category` shapes it.
+- **Tests:** new `integrity216` (22); `order194` B3 orders + purchases (66); `till213` B4 direct + a staged two-till race (78); `order194ui` / `purchasediscui` the version sent and carried; `counts` / `itemshare` stand-in tables, `companyseam` 49 flags. 25/25 killed mutants. 231 harnesses, 9603 checks. |
 | **1.215.0** | **The review's group 4: hardening.** Owner: "Do all in the proposed order".
 - **S1:** `wp_login_failed` taken with 2 args and a `vgc_sm_throttled` refusal not counted; the counter is `{n, until}` with `until` fixed at the first failure + 10 min (TTL = until − now, never extended); an old bare-number counter keeps counting (`fail_count`); `xmlrpc_enabled` false + no `xmlrpc_methods`.
 - **S2:** `output_till_manifest` → `output_neutral_till_manifest` ("Till", the app's icons, same id/start) unless `may_see_tills()` (signed in + `can_use`), for any number; `output_till_icon` redirects to the app icon for a stranger or a missing location; `enter_known_company()` 404s an unknown company for manifest and icon; manifest link `crossorigin="use-credentials"`; till answers `Cache-Control: private` + `Vary: Cookie`.
