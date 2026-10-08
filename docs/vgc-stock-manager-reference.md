@@ -2,7 +2,7 @@
 
 > **Purpose of this file.** A complete, self-contained technical reference for the VGC Stock Manager system. Written so that a new chat (or a context-collapsed one) can pick up the work with no other background. Kept in GitHub (`vgc-ltd-wp/vgc-plugin-updates` → `docs/`), deliberately **not** part of any release zip.
 >
-> **Pinned to:** Stock Manager **1.227.0** · Stock Bridge **0.7.0**
+> **Pinned to:** Stock Manager **1.228.0** · Stock Bridge **0.7.0**
 >
 > ⚠️ **This file is updated and pushed with every release** — it must never lag the shipped version. See §7 (Working conventions).
 
@@ -886,6 +886,7 @@ To add a language: add a catalogue method in `class-i18n.php` and list it in `la
 ---
 
 | **1.153.0** | **The company seams.** `VGC_SM_Company` (a table set + an option set per company; company 1's names unchanged), every helper and per-company option key through it, `run_as()`/`each()`, the `plugins_loaded` migration loop per company (`vgc_sm_flag()`), the crons fanned out, deferred init work capturing its company, the two function-local memos made class statics, access meta per company (`vgc_sm_level_c{N}`), the uninstaller's sweep. No user-visible change; the staging snapshot of every table, option and meta key was byte-identical before and after. |
+| **1.228.0** | **The recipe page on a phone (the owner's screenshot, 2026-10-08).** `.vgc-sm-crow__ctl` rows on `recipe-components` and `recipe-labour` wrap, their boxes `flex: 1 1 84px; min-width: 0`, the basis picker `flex: 1 1 140px` (it takes its own line below ~330 px of row); scoped like the custom-order and other-costs rules, so the produce screen's row is untouched. The components hint goes through `t()` as one sentence (split around `<b>` it was three text nodes and only the bold two were in the catalogue). New `recipe228look` (30, REAL Chrome, Bulgarian, desk + 390/375/360: the page and every box on the way to it no wider than the screen, every box inside its card, every picker's whole choice shown, inputs ≥ 64 px, a quantity beside its unit and hours beside the amount, the hint one Bulgarian sentence) — it fails on 1.227.0's files exactly as the screenshot did. 5/5 killed mutants. 251 harnesses, 10147 checks. |
 | **1.227.0** | **The cost on the day (the owner's 2a, 2026-10-07). DB 0.78.0.**
 - **Columns** (DECIMAL(18,4) NULL; NULL = from before, read today's; 0 is a value): `location_ledger.unit_cost` / `unit_labour`, `note_lines.unit_cost` / `unit_labour`, `sale_lines.unit_labour`. In the CREATE TABLEs and `VGC_SM_Install::ensure_cost_at_time_columns()` behind flag `cost_at_time_v1` (last in the per-company loop, after `pos_tables_repaired_v1`). Not back-filled.
 - **Writers:** `Locations::write_off()` (every shrink and gift: a count, a closing count, Settle, the location page) records `Sales::unit_cost_of()` and `Cost_Split::labour_now()`; `write_ledger()` takes them as a `$cost` array; `reverse_entry()` copies the entry's own (NULL stays NULL) so the pair cancels. A find, a sale, a push record none. `Notes::issue()` writes both on every line (not on a draft; once). `Sales::checkout()` writes `unit_labour` beside `unit_cost` (0 for no recipe). `Cost_Split::labour_now($item)` = the recipe's labour in one unit now, a fresh walk, no memo kept.
