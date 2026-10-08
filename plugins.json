@@ -153,17 +153,17 @@
   },
   "vgc-order-withdrawal": {
     "name": "VGC Order Withdrawal",
-    "version": "1.6.1",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-order-withdrawal-1.6.1/vgc-order-withdrawal-1.6.1.zip",
+    "version": "1.6.2",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-order-withdrawal-1.6.2/vgc-order-withdrawal-1.6.2.zip",
     "requires": "6.0",
     "requires_php": "7.4",
     "tested": "6.8",
-    "last_updated": "2026-06-30",
+    "last_updated": "2026-10-08",
     "homepage": "https://tools.vgc-ltd.com",
     "author": "VGC",
     "sections": {
       "description": "EU 14-day right-of-withdrawal returns for WooCommerce.",
-      "changelog": "<h4>1.6.1</h4><ul><li>Self-hosted updater: native WordPress \"Update now\" button via the public manifest (no wp-config token).</li></ul>"
+      "changelog": "<h4>1.6.2</h4><ul><li>Fixed: the self-hosted updater never ran on a real site, because it had been placed inside the \"no direct access\" guard. It now loads after the guard, so the WordPress \"Update now\" button appears for new releases. Sites on 1.6.1 need this one release uploaded by hand; later releases update normally.</li></ul><h4>1.6.1</h4><ul><li>Self-hosted updater: native WordPress \"Update now\" button via the public manifest (no wp-config token).</li></ul>"
     }
   },
   "vgc-email-templates": {
