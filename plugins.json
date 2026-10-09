@@ -138,17 +138,17 @@
   },
   "vgc-price-by-quantity": {
     "name": "VGC Price By Quantity",
-    "version": "1.4.6",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-price-by-quantity-1.4.6/vgc-price-by-quantity-1.4.6.zip",
+    "version": "1.4.7",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-price-by-quantity-1.4.7/vgc-price-by-quantity-1.4.7.zip",
     "requires": "6.0",
     "requires_php": "7.4",
     "tested": "6.8",
-    "last_updated": "2026-06-30",
+    "last_updated": "2026-10-09",
     "homepage": "https://tools.vgc-ltd.com",
     "author": "VGC",
     "sections": {
       "description": "Quantity-based pricing for WooCommerce.",
-      "changelog": "<h4>1.4.6</h4><ul><li>Self-hosted updater: native WordPress \"Update now\" button via the public manifest (no wp-config token).</li></ul>"
+      "changelog": "<h4>1.4.7</h4><ul><li>Fix: per-variation tiers now show live on the product page for products built on the variable type too - e.g. VGC Events for WooCommerce's event products (the cart already priced them correctly).</li><li>Tweak: the front-end script's version follows the plugin's, so browsers pick up updates.</li></ul><h4>1.4.6</h4><ul><li>Self-hosted updater: native WordPress \"Update now\" button via the public manifest (no wp-config token).</li></ul>"
     }
   },
   "vgc-order-withdrawal": {
