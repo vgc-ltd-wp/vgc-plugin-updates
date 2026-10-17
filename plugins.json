@@ -306,9 +306,9 @@
   },
   "vgc-limited-editions": {
     "name": "VGC Limited Editions",
-    "version": "1.0.1",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-limited-editions-1.0.1/vgc-limited-editions-1.0.1.zip",
-    "sha256": "a6c171e1f49a815dca5adaa1889ef77e6014e5ca5e328329820620f8910d859f",
+    "version": "1.1.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-limited-editions-1.1.0/vgc-limited-editions-1.1.0.zip",
+    "sha256": "92fb46bc4d7ffc8b0a97abe387662755be1722287fa0ff310cc398a872367b8b",
     "requires": "6.0",
     "requires_php": "7.4",
     "tested": "6.8",
@@ -317,7 +317,7 @@
     "author": "VGC",
     "sections": {
       "description": "Limited numbered series for WooCommerce: each unit of a product gets its own number from a range. The product page shows the customer's number live, customers can pick a number (optionally for a price), and the number follows the order to the thank-you page, the emails, My Account and the admin, with a register of every number.",
-      "changelog": "<h4>1.0.1</h4><ul><li>The customer's real number is always shown. A \"Number shown as\" without {number} (for example \"5/20\") printed that same text for every number in the cart, the order, My Account and the emails; it now falls back to the default, the product editor refuses it with a message and shows a live example of what customers will see.</li><li>Saving an order on the admin screen no longer writes the shown text over the line's numbers (which could also claim a wrong number on the next status change). The number is shown read-only under the line; lines damaged by 1.0.0 are read from the register and repaired.</li></ul><h4>1.0.0</h4><ul><li>First release: numbered series per product, live number on the product page (edition card or compact line), number picking with an optional price, numbers fixed at checkout and shown on the order everywhere, cancellation rules, numbers register with offline sales.</li></ul>"
+      "changelog": "<h4>1.1.0</h4><ul><li>A paid order that is cancelled or refunded sets its numbers aside by default: nobody gets them until you free them with \"Return to the series\" under the order line (or in the product's Series numbers box), which adds a note to the order. The other choice, \"goes back into the series straight away\", stays per product; products saved earlier keep the choice they were saved with.</li><li>Fix: picked numbers no longer stay \"taken\" after a refused add to cart. Picking more numbers than the product's stock left them held for 30 minutes with no cart line, so after a refresh the page showed them as taken and \"in your cart\". The picker now stops at the quantity the product allows, the shop refuses too many numbers before holding any, holds of an add to cart that did not go through are let go, and a cart's unused holds go on the next visit.</li></ul><h4>1.0.1</h4><ul><li>The customer's real number is always shown. A \"Number shown as\" without {number} (for example \"5/20\") printed that same text for every number in the cart, the order, My Account and the emails; it now falls back to the default, the product editor refuses it with a message and shows a live example of what customers will see.</li><li>Saving an order on the admin screen no longer writes the shown text over the line's numbers (which could also claim a wrong number on the next status change). The number is shown read-only under the line; lines damaged by 1.0.0 are read from the register and repaired.</li></ul><h4>1.0.0</h4><ul><li>First release: numbered series per product, live number on the product page (edition card or compact line), number picking with an optional price, numbers fixed at checkout and shown on the order everywhere, cancellation rules, numbers register with offline sales.</li></ul>"
     }
   }
 }
