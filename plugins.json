@@ -336,5 +336,21 @@
       "description": "A Google Merchant Center product feed for WooCommerce: one stable XML address (/vgc-google-product-feed/bg.xml) with every sellable physical product, served from a ready file and rebuilt in the background after product changes and every night. Workshops, vouchers and virtual products are left out with a reason; IDs are issued once and kept; prices include VAT as the shop shows them. Read-only toward the catalogue; no tags, no Google API calls. With VGC AI Nexus active, AI assistants can read the feed's status, the left-out products and one product's entry (read-only tools).",
       "changelog": "<h4>1.1.0</h4><ul><li>AI Nexus abilities (read-only): get_feed_status, list_feed_excluded and get_feed_item in one vgc-google-product-feed-status tool, with their own card under AI Nexus \u2192 Extensions and a section in the AI Nexus usage guide. Allowed in AI Nexus read-only mode; they never start a build and never return the feed key.</li><li>wp vgc-google-product-feed item and get_feed_item share one routine; a variation in the trash now says it is left out (hidden) instead of printing nothing once WooCommerce's list of variations no longer has it.</li></ul><h4>1.0.0</h4><ul><li>First release: the Google Merchant Center feed at /vgc-google-product-feed/bg.xml, served from a ready file and rebuilt in the background (after changes, nightly at 03:00, Rebuild now, WP-CLI); inclusion rules with a reason for every left-out product; g:id issued once and kept; prices with VAT as the shop shows them; the /en/ copy refused; admin page (WooCommerce \u2192 Google Product Feed) with status, warnings, preview and settings; wp vgc-google-product-feed build | validate | item; Bulgarian translation.</li></ul>"
     }
+  },
+  "vgc-stats": {
+    "name": "VGC Stats",
+    "version": "1.0.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-stats-1.0.0/vgc-stats-1.0.0.zip",
+    "sha256": "e552cf451997a8ba0ded1e9ebfc98b2db75850fcd18d366aac413135a59b316a",
+    "requires": "6.0",
+    "requires_php": "7.4",
+    "tested": "7.1",
+    "last_updated": "2026-10-20",
+    "homepage": "https://tools.vgc-ltd.com",
+    "author": "VGC",
+    "sections": {
+      "description": "Cookieless, self-hosted statistics for every visitor: page views, entrances, sources, pages, engagement, devices and countries, plus an aggregate WooCommerce funnel (product views, adds to cart, checkouts, purchases; workshops apart). No cookies or browser storage, no fingerprinting, no IP addresses or user agents kept, nothing sent to anyone else. Reports under Statistics with comparison and CSV export; a read-only AI Nexus tool; WP-CLI.",
+      "changelog": "<h4>1.0.0</h4><ul><li>First release: cookieless page-view beacon (under 2 KB gzipped) and engagement events; WooCommerce funnel from add-to-cart and order hooks (once per order, taken out again on cancel or refund, VGC Events workshops and reservations apart); channels from ad flags, utm tags and referrers; nightly idempotent rollup into daily totals in the Europe/Sofia day, raw rows kept 35 days; Statistics screen with Overview, Sources, Pages, Funnel, Products, Engagement and Devices, comparison with the period before and CSV export; read-only AI Nexus tool vgc-stats-report; wp vgc-stats status | rollup | purge | report; Bulgarian translation.</li></ul>"
+    }
   }
 }
