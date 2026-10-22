@@ -371,9 +371,9 @@
   },
   "vgc-ai-nexus-pinterest": {
     "name": "VGC AI Nexus for Pinterest",
-    "version": "1.1.0",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-pinterest-1.1.0/vgc-ai-nexus-pinterest-1.1.0.zip",
-    "sha256": "d7eacb347a832e7cb99690d64af08f7fe1c418eda46ee8fc711032c358d5294e",
+    "version": "1.2.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-pinterest-1.2.0/vgc-ai-nexus-pinterest-1.2.0.zip",
+    "sha256": "fcb0bdefea773320dd90eb8af5c8083cdd5f58120db1bf6b19fd3a22ec06e974",
     "requires": "6.0",
     "requires_php": "8.0",
     "tested": "7.1",
@@ -382,7 +382,7 @@
     "author": "VGC",
     "sections": {
       "description": "Pinterest for VGC AI Nexus: one MCP tool, pinterest-pins, for the connected Pinterest account. Connect with Pinterest's own sign-in under AI Nexus, Extensions, Pinterest; the app secret and tokens are stored encrypted and renew themselves. Requires VGC AI Nexus.",
-      "changelog": "<h4>1.1.0</h4><ul><li>Pinning: create_pin, create_board (public boards only) and list_pins.</li><li>Rules the site enforces for every request: link and image on this site's own domain, the image from the Media Library (JPEG, PNG, WebP); a daily cap (default 5); no repeat of the same link and image on the same board within 90 days; pins published one at a time, 2–4 hours apart by default; text over the limits refused, never cut.</li><li>A queue (Action Scheduler with WooCommerce, otherwise WP-Cron, plus a 15-minute sweep) publishes each pin in its slot and retries network errors, rate limits and Pinterest server errors 3 times, 30 minutes apart.</li><li>Every request is logged. The settings page shows the log, the daily cap, the time between pins, a pause switch and Cancel for waiting pins.</li></ul><h4>1.0.0</h4><ul><li>First release: settings under AI Nexus, Extensions, Pinterest (app ID, app secret, redirect URI, access tier); Connect Pinterest with OAuth 2.0; the app secret and tokens stored encrypted, renewed automatically under a lock before they expire; the pinterest-pins tool with the status and list_boards actions.</li></ul>"
+      "changelog": "<h4>1.2.0</h4><ul><li>pin_metrics: impressions, saves, outbound clicks and pin clicks per pin from Pinterest's analytics, for pins published through the tool; optional day-by-day figures; totals per board sorted by outbound clicks; at most 90 days back; cached 6 hours; stops at Pinterest's rate limit. Pins published on Trial access are sandbox pins and are reported as having no statistics.</li></ul><h4>1.1.0</h4><ul><li>Pinning: create_pin, create_board (public boards only) and list_pins.</li><li>Rules the site enforces for every request: link and image on this site's own domain, the image from the Media Library (JPEG, PNG, WebP); a daily cap (default 5); no repeat of the same link and image on the same board within 90 days; pins published one at a time, 2–4 hours apart by default; text over the limits refused, never cut.</li><li>A queue (Action Scheduler with WooCommerce, otherwise WP-Cron, plus a 15-minute sweep) publishes each pin in its slot and retries network errors, rate limits and Pinterest server errors 3 times, 30 minutes apart.</li><li>Every request is logged. The settings page shows the log, the daily cap, the time between pins, a pause switch and Cancel for waiting pins.</li></ul><h4>1.0.0</h4><ul><li>First release: settings under AI Nexus, Extensions, Pinterest (app ID, app secret, redirect URI, access tier); Connect Pinterest with OAuth 2.0; the app secret and tokens stored encrypted, renewed automatically under a lock before they expire; the pinterest-pins tool with the status and list_boards actions.</li></ul>"
     }
   }
 }
