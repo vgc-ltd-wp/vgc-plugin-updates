@@ -384,5 +384,37 @@
       "description": "Pinterest for VGC AI Nexus: one MCP tool, pinterest-pins, for the connected Pinterest account. Connect with Pinterest's own sign-in under AI Nexus, Extensions, Pinterest; the app secret and tokens are stored encrypted and renew themselves. Requires VGC AI Nexus.",
       "changelog": "<h4>1.2.0</h4><ul><li>pin_metrics: impressions, saves, outbound clicks and pin clicks per pin from Pinterest's analytics, for pins published through the tool; optional day-by-day figures; totals per board sorted by outbound clicks; at most 90 days back; cached 6 hours; stops at Pinterest's rate limit. Pins published on Trial access are sandbox pins and are reported as having no statistics.</li></ul><h4>1.1.0</h4><ul><li>Pinning: create_pin, create_board (public boards only) and list_pins.</li><li>Rules the site enforces for every request: link and image on this site's own domain, the image from the Media Library (JPEG, PNG, WebP); a daily cap (default 5); no repeat of the same link and image on the same board within 90 days; pins published one at a time, 2–4 hours apart by default; text over the limits refused, never cut.</li><li>A queue (Action Scheduler with WooCommerce, otherwise WP-Cron, plus a 15-minute sweep) publishes each pin in its slot and retries network errors, rate limits and Pinterest server errors 3 times, 30 minutes apart.</li><li>Every request is logged. The settings page shows the log, the daily cap, the time between pins, a pause switch and Cancel for waiting pins.</li></ul><h4>1.0.0</h4><ul><li>First release: settings under AI Nexus, Extensions, Pinterest (app ID, app secret, redirect URI, access tier); Connect Pinterest with OAuth 2.0; the app secret and tokens stored encrypted, renewed automatically under a lock before they expire; the pinterest-pins tool with the status and list_boards actions.</li></ul>"
     }
+  },
+  "vgc-studio": {
+    "name": "VGC Studio",
+    "version": "1.0.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-studio-1.0.0/vgc-studio-1.0.0.zip",
+    "sha256": "a2df7b1c9ea25835567386ac298efdc3d4b49eb62c5b4f05d14bbde72299cd95",
+    "requires": "6.6",
+    "requires_php": "7.4",
+    "tested": "7.1",
+    "last_updated": "2026-10-23",
+    "homepage": "https://vgc-ltd.com",
+    "author": "VGC",
+    "sections": {
+      "description": "Block theme of the VGC Ltd studio site: design tokens in theme.json (with blue, green and violet accent variations), self-hosted Geist fonts, one pattern per homepage section, and templates for pages, posts, the /work/ archive and project pages. Content comes from the VGC Studio Content plugin.",
+      "changelog": "<h4>1.0.0</h4><ul><li>First release: tokens, templates, section patterns, menus for header and footer, WPML language switch, self-updates through the VGC channel.</li></ul>"
+    }
+  },
+  "vgc-studio-content": {
+    "name": "VGC Studio Content",
+    "version": "1.0.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-studio-content-1.0.0/vgc-studio-content-1.0.0.zip",
+    "sha256": "85303e122141671cd91b3771d816246e3106cf26889d8ac7b05732525c0d2475",
+    "requires": "6.6",
+    "requires_php": "7.4",
+    "tested": "7.1",
+    "last_updated": "2026-10-23",
+    "homepage": "https://vgc-ltd.com",
+    "author": "VGC",
+    "sections": {
+      "description": "Content model of the VGC Ltd studio site: services, projects and tools (all in REST and AI Nexus), Settings → VGC Studio, the homepage blocks, a contact form that works without JavaScript and keeps every enquiry, Organization schema that merges into the SEO plugin's, and `wp vgc-studio seed`.",
+      "changelog": "<h4>1.0.0</h4><ul><li>First release: post types and fields, settings, homepage blocks, contact form with spam traps and stored enquiries, schema, seed command, AI Nexus guide section.</li></ul>"
+    }
   }
 }
