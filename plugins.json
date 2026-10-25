@@ -416,5 +416,21 @@
       "description": "Content model of the VGC Ltd studio site: services, projects and tools (all in REST and AI Nexus), Settings \u2192 VGC Studio, the homepage blocks, a contact form that works without JavaScript and keeps every enquiry, Organization schema that merges into the SEO plugin's, and `wp vgc-studio seed`.",
       "changelog": "<h4>1.0.0</h4><ul><li>First release: post types and fields, settings, homepage blocks, contact form with spam traps and stored enquiries, schema, seed command, AI Nexus guide section.</li></ul>"
     }
+  },
+  "vgc-tracker": {
+    "name": "VGC Tracker",
+    "version": "0.2.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-tracker-0.2.0/vgc-tracker-0.2.0.zip",
+    "sha256": "6cd8ff4a0ed4eaa7492170710e3b2b0888e38c5dfab99cc657108b6b8f93fcca",
+    "requires": "6.6",
+    "requires_php": "8.1",
+    "tested": "7.1",
+    "last_updated": "2026-10-25",
+    "homepage": "https://tools.vgc-ltd.com",
+    "author": "VGC",
+    "sections": {
+      "description": "A light, self-hosted issue tracker: projects, epics, tasks, bugs and sub-tasks, a Kanban board, a list with a small query language and saved filters, comments, links, attachments, watchers, history, webhooks and a REST API.",
+      "changelog": "<h4>0.2.0</h4><ul><li>The tracker on a front-end page: Site settings (WordPress administrators) chooses the page or creates one; the page shows the app full screen with its own sign-in screen (\"Forgot your password?\" uses WordPress's reset), a \"no access\" screen for accounts that are not on the team, and Sign out.</li><li>People who only use the tracker (no right to edit posts) can be kept out of the WordPress dashboard: wp-admin and the wp-login.php landing send them to the page, and they see no admin bar. Administrators and editors keep the dashboard and get a \"WordPress dashboard\" link on the page.</li><li>E-mailed issue links point to the page when there is one, and open the issue after signing in.</li><li>My settings: the tracker's language per person.</li><li>The account menu closes on a click outside or Escape.</li></ul><h4>0.1.0</h4><ul><li>Phase 1, the core tracker: projects with their own workflow and custom fields; epics, tasks, bugs and sub-tasks; Kanban board with drag and drop, WIP limits, swimlanes and quick filters; list with TQL-lite, saved filters and inline edits; issue screen with comments, history, links, files and watchers; team roles; e-mail notifications; signed webhooks; REST API; audit log; Bulgarian translation.</li></ul>"
+    }
   }
 }
