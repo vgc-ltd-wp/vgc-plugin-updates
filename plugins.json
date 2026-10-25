@@ -432,5 +432,20 @@
       "description": "A light, self-hosted issue tracker: projects, epics, tasks, bugs and sub-tasks, a Kanban board, a list with a small query language and saved filters, comments, links, attachments, watchers, history, webhooks and a REST API.",
       "changelog": "<h4>0.2.0</h4><ul><li>The tracker on a front-end page: Site settings (WordPress administrators) chooses the page or creates one; the page shows the app full screen with its own sign-in screen (\"Forgot your password?\" uses WordPress's reset), a \"no access\" screen for accounts that are not on the team, and Sign out.</li><li>People who only use the tracker (no right to edit posts) can be kept out of the WordPress dashboard: wp-admin and the wp-login.php landing send them to the page, and they see no admin bar. Administrators and editors keep the dashboard and get a \"WordPress dashboard\" link on the page.</li><li>E-mailed issue links point to the page when there is one, and open the issue after signing in.</li><li>My settings: the tracker's language per person.</li><li>The account menu closes on a click outside or Escape.</li></ul><h4>0.1.0</h4><ul><li>Phase 1, the core tracker: projects with their own workflow and custom fields; epics, tasks, bugs and sub-tasks; Kanban board with drag and drop, WIP limits, swimlanes and quick filters; list with TQL-lite, saved filters and inline edits; issue screen with comments, history, links, files and watchers; team roles; e-mail notifications; signed webhooks; REST API; audit log; Bulgarian translation.</li></ul>"
     }
+  },
+  "vgc-ai-nexus-tracker": {
+    "name": "VGC AI Nexus for VGC Tracker",
+    "version": "1.0.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-tracker-1.0.0/vgc-ai-nexus-tracker-1.0.0.zip",
+    "requires": "6.6",
+    "requires_php": "8.1",
+    "tested": "6.8",
+    "last_updated": "2026-10-25",
+    "homepage": "https://tools.vgc-ltd.com",
+    "author": "VGC",
+    "sections": {
+      "description": "VGC Tracker tools for AI Nexus: search, read and change issues, move them through the workflow, comment, link, manage projects, saved filters and the team - as the connected user, under the tracker's own rules and history. Needs VGC AI Nexus and VGC Tracker.",
+      "changelog": "<h4>1.0.0</h4><ul><li>First release: four tools - tracker-issues, tracker-comments (comments and links), tracker-projects (projects, labels, query language, saved filters) and tracker-team (team and audit log). Every action runs through the tracker's own REST API as the signed-in user; read-only mode and confirm-before-delete apply.</li></ul>"
+    }
   }
 }
