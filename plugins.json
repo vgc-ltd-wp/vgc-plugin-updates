@@ -447,5 +447,21 @@
       "description": "VGC Tracker tools for AI Nexus: search, read and change issues, move them through the workflow, comment, link, plan sprints, read reports, log time, manage projects, saved filters, automation rules and the team - as the connected user, under the tracker's own rules and history. Needs VGC AI Nexus and VGC Tracker.",
       "changelog": "<h4>1.1.0</h4><ul><li>Up to VGC Tracker 1.0.0. New tool tracker-planning: sprints and backlog (create, update, start, complete, delete, plan an issue), reports (summary, burndown, velocity, cycle time, cumulative flow) and time (work log, log, edit, delete, timesheet).</li><li>tracker-issues: estimate, remaining and sprint on updates; approve_issue; list_client_requests.</li><li>tracker-comments: internal notes or replies the portal client sees; set_comment_visibility.</li><li>tracker-team: a project's portal clients and its automation rules (list, get, create, update, delete, run now, run log).</li><li>Fix: portal clients (the tracker's client role) no longer get the tools.</li><li>New deletes need the ID repeated in \"confirm\"; read-only mode keeps every read.</li></ul><h4>1.0.0</h4><ul><li>First release: four tools - tracker-issues, tracker-comments (comments and links), tracker-projects (projects, labels, query language, saved filters) and tracker-team (team and audit log). Every action runs through the tracker's own REST API as the signed-in user; read-only mode and confirm-before-delete apply.</li></ul>"
     }
+  },
+  "vgc-cookie-compliance": {
+    "name": "VGC Cookie Compliance",
+    "version": "1.0.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-cookie-compliance-1.0.0/vgc-cookie-compliance-1.0.0.zip",
+    "sha256": "74e09e61ff82fc1e620c28873ef2fb87eb816c35353775808462523f88a57103",
+    "requires": "6.5",
+    "requires_php": "8.1",
+    "tested": "7.1",
+    "last_updated": "2026-10-26",
+    "homepage": "https://tools.vgc-ltd.com",
+    "author": "VGC",
+    "sections": {
+      "description": "Finds every cookie, browser-storage item and outside service your site uses, from four sources (server headers, a crawl, a scan in your browser and an outside scanner), shows them on one screen (Tools \u2192 Cookies) and records what you decide about each one. Change alerts, a cookie policy table (block and shortcode), AI Nexus tools and WP-CLI. Stores names and attributes only, never values.",
+      "changelog": "<h4>1.0.0</h4><ul><li>First release (Phase 1): header capture, crawl, browser scan and the outside-scanner endpoint; classification from the Open Cookie Database and VGC rules; Tools \u2192 Cookies with Overview, Inventory and item panel, decisions with bulk actions, Log and Settings; change alerts (notice, daily digest, action, crawl after updates); cookie policy block and shortcode; AI Nexus tool; WP-CLI; Bulgarian translation.</li></ul>"
+    }
   }
 }
