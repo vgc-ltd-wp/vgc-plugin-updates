@@ -359,9 +359,9 @@
   },
   "vgc-seo": {
     "name": "VGC SEO",
-    "version": "1.1.0",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-seo-1.1.0/vgc-seo-1.1.0.zip",
-    "sha256": "08d3bc0a7d9fd51c2b1b4900513f5719fdadde73466b081cbbcbdebd55e3d836",
+    "version": "1.1.1",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-seo-1.1.1/vgc-seo-1.1.1.zip",
+    "sha256": "cd67c523c7b7bcd5d86422c46e7f76ce1676da4a4c1aaac7f00cecb2a28c166e",
     "requires": "6.0",
     "requires_php": "7.4",
     "tested": "7.1",
@@ -370,7 +370,7 @@
     "author": "VGC",
     "sections": {
       "description": "Lightweight in-house SEO: titles, meta descriptions, canonical and robots tags, Open Graph and Twitter cards, a JSON-LD graph, XML sitemaps and robots.txt, with per-item fields, templates with tokens, an importer from All in One SEO and a parity check against it. No scoring, no dashboards, no external calls.",
-      "changelog": "<h4>1.1.0</h4><ul><li>With VGC Toolbox active, the SEO screens move into its menu: VGC Toolbox \u2192 SEO, with Settings, Missing SEO and Import &amp; parity as tabs. Every page keeps its address, so old links open the same screen. Without VGC Toolbox the SEO menu stays as before.</li><li>Scripts, styles and notices load by the exact screen, in the SEO menu and in VGC Toolbox.</li></ul><h4>1.0.0</h4><ul><li>First release: head output, per-item SEO box and term fields, templates and tokens, sitemaps (XML, images, RSS, stylesheet, redirects of the old addresses), robots.txt, llms.txt, structured data, Missing SEO list, import from All in One SEO with dry run, logs and undo, parity check (WP-CLI and admin, also while All in One SEO is still active), AI Nexus tool <code>vgc-seo-manage</code>, WP-CLI <code>wp vgc-seo</code>, Bulgarian translation.</li></ul>"
+      "changelog": "<h4>1.1.1</h4><ul><li>Missing SEO: each row shows its own item's \"Title shown now\" and \"Description shown now\", the values its page prints. Before, rows showed the values of other items in the list, and they changed between page loads. The AI Nexus tool's missing-SEO list, its site audit (duplicate titles and descriptions) and several items read in one call had the same fault. What the site prints is unchanged.</li></ul><h4>1.1.0</h4><ul><li>With VGC Toolbox active, the SEO screens move into its menu: VGC Toolbox \u2192 SEO, with Settings, Missing SEO and Import &amp; parity as tabs. Every page keeps its address, so old links open the same screen. Without VGC Toolbox the SEO menu stays as before.</li><li>Scripts, styles and notices load by the exact screen, in the SEO menu and in VGC Toolbox.</li></ul><h4>1.0.0</h4><ul><li>First release: head output, per-item SEO box and term fields, templates and tokens, sitemaps (XML, images, RSS, stylesheet, redirects of the old addresses), robots.txt, llms.txt, structured data, Missing SEO list, import from All in One SEO with dry run, logs and undo, parity check (WP-CLI and admin, also while All in One SEO is still active), AI Nexus tool <code>vgc-seo-manage</code>, WP-CLI <code>wp vgc-seo</code>, Bulgarian translation.</li></ul>"
     }
   },
   "vgc-ai-nexus-pinterest": {
