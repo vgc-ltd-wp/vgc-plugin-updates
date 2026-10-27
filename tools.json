@@ -43,7 +43,7 @@
     "icon": "shield",
     "order": 40,
     "requires_plugins": [],
-    "page": "tools.php?page=vgc-cookies",
+    "page": "admin.php?page=vgc-cookies",
     "docs_url": "",
     "licence": null
   },
