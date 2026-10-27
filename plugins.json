@@ -155,8 +155,8 @@
   },
   "vgc-order-withdrawal": {
     "name": "VGC Order Withdrawal",
-    "version": "1.7.0",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-order-withdrawal-1.7.0/vgc-order-withdrawal-1.7.0.zip",
+    "version": "1.7.1",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-order-withdrawal-1.7.1/vgc-order-withdrawal-1.7.1.zip",
     "requires": "6.0",
     "requires_php": "7.4",
     "tested": "6.7",
@@ -165,9 +165,9 @@
     "author": "VGC",
     "sections": {
       "description": "Implements the EU Consumer Rights Directive (2011/83/EU) 14-day right of withdrawal for WooCommerce: per-item eligibility, product-level exemptions, a logged-in My Account flow, and a tokenised guest return flow with magic links.",
-      "changelog": "<h4>1.7.0</h4><ul><li>Added: with VGC Toolbox active, the Withdrawals list and its Settings move into the VGC Toolbox menu (VGC Toolbox \u2192 Withdrawals, Settings as a tab), and the number of open requests shows on that menu item. The addresses stay the same (<code>admin.php?page=vgc-withdrawals</code>, <code>vgc-withdrawal-settings</code>). Without VGC Toolbox the Withdrawals menu is as before.</li><li>Fixed: Withdrawals \u2192 Settings answered \"Sorry, you are not allowed to access this page\" and the Withdrawals menu opened Settings instead of the list. Settings was registered before its parent menu existed; it is now registered after it.</li></ul><h4>1.6.2</h4><ul><li>Fixed: the self-hosted updater never ran on a real site, because it had been placed inside the \"no direct access\" guard. It now loads after the guard, so the WordPress \"Update now\" button appears for new releases. Sites on 1.6.1 need this one release uploaded by hand; later releases update normally.</li></ul><h4>1.6.1</h4><ul><li>Added the self-hosted updater (native WordPress \"Update now\" button via the public manifest).</li></ul><h4>1.6.0</h4><ul><li>The \"Return an Order\" page now lists a logged-in customer's returnable orders with direct \"Choose items to return\" links. The order-number + email lookup form is shown as a fallback when no eligible orders are found.</li></ul><h4>1.5.1</h4><ul><li>Fixed: the exemption flag was ignored for variations of variable products (the flag is stored on the parent). Eligibility now inherits the parent product's exemption for variations.</li></ul>"
+      "changelog": "<h4>1.7.1</h4><ul><li>Fixed: a shop manager could open Withdrawals \u2192 Settings but not save it (\"Sorry, you are not allowed to manage options for this site\"). Saving now asks for the same permission as the page (manage_woocommerce).</li><li>Fixed: after saving, the page now says \"Settings saved.\"</li></ul><h4>1.7.0</h4><ul><li>Added: with VGC Toolbox active, the Withdrawals list and its Settings move into the VGC Toolbox menu (VGC Toolbox \u2192 Withdrawals, Settings as a tab), and the number of open requests shows on that menu item. The addresses stay the same (<code>admin.php?page=vgc-withdrawals</code>, <code>vgc-withdrawal-settings</code>). Without VGC Toolbox the Withdrawals menu is as before.</li><li>Fixed: Withdrawals \u2192 Settings answered \"Sorry, you are not allowed to access this page\" and the Withdrawals menu opened Settings instead of the list. Settings was registered before its parent menu existed; it is now registered after it.</li></ul><h4>1.6.2</h4><ul><li>Fixed: the self-hosted updater never ran on a real site, because it had been placed inside the \"no direct access\" guard. It now loads after the guard, so the WordPress \"Update now\" button appears for new releases. Sites on 1.6.1 need this one release uploaded by hand; later releases update normally.</li></ul><h4>1.6.1</h4><ul><li>Added the self-hosted updater (native WordPress \"Update now\" button via the public manifest).</li></ul><h4>1.6.0</h4><ul><li>The \"Return an Order\" page now lists a logged-in customer's returnable orders with direct \"Choose items to return\" links. The order-number + email lookup form is shown as a fallback when no eligible orders are found.</li></ul>"
     },
-    "sha256": "fb9cc86071ffbbebdf1a75f385083592e8c4a70eef1d15b04a19bdd7198c66d7"
+    "sha256": "7ae057c06e2580745cf4c002314e830ea349f022585070a8b804105f6331013a"
   },
   "vgc-email-templates": {
     "name": "VGC Email Templates",
