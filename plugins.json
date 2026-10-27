@@ -359,18 +359,18 @@
   },
   "vgc-seo": {
     "name": "VGC SEO",
-    "version": "1.0.0",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-seo-1.0.0/vgc-seo-1.0.0.zip",
-    "sha256": "151c42d0ac874d78caf214e5ca792e9fa8c44065c51fe8a33f1579fd7bf8d7bf",
+    "version": "1.1.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-seo-1.1.0/vgc-seo-1.1.0.zip",
+    "sha256": "08d3bc0a7d9fd51c2b1b4900513f5719fdadde73466b081cbbcbdebd55e3d836",
     "requires": "6.0",
     "requires_php": "7.4",
     "tested": "7.1",
-    "last_updated": "2026-10-21",
+    "last_updated": "2026-10-27",
     "homepage": "https://tools.vgc-ltd.com",
     "author": "VGC",
     "sections": {
-      "description": "Lightweight in-house SEO plugin that replaces All in One SEO with the same output on every address: titles, meta descriptions, canonicals, robots, Open Graph and Twitter tags, one JSON-LD graph, XML sitemaps with images, /sitemap.rss and robots.txt. Prints nothing while All in One SEO is active; imports its values (dry run, log, undo) and checks parity on the same pages before the switch. Per-item SEO box with counters and a search preview, term fields, templates with tokens (incl. VGC Events workshops), Missing SEO list, AI Nexus tool vgc-seo-manage, WP-CLI wp vgc-seo. No scoring, no dashboards, no external calls.",
-      "changelog": "<h4>1.0.0</h4><ul><li>First release: head output, per-item SEO box and term fields, templates and tokens, sitemaps (XML, images, RSS, stylesheet, 301 from the old addresses), robots.txt, llms.txt, structured data, Missing SEO list, import from All in One SEO with dry run, logs and undo, parity check (WP-CLI and admin, also while All in One SEO is still active), AI Nexus tool <code>vgc-seo-manage</code>, WP-CLI <code>wp vgc-seo</code>, Bulgarian translation.</li></ul>"
+      "description": "Lightweight in-house SEO: titles, meta descriptions, canonical and robots tags, Open Graph and Twitter cards, a JSON-LD graph, XML sitemaps and robots.txt, with per-item fields, templates with tokens, an importer from All in One SEO and a parity check against it. No scoring, no dashboards, no external calls.",
+      "changelog": "<h4>1.1.0</h4><ul><li>With VGC Toolbox active, the SEO screens move into its menu: VGC Toolbox \u2192 SEO, with Settings, Missing SEO and Import &amp; parity as tabs. Every page keeps its address, so old links open the same screen. Without VGC Toolbox the SEO menu stays as before.</li><li>Scripts, styles and notices load by the exact screen, in the SEO menu and in VGC Toolbox.</li></ul><h4>1.0.0</h4><ul><li>First release: head output, per-item SEO box and term fields, templates and tokens, sitemaps (XML, images, RSS, stylesheet, redirects of the old addresses), robots.txt, llms.txt, structured data, Missing SEO list, import from All in One SEO with dry run, logs and undo, parity check (WP-CLI and admin, also while All in One SEO is still active), AI Nexus tool <code>vgc-seo-manage</code>, WP-CLI <code>wp vgc-seo</code>, Bulgarian translation.</li></ul>"
     }
   },
   "vgc-ai-nexus-pinterest": {
