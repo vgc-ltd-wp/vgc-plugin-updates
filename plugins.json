@@ -483,5 +483,21 @@
       "description": "One menu for every VGC tool. See which tools this site has, update them, and add more from the VGC update channel in one click. Every download is checked against its SHA-256 fingerprint before it is installed.",
       "changelog": "<h4>1.0.0</h4><ul><li>VGC Toolbox menu right under Dashboard, with a toolbox icon and a bubble for waiting updates.</li><li>Your tools: every VGC tool on the site, what needs attention, Update and Update all.</li><li>Add tools: the whole toolbox by category, with search, a details panel and one-click Install (installed and switched on, then its page opens).</li><li>Every download is checked against its SHA-256 fingerprint, also for updates WordPress downloads itself.</li><li>Settings: check the list again, and where each tool sits in the menu.</li><li>For tools: <code>vgc_toolbox_register</code> puts a tool's pages in the menu, inside the toolbox frame with tabs.</li></ul>"
     }
+  },
+  "vgc-trash-guard": {
+    "name": "VGC Trash Guard",
+    "version": "1.0.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-trash-guard-1.0.0/vgc-trash-guard-1.0.0.zip",
+    "sha256": "b017228540b28bea64dae3bf16447d8f4c263f6b43aff2ee9abcd05b8194b5ce",
+    "requires": "6.5",
+    "requires_php": "8.1",
+    "tested": "7.1",
+    "last_updated": "2026-10-27",
+    "homepage": "https://tools.vgc-ltd.com",
+    "author": "VGC",
+    "sections": {
+      "description": "Asks before anything goes to the trash or is deleted for good: a popup names the item (with its bookings, open orders, menus and the site pages it serves) and waits for a second click. Choose the content types it guards, turn trashing and deleting off for everyone with one switch, and see who trashed, restored or deleted what in the trash log.",
+      "changelog": "<h4>1.0.0</h4><ul><li>First release: the popup before trashing, deleting and emptying the trash, with each item's bookings, open orders, page role, menu links and featured-image use.</li><li>Content types to guard, ticked by default (new types too).</li><li>The switch that turns trashing and deleting off for everyone, refused on every route, with restoring still possible.</li><li>The trash log: who, what, when and from where, refusals and switch changes, kept for a chosen time.</li><li>VGC Toolbox page with Settings and Trash log tabs; Settings \u2192 Trash Guard without the toolbox.</li><li>Bulgarian translation.</li></ul>"
+    }
   }
 }
