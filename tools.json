@@ -137,11 +137,23 @@
     "name": "Trash Guard",
     "description": "Asks before anything is trashed or deleted, and logs it.",
     "details": "A popup names the item and what depends on it (bookings, open orders, the front page) and waits for a second click before anything goes to the trash or is deleted for good. One switch turns trashing off for everyone; the trash log shows who did what.",
-    "category": "content",
+    "category": "site",
     "icon": "trash",
     "order": 120,
     "requires_plugins": [],
     "page": "admin.php?page=vgc-trash-guard",
+    "docs_url": "",
+    "licence": null
+  },
+  "vgc-mailer": {
+    "name": "Mailer",
+    "description": "Every site mail through your Microsoft 365 mailbox, logged.",
+    "details": "Sends every WordPress and WooCommerce mail through your Microsoft 365 mailbox with OAuth, logs each one with its source, holds mail when Microsoft is down, and checks SPF, DKIM and DMARC so mail stays out of spam.",
+    "category": "site",
+    "icon": "outbox",
+    "order": 130,
+    "requires_plugins": [],
+    "page": "admin.php?page=vgc-mailer",
     "docs_url": "",
     "licence": null
   }
