@@ -502,9 +502,9 @@
   },
   "vgc-mailer": {
     "name": "VGC Mailer",
-    "version": "1.0.0",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-mailer-1.0.0/vgc-mailer-1.0.0.zip",
-    "sha256": "72ca5fde10af442a33cdf17082d8b32619507980d8dd421a67642daa654a7f2c",
+    "version": "1.0.1",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-mailer-1.0.1/vgc-mailer-1.0.1.zip",
+    "sha256": "02a1cccbf11c49da821fb5a47b7e4890d4755b5b742f32f581714342cb53db73",
     "requires": "6.5",
     "requires_php": "8.1",
     "tested": "7.1",
@@ -513,7 +513,7 @@
     "author": "VGC",
     "sections": {
       "description": "Sends every WordPress e-mail through your Microsoft 365 mailbox with OAuth (Microsoft Graph), logs each one, shows what was sent, failed and opened, holds mail when Microsoft is down instead of losing it, and checks the DNS records that keep mail out of spam. It never changes a mail's content.",
-      "changelog": "<h4>1.0.0</h4><ul><li>First release: Microsoft Graph transport with client credentials, the takeover of wp_mail() with forced From and the Reply-To rule, the log with search, preview and resend, the retry queue with holding and the per-minute limit, open tracking, Dashboard, Log, Health and Settings, the four-step set-up, DNS checks, alerts, the weekly summary, the staging guard, wp-config constants, and the VGC Toolbox tab.</li><li>Bulgarian translation.</li></ul>"
+      "changelog": "<h4>1.0.1</h4><ul><li>An admin notice and a Health row when more mails failed in the last hour than the alert threshold, with a link to the failed mails.</li><li>The log drawer has a Print button (the mail's content, without its scripts), and says \"Send again without attachments\" when the attached files are no longer on the server.</li><li>Health's last-failure card copies its details with \"Copy for support\".</li></ul><h4>1.0.0</h4><ul><li>First release: Microsoft Graph transport with client credentials, the takeover of wp_mail() with forced From and the Reply-To rule, the log with search, preview and resend, the retry queue with holding and the per-minute limit, open tracking, Dashboard, Log, Health and Settings, the four-step set-up, DNS checks, alerts, the weekly summary, the staging guard, wp-config constants, and the VGC Toolbox tab.</li><li>Bulgarian translation.</li></ul>"
     }
   }
 }
