@@ -499,5 +499,21 @@
       "description": "Asks before anything goes to the trash or is deleted for good: a popup names the item (with its bookings, open orders, menus and the site pages it serves) and waits for a second click. Choose the content types it guards, turn trashing and deleting off for everyone with one switch, and see who trashed, restored or deleted what in the trash log.",
       "changelog": "<h4>1.0.0</h4><ul><li>First release: the popup before trashing, deleting and emptying the trash, with each item's bookings, open orders, page role, menu links and featured-image use.</li><li>Content types to guard, ticked by default (new types too).</li><li>The switch that turns trashing and deleting off for everyone, refused on every route, with restoring still possible.</li><li>The trash log: who, what, when and from where, refusals and switch changes, kept for a chosen time.</li><li>VGC Toolbox page with Settings and Trash log tabs; Settings \u2192 Trash Guard without the toolbox.</li><li>Bulgarian translation.</li></ul>"
     }
+  },
+  "vgc-mailer": {
+    "name": "VGC Mailer",
+    "version": "1.0.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-mailer-1.0.0/vgc-mailer-1.0.0.zip",
+    "sha256": "72ca5fde10af442a33cdf17082d8b32619507980d8dd421a67642daa654a7f2c",
+    "requires": "6.5",
+    "requires_php": "8.1",
+    "tested": "7.1",
+    "last_updated": "2026-10-28",
+    "homepage": "https://tools.vgc-ltd.com",
+    "author": "VGC",
+    "sections": {
+      "description": "Sends every WordPress e-mail through your Microsoft 365 mailbox with OAuth (Microsoft Graph), logs each one, shows what was sent, failed and opened, holds mail when Microsoft is down instead of losing it, and checks the DNS records that keep mail out of spam. It never changes a mail's content.",
+      "changelog": "<h4>1.0.0</h4><ul><li>First release: Microsoft Graph transport with client credentials, the takeover of wp_mail() with forced From and the Reply-To rule, the log with search, preview and resend, the retry queue with holding and the per-minute limit, open tracking, Dashboard, Log, Health and Settings, the four-step set-up, DNS checks, alerts, the weekly summary, the staging guard, wp-config constants, and the VGC Toolbox tab.</li><li>Bulgarian translation.</li></ul>"
+    }
   }
 }
