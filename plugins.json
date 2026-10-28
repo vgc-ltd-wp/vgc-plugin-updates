@@ -470,18 +470,18 @@
   },
   "vgc-toolbox": {
     "name": "VGC Toolbox",
-    "version": "1.0.1",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-toolbox-1.0.1/vgc-toolbox-1.0.1.zip",
-    "sha256": "b4a14908d9d79d1fc66313d103dc12161fb7509695cca3c6a421ba614eec2731",
+    "version": "1.1.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-toolbox-1.1.0/vgc-toolbox-1.1.0.zip",
+    "sha256": "d4d22a26264b8cb52a6ab864cad856bb6ebad3142e23b7bc155568b87525021f",
     "requires": "6.5",
     "requires_php": "8.1",
     "tested": "7.1",
-    "last_updated": "2026-10-27",
+    "last_updated": "2026-10-28",
     "homepage": "https://tools.vgc-ltd.com",
     "author": "VGC",
     "sections": {
       "description": "One menu for every VGC tool. See which tools this site has, update them, and add more from the VGC update channel in one click. Every download is checked against its SHA-256 fingerprint before it is installed.",
-      "changelog": "<h4>1.0.1</h4><ul><li>A tool's page opened at its address from before the toolbox (for example <code>tools.php?page=vgc-cookies</code> or an <code>options-general.php?page=</code> link) opens in the toolbox instead of \"Sorry, you are not allowed to access this page\", with the same tab and filters.</li><li>Trash Guard is in the built-in tool list (used until the channel answers), with a trash icon of its own; Cookie Compliance's page there is VGC Toolbox \u2192 Cookies.</li></ul><h4>1.0.0</h4><ul><li>VGC Toolbox menu right under Dashboard, with a toolbox icon and a bubble for waiting updates.</li><li>Your tools: every VGC tool on the site, what needs attention, Update and Update all.</li><li>Add tools: the whole toolbox by category, with search, a details panel and one-click Install (installed and switched on, then its page opens).</li><li>Every download is checked against its SHA-256 fingerprint, also for updates WordPress downloads itself.</li><li>Settings: check the list again, and where each tool sits in the menu.</li><li>For tools: <code>vgc_toolbox_register</code> puts a tool's pages in the menu, inside the toolbox frame with tabs.</li></ul>"
+      "changelog": "<h4>1.1.0</h4><ul><li>A new category, Site, for tools that look after the whole site rather than the shop or the content: Trash Guard moves there, and VGC Mailer joins the built-in tool list there with an outbox icon of its own.</li></ul><h4>1.0.1</h4><ul><li>A tool's page opened at its address from before the toolbox (for example <code>tools.php?page=vgc-cookies</code> or an <code>options-general.php?page=</code> link) opens in the toolbox instead of \"Sorry, you are not allowed to access this page\", with the same tab and filters.</li><li>Trash Guard is in the built-in tool list (used until the channel answers), with a trash icon of its own; Cookie Compliance's page there is VGC Toolbox \u2192 Cookies.</li></ul><h4>1.0.0</h4><ul><li>VGC Toolbox menu right under Dashboard, with a toolbox icon and a bubble for waiting updates.</li><li>Your tools: every VGC tool on the site, what needs attention, Update and Update all.</li><li>Add tools: the whole toolbox by category, with search, a details panel and one-click Install (installed and switched on, then its page opens).</li><li>Every download is checked against its SHA-256 fingerprint, also for updates WordPress downloads itself.</li><li>Settings: check the list again, and where each tool sits in the menu.</li><li>For tools: <code>vgc_toolbox_register</code> puts a tool's pages in the menu, inside the toolbox frame with tabs.</li></ul>"
     }
   },
   "vgc-trash-guard": {
