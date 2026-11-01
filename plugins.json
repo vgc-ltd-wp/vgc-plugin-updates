@@ -343,18 +343,18 @@
   },
   "vgc-stats": {
     "name": "VGC Stats",
-    "version": "1.0.1",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-stats-1.0.1/vgc-stats-1.0.1.zip",
-    "sha256": "43ce2b645807ac0980c4966074b275a9846fe01f0cde49eda41703967167db6d",
+    "version": "1.1.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-stats-1.1.0/vgc-stats-1.1.0.zip",
+    "sha256": "eb04cd10942e19c501de9f0f18f479a3e3d895b062bf7aed9cda86673ff0a504",
     "requires": "6.0",
     "requires_php": "7.4",
     "tested": "7.1",
-    "last_updated": "2026-10-21",
+    "last_updated": "2026-11-01",
     "homepage": "https://tools.vgc-ltd.com",
     "author": "VGC",
     "sections": {
       "description": "Cookieless, self-hosted statistics for every visitor: page views, entrances, sources, pages, engagement, devices and countries, plus an aggregate WooCommerce funnel (product views, adds to cart, checkouts, purchases; workshops apart). No cookies or browser storage, no fingerprinting, no IP addresses or user agents kept, nothing sent to anyone else. Reports under Statistics with comparison and CSV export; a read-only AI Nexus tool; WP-CLI.",
-      "changelog": "<h4>1.0.1</h4><ul><li>Orders placed in the shop from a staff account (e.g. an admin's test order) no longer count as purchases, under Leave out staff; staff orders counted before are taken out on the first admin page after the update, and the Statistics screen says how many.</li><li>The counted flag on an order is written without saving the order again (on HPOS: no new modified date, no second order-updated hooks or webhooks).</li><li>AI Nexus: no more \"segment had no effect\" warning on actions other than products.</li></ul><h4>1.0.0</h4><ul><li>First release: cookieless page-view beacon (under 2 KB gzipped) and engagement events; WooCommerce funnel from add-to-cart and order hooks (once per order, taken out again on cancel or refund, VGC Events workshops and reservations apart); channels from ad flags, utm tags and referrers; nightly idempotent rollup into daily totals in the Europe/Sofia day, raw rows kept 35 days; Statistics screen with Overview, Sources, Pages, Funnel, Products, Engagement and Devices, comparison with the period before and CSV export; read-only AI Nexus tool vgc-stats-report; wp vgc-stats status | rollup | purge | report; Bulgarian translation.</li></ul>"
+      "changelog": "<h4>1.1.0</h4><ul><li>Adds to cart: robots no longer count. They follow the ?add-to-cart= links of the shop and category pages (every language version) despite robots.txt and nofollow, and each request counted as an add. An add made by a script of the site's own pages (WooCommerce's button, WPC AJAX Add to Cart, the Store API) counts as before, if a page of the site sent it; an add made by following a link or posting the product form without JavaScript counts only when the page it leads to (also after a redirect to the cart) loads in a browser and reports itself. Adds no page confirms are deleted after a day.</li><li>Reports mark adds to cart up to the day of this update as too high (Statistics screen notice; adds_overstated_until in the report data, CLI and AI Nexus).</li><li>Purchases: an order placed before VGC Stats was installed no longer counts when it is completed later; an order counts only on its way into a counted status. Such orders counted before are taken out on the first admin page after the update, and the Statistics screen says how many.</li></ul><h4>1.0.1</h4><ul><li>Orders placed in the shop from a staff account (e.g. an admin's test order) no longer count as purchases, under Leave out staff; staff orders counted before are taken out on the first admin page after the update, and the Statistics screen says how many.</li><li>The counted flag on an order is written without saving the order again (on HPOS: no new modified date, no second order-updated hooks or webhooks).</li><li>AI Nexus: no more \"segment had no effect\" warning on actions other than products.</li></ul><h4>1.0.0</h4><ul><li>First release: cookieless page-view beacon (under 2 KB gzipped) and engagement events; WooCommerce funnel from add-to-cart and order hooks (once per order, taken out again on cancel or refund, VGC Events workshops and reservations apart); channels from ad flags, utm tags and referrers; nightly idempotent rollup into daily totals in the Europe/Sofia day, raw rows kept 35 days; Statistics screen with Overview, Sources, Pages, Funnel, Products, Engagement and Devices, comparison with the period before and CSV export; read-only AI Nexus tool vgc-stats-report; wp vgc-stats status | rollup | purge | report; Bulgarian translation.</li></ul>"
     }
   },
   "vgc-seo": {
