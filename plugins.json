@@ -439,18 +439,19 @@
   },
   "vgc-ai-nexus-tracker": {
     "name": "VGC AI Nexus for VGC Tracker",
-    "version": "1.1.0",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-tracker-1.1.0/vgc-ai-nexus-tracker-1.1.0.zip",
+    "version": "1.2.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-tracker-1.2.0/vgc-ai-nexus-tracker-1.2.0.zip",
     "requires": "6.6",
     "requires_php": "8.1",
     "tested": "6.8",
-    "last_updated": "2026-10-26",
+    "last_updated": "2026-11-03",
     "homepage": "https://tools.vgc-ltd.com",
     "author": "VGC",
     "sections": {
       "description": "VGC Tracker tools for AI Nexus: search, read and change issues, move them through the workflow, comment, link, plan sprints, read reports, log time, manage projects, saved filters, automation rules and the team - as the connected user, under the tracker's own rules and history. Needs VGC AI Nexus and VGC Tracker.",
-      "changelog": "<h4>1.1.0</h4><ul><li>Up to VGC Tracker 1.0.0. New tool tracker-planning: sprints and backlog (create, update, start, complete, delete, plan an issue), reports (summary, burndown, velocity, cycle time, cumulative flow) and time (work log, log, edit, delete, timesheet).</li><li>tracker-issues: estimate, remaining and sprint on updates; approve_issue; list_client_requests.</li><li>tracker-comments: internal notes or replies the portal client sees; set_comment_visibility.</li><li>tracker-team: a project's portal clients and its automation rules (list, get, create, update, delete, run now, run log).</li><li>Fix: portal clients (the tracker's client role) no longer get the tools.</li><li>New deletes need the ID repeated in \"confirm\"; read-only mode keeps every read.</li></ul><h4>1.0.0</h4><ul><li>First release: four tools - tracker-issues, tracker-comments (comments and links), tracker-projects (projects, labels, query language, saved filters) and tracker-team (team and audit log). Every action runs through the tracker's own REST API as the signed-in user; read-only mode and confirm-before-delete apply.</li></ul>"
-    }
+      "changelog": "<h4>1.2.0</h4><ul><li>Credits, for VGC Tracker 1.4.0 or later (update the tracker first). tracker-issues: \"credits\" on create_issue and update_issue; get_issue and search rows show the figures; search understands credits, creditsPaid and creditsUnpaid.</li><li>New actions set_credits_paid (tracker-issues: an issue and everything under it) and set_project_credits_paid (tracker-planning: a whole project, or what is under no epic). The tracker allows only administrators and the project's lead; read-only mode blocks both.</li></ul><h4>1.1.0</h4><ul><li>Up to VGC Tracker 1.0.0. New tool tracker-planning: sprints and backlog (create, update, start, complete, delete, plan an issue), reports (summary, burndown, velocity, cycle time, cumulative flow) and time (work log, log, edit, delete, timesheet).</li><li>tracker-issues: estimate, remaining and sprint on updates; approve_issue; list_client_requests.</li><li>tracker-comments: internal notes or replies the portal client sees; set_comment_visibility.</li><li>tracker-team: a project's portal clients and its automation rules (list, get, create, update, delete, run now, run log).</li><li>Fix: portal clients (the tracker's client role) no longer get the tools.</li><li>New deletes need the ID repeated in \"confirm\"; read-only mode keeps every read.</li></ul><h4>1.0.0</h4><ul><li>First release: four tools - tracker-issues, tracker-comments (comments and links), tracker-projects (projects, labels, query language, saved filters) and tracker-team (team and audit log). Every action runs through the tracker's own REST API as the signed-in user; read-only mode and confirm-before-delete apply.</li></ul>"
+    },
+    "sha256": "99294667b61d9411583501b48c1318a72b0cc704b1d4a24c40042c22bb44f1ce"
   },
   "vgc-cookie-compliance": {
     "name": "VGC Cookie Compliance",
