@@ -532,5 +532,21 @@
       "description": "Site tools for adastracorp.com, each with its own switch under Settings \u2192 Adastra Tools. First tool: the transparent header lies over the hero image from the first paint, so it no longer jumps into place when the page finishes loading.",
       "changelog": "<h4>1.0.0</h4><ul><li>First release, with Settings \u2192 Adastra Tools: one switch per tool.</li><li>Transparent header over hero images: decided on the server (body class <code>ada-hero-header</code>), the header lies over the hero from the first paint, so the hero no longer jumps when Avada's sticky-header script runs. On by default.</li><li>The settings page says when the old transparent-header rules are still in Avada's Custom CSS.</li></ul>"
     }
+  },
+  "vgc-ai-nexus-environment-lock": {
+    "name": "VGC AI Nexus Environment Lock",
+    "version": "1.0.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-environment-lock-1.0.0/vgc-ai-nexus-environment-lock-1.0.0.zip",
+    "sha256": "ad297d66fd5d7b164bf6af9d1f013b74554aedb78d643090628fb004aa7926bc",
+    "requires": "6.6",
+    "requires_php": "8.0",
+    "tested": "6.8",
+    "last_updated": "2026-11-04",
+    "homepage": "https://tools.vgc-ltd.com",
+    "author": "VGC",
+    "sections": {
+      "description": "Keeps VGC AI Nexus installed everywhere but opens it only on the environments you list. A copy of the site that lands anywhere else, such as production after a full staging deploy, locks itself: no AI connection, no sign-in, no tools. Needs VGC AI Nexus.",
+      "changelog": "<h4>1.0.0</h4><ul><li>First release. Allow the environments where AI may connect; every other copy of the site locks itself and removes the AI connections it brought along, without anyone having to do anything after a deploy. A status page on a locked site says why AI access is off. While the lock is on, the plugin cannot be deactivated or deleted from wp-admin; turning the lock off needs the site address typed as confirmation.</li></ul>"
+    }
   }
 }
