@@ -156,5 +156,18 @@
     "page": "admin.php?page=vgc-mailer",
     "docs_url": "",
     "licence": null
+  },
+  "vgc-promotions": {
+    "name": "Promotions",
+    "description": "Cart promotions such as \"any 3 for €35\", without code.",
+    "details": "Bundle prices with a product selector, dates and priority; one discount per unit, so a promoted product never takes a coupon too; badges, \"add 1 more\" messages and a test cart; every order records the promotions it used.",
+    "where": "Its screens are VGC Toolbox → Promotions.",
+    "category": "shop",
+    "icon": "tag",
+    "order": 105,
+    "requires_plugins": ["woocommerce"],
+    "page": "admin.php?page=vgc-promotions",
+    "docs_url": "",
+    "licence": null
   }
 }
