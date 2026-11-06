@@ -552,9 +552,9 @@
   },
   "vgc-promotions": {
     "name": "VGC Promotions",
-    "version": "0.1.1",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-promotions-0.1.1/vgc-promotions-0.1.1.zip",
-    "sha256": "1c4a4bdbb5136f1bb0efc430a63a6bea20655dfd0331a9df2daab412afd1181f",
+    "version": "0.1.2",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-promotions-0.1.2/vgc-promotions-0.1.2.zip",
+    "sha256": "0d909d752ed087b719148f316f4ddf40945b03beed6d928d7915f76f83e00133",
     "requires": "6.5",
     "requires_php": "8.1",
     "tested": "7.1",
@@ -563,7 +563,7 @@
     "author": "VGC",
     "sections": {
       "description": "Cart promotions for WooCommerce without code: bundle prices such as \"any 3 candles for \u20ac35\", with a product selector, dates, priority, badges, \"add 1 more\" messages, a test cart and a record on every order. One discount per unit: a promoted unit never takes a coupon too. Discounts lower the line prices, so VAT stays right, and a promotion can make chosen delivery methods free.",
-      "changelog": "<h4>0.1.1</h4><ul><li>The \"add more\" box in the cart and mini-cart has an even, light border instead of a thick red stripe on its left.</li></ul><h4>0.1.0</h4><ul><li>First release: the bundle price promotion with the product selector, dates, priority and status, one discount per unit against coupons, free delivery override, badges, \"add more\" and saving messages per language, the admin test cart, order records and the switch for the whole shop.</li></ul>"
+      "changelog": "<h4>0.1.2</h4><ul><li>The \"add more\" box keeps its own spacing and an underlined link when the theme styles paragraphs and links (no empty band under the text on sveshtigoreshti.com).</li></ul><h4>0.1.1</h4><ul><li>The \"add more\" box in the cart and mini-cart has an even, light border instead of a thick red stripe on its left.</li></ul><h4>0.1.0</h4><ul><li>First release: the bundle price promotion with the product selector, dates, priority and status, one discount per unit against coupons, free delivery override, badges, \"add more\" and saving messages per language, the admin test cart, order records and the switch for the whole shop.</li></ul>"
     }
   }
 }
