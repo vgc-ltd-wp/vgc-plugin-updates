@@ -392,9 +392,9 @@
   },
   "vgc-studio": {
     "name": "VGC Studio",
-    "version": "1.1.1",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-studio-1.1.1/vgc-studio-1.1.1.zip",
-    "sha256": "dad5bf0884e054b8b156b93a5d9f49abfb429100ff31419174444b72a3e840d8",
+    "version": "1.1.2",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-studio-1.1.2/vgc-studio-1.1.2.zip",
+    "sha256": "57cbe945ee24d5c39786b472a935ba3b14aaa0c052ae7562ee05a2c7fea8157e",
     "requires": "6.6",
     "requires_php": "7.4",
     "tested": "7.1",
@@ -403,7 +403,7 @@
     "author": "VGC",
     "sections": {
       "description": "Block theme of the VGC Ltd studio site: a working-sheet look (paper, ink, ruled rows, square corners and a yellow marked cell), self-hosted Martian Grotesk and Martian Mono, one pattern per homepage section, the case-study and tools-page layouts, and templates for pages, posts, the /work/ archive and project pages. Content comes from the VGC Studio Content plugin.",
-      "changelog": "<h4>1.1.1</h4><ul><li>Case studies and the tools page: one headline per page, plain sentence-case labels, the studio's marked cell and ink in every case study, 12px chart labels, and an \"Ask about\" link on each tool card.</li><li>Homepage patterns: the Approach steps in the studio's own terms, \"Tell us what you need built\", and no comma before the marked phrase in the headline.</li><li>Darker field borders (3:1 contrast) and a style for the policy pages' \"Last updated\" line.</li></ul><h4>1.1.0</h4><ul><li>New identity: Martian Grotesk and Martian Mono replace Geist; paper, ink and the yellow marked cell replace the off-white and orange look; square corners and ruled rows replace rounded cards.</li><li>Homepage patterns rewritten: headline with the marked phrase, the hero sheet, a proof strip of measured figures, services in a rail, a four-step approach row, one line for our own plugins, and a contact section that says what happens next.</li><li>Case-study and tools-page layouts moved from Additional CSS into the theme, with contrast and layout fixes.</li><li>Sticky header with the site logo and a phone menu button; footer with email and location; a 404 page with three ways on.</li></ul><h4>1.0.0</h4><ul><li>First release: tokens, templates, section patterns, menus for header and footer, WPML language switch, self-updates through the VGC channel.</li></ul>"
+      "changelog": "<h4>1.1.2</h4><ul><li>VGC Cookie Compliance's banner, choices dialog and embed placeholders take the site's look: paper, ink, square corners and the marked cell on hover, aligned with the content column.</li><li>Footer: a \"Cookie settings\" link next to \"Privacy policy\" while the banner is on.</li></ul><h4>1.1.1</h4><ul><li>Case studies and the tools page: one headline per page, plain sentence-case labels, the studio's marked cell and ink in every case study, 12px chart labels, and an \"Ask about\" link on each tool card.</li><li>Homepage patterns: the Approach steps in the studio's own terms, \"Tell us what you need built\", and no comma before the marked phrase in the headline.</li><li>Darker field borders (3:1 contrast) and a style for the policy pages' \"Last updated\" line.</li></ul><h4>1.1.0</h4><ul><li>New identity: Martian Grotesk and Martian Mono replace Geist; paper, ink and the yellow marked cell replace the off-white and orange look; square corners and ruled rows replace rounded cards.</li><li>Homepage patterns rewritten: headline with the marked phrase, the hero sheet, a proof strip of measured figures, services in a rail, a four-step approach row, one line for our own plugins, and a contact section that says what happens next.</li><li>Case-study and tools-page layouts moved from Additional CSS into the theme, with contrast and layout fixes.</li><li>Sticky header with the site logo and a phone menu button; footer with email and location; a 404 page with three ways on.</li></ul><h4>1.0.0</h4><ul><li>First release: tokens, templates, section patterns, menus for header and footer, WPML language switch, self-updates through the VGC channel.</li></ul>"
     }
   },
   "vgc-studio-content": {
