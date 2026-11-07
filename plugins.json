@@ -408,18 +408,18 @@
   },
   "vgc-studio-content": {
     "name": "VGC Studio Content",
-    "version": "1.0.0",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-studio-content-1.0.0/vgc-studio-content-1.0.0.zip",
-    "sha256": "85303e122141671cd91b3771d816246e3106cf26889d8ac7b05732525c0d2475",
+    "version": "1.1.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-studio-content-1.1.0/vgc-studio-content-1.1.0.zip",
+    "sha256": "9215138030cd305fbf4c65aaccd0a467c8525e0de6dbdf369c8a129558b9ab52",
     "requires": "6.6",
     "requires_php": "7.4",
     "tested": "7.1",
-    "last_updated": "2026-10-23",
+    "last_updated": "2026-11-07",
     "homepage": "https://vgc-ltd.com",
     "author": "VGC",
     "sections": {
       "description": "Content model of the VGC Ltd studio site: services, projects and tools (all in REST and AI Nexus), Settings \u2192 VGC Studio, the homepage blocks, a contact form that works without JavaScript and keeps every enquiry, Organization schema that merges into the SEO plugin's, and `wp vgc-studio seed`.",
-      "changelog": "<h4>1.0.0</h4><ul><li>First release: post types and fields, settings, homepage blocks, contact form with spam traps and stored enquiries, schema, seed command, AI Nexus guide section.</li></ul>"
+      "changelog": "<h4>1.1.0</h4><ul><li>New look to match VGC Studio theme 1.1.0: the hero list is a two-column sheet (the client's words, then the service), services are ruled rows, project cards are framed images, the contact form is a light sheet with clear focus and error states. Every tap target is at least 44px.</li><li>The stats strip is now a proof strip: each figure can carry a source and a link to the case study it comes from.</li><li>Services: optional \"Price line\" field, shown under the title while filled in. The \"01\" number and the dark variant are gone from the homepage.</li><li>\"All projects\" shows how many there are.</li><li>The contact details block can be used twice (homepage and footer).</li><li>The seed builds the homepage without the founder block and fills the proof strip with measured figures.</li><li>AI Nexus guide: the new fields, and why styles belong in the theme rather than in Additional CSS.</li></ul><h4>1.0.0</h4><ul><li>First release: post types and fields, settings, homepage blocks, contact form with spam traps and stored enquiries, schema, seed command, AI Nexus guide section.</li></ul>"
     }
   },
   "vgc-tracker": {
