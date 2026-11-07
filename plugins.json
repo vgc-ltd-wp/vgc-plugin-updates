@@ -392,18 +392,18 @@
   },
   "vgc-studio": {
     "name": "VGC Studio",
-    "version": "1.0.0",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-studio-1.0.0/vgc-studio-1.0.0.zip",
-    "sha256": "a2df7b1c9ea25835567386ac298efdc3d4b49eb62c5b4f05d14bbde72299cd95",
+    "version": "1.1.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-studio-1.1.0/vgc-studio-1.1.0.zip",
+    "sha256": "7c7e333833f1d6b2aed1ee8e43a69e2201abb6d1bbf4f92f6871a415adcc73d9",
     "requires": "6.6",
     "requires_php": "7.4",
     "tested": "7.1",
-    "last_updated": "2026-10-23",
+    "last_updated": "2026-11-07",
     "homepage": "https://vgc-ltd.com",
     "author": "VGC",
     "sections": {
-      "description": "Block theme of the VGC Ltd studio site: design tokens in theme.json (with blue, green and violet accent variations), self-hosted Geist fonts, one pattern per homepage section, and templates for pages, posts, the /work/ archive and project pages. Content comes from the VGC Studio Content plugin.",
-      "changelog": "<h4>1.0.0</h4><ul><li>First release: tokens, templates, section patterns, menus for header and footer, WPML language switch, self-updates through the VGC channel.</li></ul>"
+      "description": "Block theme of the VGC Ltd studio site: a working-sheet look (paper, ink, ruled rows, square corners and a yellow marked cell), self-hosted Martian Grotesk and Martian Mono, one pattern per homepage section, the case-study and tools-page layouts, and templates for pages, posts, the /work/ archive and project pages. Content comes from the VGC Studio Content plugin.",
+      "changelog": "<h4>1.1.0</h4><ul><li>New identity: Martian Grotesk and Martian Mono replace Geist; paper, ink and the yellow marked cell replace the off-white and orange look; square corners and ruled rows replace rounded cards.</li><li>Homepage patterns rewritten: headline with the marked phrase, the hero sheet, a proof strip of measured figures, services in a rail, a four-step approach row, one line for our own plugins, and a contact section that says what happens next.</li><li>Case-study and tools-page layouts moved from Additional CSS into the theme, with contrast and layout fixes.</li><li>Sticky header with the site logo and a phone menu button; footer with email and location; a 404 page with three ways on.</li></ul><h4>1.0.0</h4><ul><li>First release: tokens, templates, section patterns, menus for header and footer, WPML language switch, self-updates through the VGC channel.</li></ul>"
     }
   },
   "vgc-studio-content": {
