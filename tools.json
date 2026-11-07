@@ -169,5 +169,18 @@
     "page": "admin.php?page=vgc-promotions",
     "docs_url": "",
     "licence": null
+  },
+  "vgc-shop-assistant": {
+    "name": "Shop Assistant",
+    "description": "A chat that answers from your own catalogue, using Claude.",
+    "details": "Visitors ask for a gift or a product; the assistant answers only from your products, the pages you choose and your shop facts, and shows its picks as cards with an add-to-cart button. Needs a Claude API key; a monthly budget, limits and a log of every conversation keep it under control.",
+    "where": "Its screens are VGC Toolbox → Shop Assistant.",
+    "category": "shop",
+    "icon": "send",
+    "order": 107,
+    "requires_plugins": ["woocommerce"],
+    "page": "admin.php?page=vgc-shop-assistant",
+    "docs_url": "",
+    "licence": null
   }
 }
