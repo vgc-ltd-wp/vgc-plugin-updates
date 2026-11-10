@@ -64,18 +64,19 @@
   },
   "vgc-ai-nexus-wpml": {
     "name": "VGC AI Nexus for WPML",
-    "version": "1.6.1",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-wpml-1.6.1/vgc-ai-nexus-wpml-1.6.1.zip",
+    "version": "1.7.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-wpml-1.7.0/vgc-ai-nexus-wpml-1.7.0.zip",
     "requires": "6.0",
     "requires_php": "8.0",
     "tested": "6.8",
-    "last_updated": "2026-10-22",
+    "last_updated": "2026-11-10",
     "homepage": "https://tools.vgc-ltd.com",
     "author": "VGC",
     "sections": {
       "description": "WPML translation management abilities.",
-      "changelog": "<h4>1.6.1</h4><ul><li>Quieter debug log: no more 'translation loaded too early' notices on every request; no duplicate ability-category notice next to WooCommerce 11.</li></ul><h4>1.6.0</h4><ul><li>New update_term_translation: edit an existing translated term's name, slug or description in its own language context.</li></ul><h4>1.5.0</h4><ul><li>Adds this extension to the AI Nexus usage guide, so connected AI assistants can read what it does and its anti-patterns instead of guessing.</li></ul><h4>1.4.3</h4><ul><li>Compatibility: tool schemas are now valid for strict MCP clients (Claude Desktop 1.18286+) regardless of which MCP adapter serves them.</li></ul><h4>1.4.2</h4><ul><li>Safety: group-class collision guard - a name clash with core or another extension no longer crashes the site. Updater version handling hardened.</li></ul><h4>1.4.1</h4><ul><li>Self-hosted updater: native WordPress \"Update now\" button via the public manifest (no wp-config token).</li></ul>"
-    }
+      "changelog": "<h4>1.7.0</h4><ul><li>Security: Create Post Translation only copies a post the connected account may read. Someone else&#039;s draft, private, password-protected or scheduled post answers &quot;not found&quot;, so a Contributor can no longer read it through a translation.</li><li>Publish and private on create and update need the permission to publish; without it the translation is saved as Pending Review, with a note saying why.</li></ul><h4>1.6.1</h4><ul><li>Quieter debug log: no more 'translation loaded too early' notices on every request; no duplicate ability-category notice next to WooCommerce 11.</li></ul><h4>1.6.0</h4><ul><li>New update_term_translation: edit an existing translated term's name, slug or description in its own language context.</li></ul><h4>1.5.0</h4><ul><li>Adds this extension to the AI Nexus usage guide, so connected AI assistants can read what it does and its anti-patterns instead of guessing.</li></ul><h4>1.4.3</h4><ul><li>Compatibility: tool schemas are now valid for strict MCP clients (Claude Desktop 1.18286+) regardless of which MCP adapter serves them.</li></ul><h4>1.4.2</h4><ul><li>Safety: group-class collision guard - a name clash with core or another extension no longer crashes the site. Updater version handling hardened.</li></ul><h4>1.4.1</h4><ul><li>Self-hosted updater: native WordPress \"Update now\" button via the public manifest (no wp-config token).</li></ul>"
+    },
+    "sha256": "ccf7bbed7b8b3b836ce78de1f73b5da88ea041510e7655bad4a30ed03e64fc09"
   },
   "vgc-ai-nexus-cpt": {
     "name": "VGC AI Nexus for Custom Post Types",
