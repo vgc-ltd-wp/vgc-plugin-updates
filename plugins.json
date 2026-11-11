@@ -96,18 +96,19 @@
   },
   "vgc-ai-nexus-woocommerce": {
     "name": "VGC AI Nexus for WooCommerce",
-    "version": "1.8.1",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-woocommerce-1.8.1/vgc-ai-nexus-woocommerce-1.8.1.zip",
+    "version": "1.9.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-woocommerce-1.9.0/vgc-ai-nexus-woocommerce-1.9.0.zip",
     "requires": "6.0",
     "requires_php": "8.0",
     "tested": "6.8",
-    "last_updated": "2026-10-22",
+    "last_updated": "2026-11-11",
     "homepage": "https://tools.vgc-ltd.com",
     "author": "VGC",
     "sections": {
       "description": "WooCommerce orders, products, customers, coupons abilities.",
-      "changelog": "<h4>1.8.1</h4><ul><li>Quieter debug log: no more 'translation loaded too early' notices on every request; no duplicate ability-category notice next to WooCommerce 11.</li></ul><h4>1.8.0</h4><ul><li>Adds this extension to the AI Nexus usage guide, so connected AI assistants can read what it does and its anti-patterns instead of guessing.</li></ul><h4>1.7.3</h4><ul><li>Compatibility: tool schemas are now valid for strict MCP clients (Claude Desktop 1.18286+) regardless of which MCP adapter serves them.</li></ul><h4>1.7.2</h4><ul><li>Safety: group-class collision guard - a name clash with core or another extension no longer crashes the site. Updater version handling hardened.</li></ul><h4>1.7.1</h4><ul><li>Self-hosted updater: native WordPress \"Update now\" button via the public manifest (no wp-config token).</li></ul>"
-    }
+      "changelog": "<h4>1.9.0</h4><ul><li>Security: every product, order, coupon and customer is now checked against the account&#039;s own permission on that item, as WooCommerce&#039;s own screens do. Roles that may handle only their own products or orders (multi-vendor plugins, custom roles) no longer see or change anyone else&#039;s. Administrators and shop managers notice no change.</li><li>Orders can be set to Completed and Cancelled again and listed by those statuses. Before, both were refused, and a misspelt status put the order back to Pending payment.</li><li>Order lists: the before-date filter and search now work, and a refund among the latest orders no longer breaks the list.</li><li>Deleting a product without force now moves it to the trash instead of deleting it for good.</li><li>A customer ID that does not exist now answers not found instead of an empty record.</li></ul><h4>1.8.1</h4><ul><li>Quieter debug log: no more 'translation loaded too early' notices on every request; no duplicate ability-category notice next to WooCommerce 11.</li></ul><h4>1.8.0</h4><ul><li>Adds this extension to the AI Nexus usage guide, so connected AI assistants can read what it does and its anti-patterns instead of guessing.</li></ul><h4>1.7.3</h4><ul><li>Compatibility: tool schemas are now valid for strict MCP clients (Claude Desktop 1.18286+) regardless of which MCP adapter serves them.</li></ul><h4>1.7.2</h4><ul><li>Safety: group-class collision guard - a name clash with core or another extension no longer crashes the site. Updater version handling hardened.</li></ul><h4>1.7.1</h4><ul><li>Self-hosted updater: native WordPress \"Update now\" button via the public manifest (no wp-config token).</li></ul>"
+    },
+    "sha256": "8533abbfb2567efc03891f4d203111da4caf6c5a6d7d568920e449393ddab241"
   },
   "vgc-mcp-claude-connector-oauth": {
     "name": "VGC MCP Claude Connector (OAuth)",
