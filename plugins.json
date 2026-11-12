@@ -541,18 +541,18 @@
   },
   "vgc-ai-nexus-environment-lock": {
     "name": "VGC AI Nexus Environment Lock",
-    "version": "1.1.0",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-environment-lock-1.1.0/vgc-ai-nexus-environment-lock-1.1.0.zip",
-    "sha256": "ec07108e628906dc37d7e25c1bbd2725729cc7f9e2e890a38b13d4c2fe1f4487",
+    "version": "1.2.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-environment-lock-1.2.0/vgc-ai-nexus-environment-lock-1.2.0.zip",
+    "sha256": "7a220f9cf22b24cc6b950c44b9959d956a30c3e8ed7b2b282a2f69bc26bca1f5",
     "requires": "6.6",
     "requires_php": "8.0",
     "tested": "6.8",
-    "last_updated": "2026-11-11",
+    "last_updated": "2026-11-12",
     "homepage": "https://tools.vgc-ltd.com",
     "author": "VGC",
     "sections": {
       "description": "Keeps VGC AI Nexus installed everywhere but opens it only on the environments you list. A copy of the site that lands anywhere else, such as production after a full staging deploy, locks itself: no AI connection, no sign-in, no tools. Needs VGC AI Nexus.",
-      "changelog": "<h4>1.1.0</h4><ul><li>Security: when a copy of the site lands on a locked environment, the Application Passwords AI Nexus made are deleted too. Ones people made themselves stay.</li><li>Security: scripts an AI added through AI Nexus are held back when a copy arrives. They stay off the site until an administrator reads them on the Environment Lock screen and puts them back or deletes them.</li><li>Security: Allow, Turn the lock off and the held-script buttons ask for your own WordPress password. A wrong password changes nothing, and the administrator gets an email.</li></ul><h4>1.0.0</h4><ul><li>First release. Allow the environments where AI may connect; every other copy of the site locks itself and removes the AI connections it brought along, without anyone having to do anything after a deploy. A status page on a locked site says why AI access is off. While the lock is on, the plugin cannot be deactivated or deleted from wp-admin; turning the lock off needs the site address typed as confirmation.</li></ul>"
+      "changelog": "<h4>1.2.0</h4><ul><li>Security: if the lock&#039;s settings go missing from the database after the lock was set up, the site stays locked instead of opening AI access. A site where the lock was never set up stays open as before.</li><li>Security: the lock now tells environments apart by the site address stored in the database, not by a WP_HOME built from the visitor&#039;s Host header, so one request with a made-up address can no longer remove staging&#039;s AI connections or get past the \"never allow\" list. If WP_HOME and the stored address differ, the lock&#039;s page shows both and no clean-up runs.</li><li>Security: on a multisite, the network-activated lock can&#039;t be network-deactivated while it is on for any site, and wp plugin delete is refused while any site is locked.</li><li>Security: updates of this plugin are checked by AI Nexus 2.37 or later: they must come from the VGC update channel and match its checksum.</li></ul><h4>1.1.0</h4><ul><li>Security: when a copy of the site lands on a locked environment, the Application Passwords AI Nexus made are deleted too. Ones people made themselves stay.</li><li>Security: scripts an AI added through AI Nexus are held back when a copy arrives. They stay off the site until an administrator reads them on the Environment Lock screen and puts them back or deletes them.</li><li>Security: Allow, Turn the lock off and the held-script buttons ask for your own WordPress password. A wrong password changes nothing, and the administrator gets an email.</li></ul><h4>1.0.0</h4><ul><li>First release. Allow the environments where AI may connect; every other copy of the site locks itself and removes the AI connections it brought along, without anyone having to do anything after a deploy. A status page on a locked site says why AI access is off. While the lock is on, the plugin cannot be deactivated or deleted from wp-admin; turning the lock off needs the site address typed as confirmation.</li></ul>"
     }
   },
   "vgc-promotions": {
