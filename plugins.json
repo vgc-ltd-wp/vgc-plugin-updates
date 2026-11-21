@@ -806,5 +806,27 @@
       "description": "Extends VGC AI Nexus with one tool, batch-run-steps: an AI assistant runs an ordered list of tool calls in one call and gets back only what it asks for. A later step can use what an earlier one returned (the ID of a post it created, for example). Every step is checked, run and logged exactly like the same call made on its own, so a batch can do nothing the calls one by one could not. Deletes are refused in a batch unless an administrator allows them. Requires VGC AI Nexus 2.45.0 or later.",
       "changelog": "<h4>1.1.1</h4><ul><li>A step that only reads may filter by status &quot;trash&quot; (for example listing the comments or products in the trash). Before, such a step counted as a delete and the whole batch was refused. The step now goes to its tool, which lists the trash where it can or says which statuses it accepts.</li><li>A step that writes with status &quot;trash&quot; is still a delete: it is refused while deletes are off, as before.</li></ul><h4>1.1.0</h4><ul><li>The AI is told when to use a batch and when to call tools one by one. It sees this in three places:<ul><li>a line it reads as it connects (with VGC AI Nexus 2.46.0 or later);</li><li>the start of the tool's description;</li><li>a new \"when to batch\" part of the usage guide, with four patterns: read, decide, then batch the writes; try one, batch the rest; create and chain; ask only for the fields you need.</li></ul></li><li>How a batch runs is unchanged.</li></ul><h4>1.0.1</h4><ul><li>Security: deletes are recognised however they are written. A status of \"trash.\", \"tr ash\" or \"TRASH!\" counts as trash, and a delete word glued to another (\"trashall\", \"deleteEverything\") or in another plugin's own action (\"delete_item\", \"remove_all\") counts too. Before, these could trash or delete with deletes switched off.</li><li>Security: the answer always stays within its size limit (errors and notes are cut, a refused batch lists at most 20 problems), and the step limit and time budget hold for a whole request, even when several batches are sent at once.</li><li>Security: the settings are kept from AI tools however their name is written, and updates come only through AI Nexus's signed updater (the plugin's own unsigned updater is gone).</li></ul><h4>1.0.0</h4><ul><li>First release. One tool, batch-run-steps: an AI assistant runs an ordered list of tool calls in one call and gets back only the fields it asks for. A later step can use what an earlier one returned, such as the ID of a post it created.</li><li>Every step is checked, run and logged exactly like the same call made on its own: the same permissions, read-only mode, switched-off tools, its own activity-log row and revision label. A batch can do nothing the calls one by one could not.</li><li>The whole batch is checked before anything runs; any problem and nothing runs. At most 50 steps and 20 seconds by default, with a clear \"send steps N.. again\" when time runs out.</li><li>Deletes (and trash, remove, reset, clear, or a status set to trash) are refused in a batch unless an administrator allows them under AI Nexus \u2192 Extensions \u2192 Batch. AI tools cannot change these settings.</li><li>Needs VGC AI Nexus 2.45.0 or later.</li></ul>"
     }
+  },
+  "vgc-product-order": {
+    "name": "VGC Product Order",
+    "version": "1.0.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-product-order-1.0.0/vgc-product-order-1.0.0.zip",
+    "sha256": "b8e560930cc7afaec26bd27d0aa46ced122e554bbddf72e43e825bba3304aab4",
+    "requires": "6.5",
+    "requires_php": "7.4",
+    "tested": "7.1",
+    "last_updated": "2026-11-21",
+    "homepage": "https://tools.vgc-ltd.com",
+    "author": "VGC",
+    "sections": {
+      "description": "Sets the order the shop shows its products in. Move a whole category to the top or bottom of the shop in one click (all its products together), then drag the products inside it into place. Nothing changes in the shop until you save, and the last save can be undone.",
+      "changelog": "<h4>1.0.0</h4><ul><li>First release: the ordering screen with categories, search, drag and drop, position numbers and arrow buttons.</li><li>Move a whole category (subcategories included) or a search result to the top or bottom of the shop in one step.</li><li>Ordering inside a category swaps products only among that category's places, so the rest of the shop keeps its order.</li><li>Save, step-by-step Undo, Discard changes, and Undo for the last save.</li><li>A notice and a one-click switch when the shop's default sorting does not use this order.</li></ul>"
+    },
+    "sig": {
+      "v": 1,
+      "alg": "ed25519",
+      "kid": "2eb03b18afeb32d2",
+      "value": "VfgzoypmD7ibB0R2w0jsSjePKNUekUVBEUXNQKwUac8kbAdr4Lv0gD4eys5Elx5nH1SnNj9kJ8VMDUtreYxADQ=="
+    }
   }
 }
