@@ -784,5 +784,27 @@
       "kid": "2eb03b18afeb32d2",
       "value": "POZnHlEUF31VaL2Y6wn/deyvmr23wYcsgDMpac8MuqVSNNmuss8GUesgudi1008eWHSdgftQJZk71oaYgYStCA=="
     }
+  },
+  "vgc-ai-nexus-batch": {
+    "name": "VGC AI Nexus Batch",
+    "version": "1.0.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-ai-nexus-batch-1.0.0/vgc-ai-nexus-batch-1.0.0.zip",
+    "sha256": "8069ee381b7da70ab076d8654dc65bdfa6845aa84b932b62dcecc7f06b7944c6",
+    "last_updated": "2026-11-21",
+    "sig": {
+      "v": 1,
+      "alg": "ed25519",
+      "kid": "2eb03b18afeb32d2",
+      "value": "ulrLqlQ0pVItTdQzGHo6ZM/EPdqmPekhXtk584yqRdLNMT57denYeaMcZwJ8kff09TWcO0KqUKT9xZdXmldNAw=="
+    },
+    "requires": "6.6",
+    "requires_php": "8.0",
+    "tested": "",
+    "homepage": "https://tools.vgc-ltd.com",
+    "author": "VGC",
+    "sections": {
+      "description": "Extends VGC AI Nexus with one tool, batch-run-steps: an AI assistant runs an ordered list of tool calls in one call and gets back only what it asks for. A later step can use what an earlier one returned (the ID of a post it created, for example). Every step is checked, run and logged exactly like the same call made on its own, so a batch can do nothing the calls one by one could not. Deletes are refused in a batch unless an administrator allows them. Requires VGC AI Nexus 2.45.0 or later.",
+      "changelog": "<h4>1.0.0</h4><ul><li>First release. One tool, batch-run-steps: an AI assistant runs an ordered list of tool calls in one call and gets back only the fields it asks for. A later step can use what an earlier one returned, such as the ID of a post it created.</li><li>Every step is checked, run and logged exactly like the same call made on its own: the same permissions, read-only mode, switched-off tools, its own activity-log row and revision label. A batch can do nothing the calls one by one could not.</li><li>The whole batch is checked before anything runs; any problem and nothing runs. At most 50 steps and 20 seconds by default, with a clear \"send steps N.. again\" when time runs out.</li><li>Deletes (and trash, remove, reset, clear, or a status set to trash) are refused in a batch unless an administrator allows them under AI Nexus \u2192 Extensions \u2192 Batch. AI tools cannot change these settings.</li><li>Needs VGC AI Nexus 2.45.0 or later.</li></ul>"
+    }
   }
 }
