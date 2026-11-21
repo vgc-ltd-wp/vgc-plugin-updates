@@ -34,5 +34,11 @@
     "description": "Manage Elementor: global Kit settings, page content, widgets and templates.",
     "icon": "dashicons-admin-customizer",
     "requires": "Elementor"
+  },
+  "vgc-ai-nexus-batch": {
+    "name": "Batch",
+    "description": "Run an ordered list of tool calls in one call; each step is checked and logged like a call of its own.",
+    "icon": "dashicons-controls-forward",
+    "requires": "AI Nexus 2.45.0"
   }
 }
