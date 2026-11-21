@@ -182,5 +182,18 @@
     "page": "admin.php?page=vgc-shop-assistant",
     "docs_url": "",
     "licence": null
+  },
+  "vgc-product-order": {
+    "name": "Product Order",
+    "description": "Move a whole category to the top of the shop, then order what is inside.",
+    "details": "Sets the order the shop shows its products in. Move a whole category or a search result to the top or bottom of the shop at once, then drag the products inside it into place. Nothing changes in the shop until you save, and the last save can be undone.",
+    "where": "Its screen is VGC Toolbox → Product order.",
+    "category": "shop",
+    "icon": "hash",
+    "order": 108,
+    "requires_plugins": ["woocommerce"],
+    "page": "admin.php?page=vgc-product-order",
+    "docs_url": "",
+    "licence": null
   }
 }
