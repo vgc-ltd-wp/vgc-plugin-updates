@@ -809,9 +809,9 @@
   },
   "vgc-product-order": {
     "name": "VGC Product Order",
-    "version": "1.0.0",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-product-order-1.0.0/vgc-product-order-1.0.0.zip",
-    "sha256": "b8e560930cc7afaec26bd27d0aa46ced122e554bbddf72e43e825bba3304aab4",
+    "version": "1.1.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-product-order-1.1.0/vgc-product-order-1.1.0.zip",
+    "sha256": "dab28f503497982e4f023d2d72db942fd814ea6c476648054758b2d4d86aa703",
     "requires": "6.5",
     "requires_php": "7.4",
     "tested": "7.1",
@@ -819,14 +819,14 @@
     "homepage": "https://tools.vgc-ltd.com",
     "author": "VGC",
     "sections": {
-      "description": "Sets the order the shop shows its products in. Move a whole category to the top or bottom of the shop in one click (all its products together), then drag the products inside it into place. Nothing changes in the shop until you save, and the last save can be undone.",
-      "changelog": "<h4>1.0.0</h4><ul><li>First release: the ordering screen with categories, search, drag and drop, position numbers and arrow buttons.</li><li>Move a whole category (subcategories included) or a search result to the top or bottom of the shop in one step.</li><li>Ordering inside a category swaps products only among that category's places, so the rest of the shop keeps its order.</li><li>Save, step-by-step Undo, Discard changes, and Undo for the last save.</li><li>A notice and a one-click switch when the shop's default sorting does not use this order.</li></ul>"
+      "description": "Sets the order the shop shows its products in. Drag whole categories, tags, collections or other groups into place as blocks, each with all its products, then order the products inside them. Nothing changes in the shop until you save, and the last save can be undone.",
+      "changelog": "<h4>1.1.0</h4><ul><li>Blocks: \"Show as: Blocks by \u2026\" shows the products as whole groups to drag into place (by category, tag, brand, the shop's own taxonomies such as collections, or an attribute). Each block moves with all its products.</li><li>Inside a category, its collections (or subcategories) become the blocks; a block opens to order the products inside it, and \"Open\" goes inside it.</li><li>The taxonomies are found on the site automatically; the list on the left can browse any of them.</li><li>Products in more than one group stay in the block they sit next to; spread-out blocks are pointed out and can be gathered in one click.</li><li>The page remembers the last view.</li></ul><h4>1.0.0</h4><ul><li>First release: the ordering screen with categories, search, drag and drop, position numbers and arrow buttons.</li><li>Move a whole category (subcategories included) or a search result to the top or bottom of the shop in one step.</li><li>Ordering inside a category swaps products only among that category's places, so the rest of the shop keeps its order.</li><li>Save, step-by-step Undo, Discard changes, and Undo for the last save.</li><li>A notice and a one-click switch when the shop's default sorting does not use this order.</li></ul>"
     },
     "sig": {
       "v": 1,
       "alg": "ed25519",
       "kid": "2eb03b18afeb32d2",
-      "value": "VfgzoypmD7ibB0R2w0jsSjePKNUekUVBEUXNQKwUac8kbAdr4Lv0gD4eys5Elx5nH1SnNj9kJ8VMDUtreYxADQ=="
+      "value": "TyBPrekFPmqaW2X5ngXb7oKRk/VygzM3wbmNZ4jTTAPjPEXUzPJw0oR9C7+Qa0NjcFUDZm91ybmcjsDybb2sDQ=="
     }
   }
 }
