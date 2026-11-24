@@ -828,5 +828,27 @@
       "kid": "2eb03b18afeb32d2",
       "value": "TyBPrekFPmqaW2X5ngXb7oKRk/VygzM3wbmNZ4jTTAPjPEXUzPJw0oR9C7+Qa0NjcFUDZm91ybmcjsDybb2sDQ=="
     }
+  },
+  "vgc-site-feedback": {
+    "name": "VGC Site Feedback",
+    "version": "1.0.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-site-feedback-1.0.0/vgc-site-feedback-1.0.0.zip",
+    "sha256": "95c407b61cb33bee11721235f352f7df33f242fdac6507dab4d7c5599de34f86",
+    "requires": "6.5",
+    "requires_php": "7.4",
+    "tested": "7.1",
+    "last_updated": "2026-11-24",
+    "homepage": "https://tools.vgc-ltd.com",
+    "author": "VGC",
+    "sections": {
+      "description": "Lets administrators comment on any part of the site: click \"Comment\", pick the part of a page or wp-admin screen, and write what should change, with screenshots. Each comment keeps its page, the part and the element it is about, and goes to one list with statuses, replies and questions. AI assistants read and work on it through AI Nexus, and each comment can be linked to the task it became in a tracker.",
+      "changelog": "<h4>1.0.0</h4><ul><li>First release: comment on any part of a site page or wp-admin screen (admin bar and floating button), with the part, element, page and device stored; pasted screenshots and files.</li><li>The feedback list and item screen: statuses, replies, questions to the author, history, \"Show on the page\", links to tracker tasks, export as JSON and CSV.</li><li>Markers for the feedback on the page you are on.</li><li>AI Nexus tool vgc-site-feedback-items: list_items, get_item (with a task draft), get_summary, update_item, add_note, link_task.</li><li>Settings: which roles may comment, where the Comment button shows, keep or delete the data when the plugin is deleted.</li><li>Bulgarian translation.</li></ul>"
+    },
+    "sig": {
+      "v": 1,
+      "alg": "ed25519",
+      "kid": "2eb03b18afeb32d2",
+      "value": "af8aSuoRGz8XRBfthY7anG2f+8aH56uad6OdCKWG1iEZ/SfZPYC6cAmPETJax+1rcGDvtMVVQGXcz2c6hxUcCw=="
+    }
   }
 }
