@@ -195,5 +195,18 @@
     "page": "admin.php?page=vgc-product-order",
     "docs_url": "",
     "licence": null
+  },
+  "vgc-site-feedback": {
+    "name": "Site Feedback",
+    "description": "Comment on any part of the site, with screenshots; AI works on it.",
+    "details": "Point at any part of a site page or wp-admin screen and write what should change, with screenshots. Each comment keeps its page and element and goes to one list with statuses, replies and questions. AI assistants read and work on it through AI Nexus, and each item can be linked to its task in VGC Tracker.",
+    "where": "Its screens are VGC Toolbox → Site Feedback; comment on any page from Feedback in the admin bar.",
+    "category": "site",
+    "icon": "send",
+    "order": 140,
+    "requires_plugins": [],
+    "page": "admin.php?page=vgc-site-feedback",
+    "docs_url": "",
+    "licence": null
   }
 }
