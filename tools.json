@@ -208,5 +208,18 @@
     "page": "admin.php?page=vgc-site-feedback",
     "docs_url": "",
     "licence": null
+  },
+  "vgc-email-guard": {
+    "name": "Email Guard",
+    "description": "Asks before WooCommerce sends an email, and shows it first.",
+    "details": "When someone in the admin does something that sends a WooCommerce email, such as marking an order Completed, the email waits. A window shows it exactly as it would go out (recipient, subject, attachments and the email itself) and asks whether to send it. Emails that customers cause and scheduled ones go out as usual.",
+    "where": "Its screens are VGC Toolbox → Email Guard; the window opens on the admin page after the action.",
+    "category": "shop",
+    "icon": "mail",
+    "order": 109,
+    "requires_plugins": ["woocommerce"],
+    "page": "admin.php?page=vgc-email-guard",
+    "docs_url": "",
+    "licence": null
   }
 }
