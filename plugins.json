@@ -831,9 +831,9 @@
   },
   "vgc-site-feedback": {
     "name": "VGC Site Feedback",
-    "version": "1.1.0",
-    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-site-feedback-1.1.0/vgc-site-feedback-1.1.0.zip",
-    "sha256": "781b85a195ff2af4c0decbf182f8c35021a8151c277bedf436a5d67569528541",
+    "version": "1.1.1",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-site-feedback-1.1.1/vgc-site-feedback-1.1.1.zip",
+    "sha256": "356d63c14c12fed77fb93833e5aee9f67c6e08804c58dccc2635f79d5fed5730",
     "requires": "6.5",
     "requires_php": "7.4",
     "tested": "7.1",
@@ -842,13 +842,13 @@
     "author": "VGC",
     "sections": {
       "description": "Lets administrators and invited guests leave feedback on any part of the site: click \"Feedback\", pick the part of a page or wp-admin screen, and write what should change, with screenshots. Each item keeps its page, the part and the element it is about, and goes to one list with statuses, replies and questions. Guests sign in on their own page, without a WordPress account. AI assistants read and work on the feedback through AI Nexus, and each item can be linked to the task it became in a tracker.",
-      "changelog": "<h4>1.1.0</h4><ul><li>Guests: people with no WordPress account leave feedback after signing in on the plugin's own page. Invitations by e-mail or link, their own \"My feedback\" page with answers, e-mails about questions and outcomes, forgotten passwords, switching off, signing out everywhere, limits on wrong passwords. Works on cached pages.</li><li>The Guests screen; the list can show one guest's feedback; the AI tool tells guests from users (author.type) and filters by them.</li><li>The wording is \"feedback\" everywhere (the Feedback button, Leave feedback on this page\u2026); in Bulgarian \u201e\u0411\u0435\u043b\u0435\u0436\u043a\u0430\u201c.</li></ul><h4>1.0.0</h4><ul><li>First release: comment on any part of a site page or wp-admin screen (admin bar and floating button), with the part, element, page and device stored; pasted screenshots and files.</li><li>The feedback list and item screen: statuses, replies, questions to the author, history, \"Show on the page\", links to tracker tasks, export as JSON and CSV.</li><li>Markers for the feedback on the page you are on.</li><li>AI Nexus tool vgc-site-feedback-items: list_items, get_item (with a task draft), get_summary, update_item, add_note, link_task.</li><li>Settings: which roles may comment, where the button shows, keep or delete the data when the plugin is deleted.</li><li>Bulgarian translation.</li></ul>"
+      "changelog": "<h4>1.1.1</h4><ul><li>Guest pages and the item screen: messages and the outcome box drawn with a light border instead of a thick stripe on the left.</li></ul><h4>1.1.0</h4><ul><li>Guests: people with no WordPress account leave feedback after signing in on the plugin's own page. Invitations by e-mail or link, their own \"My feedback\" page with answers, e-mails about questions and outcomes, forgotten passwords, switching off, signing out everywhere, limits on wrong passwords. Works on cached pages.</li><li>The Guests screen; the list can show one guest's feedback; the AI tool tells guests from users (author.type) and filters by them.</li><li>The wording is \"feedback\" everywhere (the Feedback button, Leave feedback on this page\u2026); in Bulgarian \u201e\u0411\u0435\u043b\u0435\u0436\u043a\u0430\u201c.</li></ul><h4>1.0.0</h4><ul><li>First release: comment on any part of a site page or wp-admin screen (admin bar and floating button), with the part, element, page and device stored; pasted screenshots and files.</li><li>The feedback list and item screen: statuses, replies, questions to the author, history, \"Show on the page\", links to tracker tasks, export as JSON and CSV.</li><li>Markers for the feedback on the page you are on.</li><li>AI Nexus tool vgc-site-feedback-items: list_items, get_item (with a task draft), get_summary, update_item, add_note, link_task.</li><li>Settings: which roles may comment, where the button shows, keep or delete the data when the plugin is deleted.</li><li>Bulgarian translation.</li></ul>"
     },
     "sig": {
       "v": 1,
       "alg": "ed25519",
       "kid": "2eb03b18afeb32d2",
-      "value": "FrW+GI2bt4jif2PmOGbP6+V1hNEyVfiHxeXtMH8JlPH0JtwhM3urRqHdRF+GGSFooZEb3E9CWWx328brUatMAA=="
+      "value": "ykcnk1cndBKOmEncZRO2A3CbzpvuPNGpzK6JMfloI1xxIo0TuQQjds4EiLNs0tCebFrwKoAV+AIYitJJRlJDCA=="
     }
   }
 }
