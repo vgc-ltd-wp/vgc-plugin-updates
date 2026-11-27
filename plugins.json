@@ -850,5 +850,27 @@
       "kid": "2eb03b18afeb32d2",
       "value": "hwdXYBDCZ5UnGrK3K5WCvKT6CH6gcVnfm7yBplG6pqKo7VUlFaRmBp0m1kTjhLnOS7ozYvy9KX+FNtxI/TFhAQ=="
     }
+  },
+  "vgc-email-guard": {
+    "name": "VGC Email Guard",
+    "version": "1.0.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-email-guard-1.0.0/vgc-email-guard-1.0.0.zip",
+    "sha256": "fdb4726044b8afd1b477f84528d602243da3adb464ea1fb76899567544f133f6",
+    "requires": "6.5",
+    "requires_php": "7.4",
+    "tested": "6.8",
+    "last_updated": "2026-11-27",
+    "homepage": "https://tools.vgc-ltd.com",
+    "author": "VGC",
+    "sections": {
+      "description": "Asks before WooCommerce sends an email. When someone working in the admin does something that sends a WooCommerce email (an order marked Completed, a status change, a resend), the email waits: a window shows exactly what would go out (recipient, subject, attachments and the email itself) and asks whether to send it. Emails that customers cause (checkout, payment) and scheduled ones go out as usual. Choose the emails it guards and switch it off at any time.",
+      "changelog": "<h4>1.0.0</h4><ul><li>First version: WooCommerce emails caused in the admin wait for a confirmation in a window that shows the email exactly as it would be sent; Waiting emails page, settings per email, order notes, VGC Toolbox tool.</li></ul>"
+    },
+    "sig": {
+      "v": 1,
+      "alg": "ed25519",
+      "kid": "2eb03b18afeb32d2",
+      "value": "sYgFr9x+7JyfqY0wGq4uhLtR+4Xbi6I26V9hb6XXer7D6eHIOxr2mUqkKwMxzXhwDQ4NUdYLZg5wQ6g2THeiDQ=="
+    }
   }
 }
