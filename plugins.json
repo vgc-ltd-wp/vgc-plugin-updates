@@ -872,5 +872,27 @@
       "kid": "2eb03b18afeb32d2",
       "value": "sYgFr9x+7JyfqY0wGq4uhLtR+4Xbi6I26V9hb6XXer7D6eHIOxr2mUqkKwMxzXhwDQ4NUdYLZg5wQ6g2THeiDQ=="
     }
+  },
+  "vgc-app-mode": {
+    "name": "VGC App Mode",
+    "version": "1.0.0",
+    "download_url": "https://github.com/vgc-ltd-wp/vgc-plugin-updates/releases/download/vgc-app-mode-1.0.0/vgc-app-mode-1.0.0.zip",
+    "sha256": "1a338ca3fa19eaf185d2ce0bc96c470590c7d0e49f86ea9d2f0e2fea3fd6024d",
+    "requires": "6.5",
+    "requires_php": "7.4",
+    "tested": "7.1",
+    "last_updated": "2026-11-28",
+    "homepage": "https://tools.vgc-ltd.com",
+    "author": "VGC",
+    "sections": {
+      "description": "Runs WordPress as a platform for apps, without the website layer. Keeps users, sign-in, security, plugins, settings, media and the REST API; switches off blocks, patterns, widgets, the Customizer, comments, embeds, feeds, sitemaps and the theme's pages, so every request does less work. For sites where an app plugin (a tracker, a backoffice) is the whole site. Pauses itself while a site builder such as Elementor or WooCommerce is active.",
+      "changelog": "<h4>1.0.0</h4><ul><li>First version: switches off WordPress's website layer (blocks, patterns, widgets, Customizer, comments, embeds, feeds, sitemaps, XML-RPC, the theme's pages and the website REST routes) for sites that only run apps; Settings \u2192 App Mode, WP-CLI command, pauses itself while a site builder is active.</li></ul>"
+    },
+    "sig": {
+      "v": 1,
+      "alg": "ed25519",
+      "kid": "2eb03b18afeb32d2",
+      "value": "PKAcCCQD0HN0Fz3n+7BRIVdkn7w1tsCM+xGqdJCnVMzi6OzDIxPJyJUklr7idjd/q9NDjydDb/cCPLBZC+rRAQ=="
+    }
   }
 }
